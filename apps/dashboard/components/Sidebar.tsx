@@ -154,7 +154,37 @@ export default function Sidebar(): JSX.Element {
       </div>
 
       {/* 3. Bottom Footer */}
-      <div className="sidebar-bottom">
+      <div className="sidebar-bottom" style={{ borderTop: '1px solid var(--border-light, #eaecf0)', paddingTop: '12px', marginTop: '12px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '6px 8px', borderRadius: '6px', backgroundColor: 'var(--border-subtle, #f8fafc)', marginBottom: '8px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', overflow: 'hidden' }}>
+            <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#10b981', flexShrink: 0 }} />
+            <div style={{ fontSize: '0.75rem', fontWeight: 600, color: '#334155', textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}>
+              SANSA Operator
+            </div>
+          </div>
+          <button
+            onClick={() => {
+              if (typeof window !== 'undefined') {
+                localStorage.removeItem('phasor_auth');
+              }
+              router.push('/login');
+            }}
+            title="Lock station and sign out"
+            style={{
+              background: 'none',
+              border: 'none',
+              color: '#ef4444',
+              cursor: 'pointer',
+              fontSize: '0.72rem',
+              fontWeight: 600,
+              padding: '2px 6px',
+              borderRadius: '4px',
+            }}
+          >
+            Lock
+          </button>
+        </div>
+
         <div className="nav-item" style={{ color: 'var(--text-muted)' }}>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
             <circle cx="12" cy="12" r="3"></circle>
