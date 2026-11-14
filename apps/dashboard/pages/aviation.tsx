@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from '../components/Sidebar';
+import { API_BASE_URL } from '../lib/config';
 
 interface FlightRoute {
   id: string;
@@ -62,7 +63,7 @@ export default function AviationPage(): JSX.Element {
   useEffect(() => {
     const loadAviation = async (): Promise<void> => {
       try {
-        const res = await fetch('http://localhost:8000/api/aviation/triad');
+        const res = await fetch(`${API_BASE_URL}/api/aviation/triad`);
         if (res.ok) {
           const d: AviationResponse = await res.json();
           setData(d);

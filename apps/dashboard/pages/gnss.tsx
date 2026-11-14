@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from '../components/Sidebar';
+import { API_BASE_URL } from '../lib/config';
 
 interface GnssStation {
   id: string;
@@ -50,7 +51,7 @@ export default function GnssPage(): JSX.Element {
   useEffect(() => {
     const loadGnss = async (): Promise<void> => {
       try {
-        const res = await fetch('http://localhost:8000/api/gnss/scintillation');
+        const res = await fetch(`${API_BASE_URL}/api/gnss/scintillation`);
         if (res.ok) {
           const d: GnssResponse = await res.json();
           setData(d);
@@ -67,7 +68,7 @@ export default function GnssPage(): JSX.Element {
   const handleSendSms = async (): Promise<void> => {
     setIsSendingSms(true);
     try {
-      const res = await fetch('http://localhost:8000/api/gnss/dispatch-sms', {
+      const res = await fetch(`${API_BASE_URL}/api/gnss/dispatch-sms`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ phone: phoneInput })

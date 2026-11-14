@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from '../components/Sidebar';
+import { DOTNET_BASE_URL } from '../lib/config';
 
 interface StormSummary {
   id: string;
@@ -18,7 +19,7 @@ export default function ReplayPage(): JSX.Element {
   useEffect(() => {
     const loadStorms = async (): Promise<void> => {
       try {
-        const res = await fetch('http://127.0.0.1:5000/api/storms');
+        const res = await fetch(`${DOTNET_BASE_URL}/api/storms`);
         if (res.ok) {
           const d = await res.json();
           setStorms(d.catalog || []);

@@ -305,7 +305,17 @@ Open **[http://localhost:5173](http://localhost:5173)** in your browser to explo
 
 ---
 
-## 9. Scientific References & Operational Precedents
+## 9. Cloud Deployment (Render & Vercel)
+
+Phasor is pre-configured for automated cloud deployment:
+- **Backend (Render):** Deploy the FastAPI scientific computing service with 1-click via [`render.yaml`](render.yaml).
+- **Frontend (Vercel):** Deploy `apps/dashboard` (Next.js) and `apps/home` (Vite) with automatic CI/CD.
+
+👉 **See the complete step-by-step [Deployment Guide](docs/DEPLOYMENT.md) for full instructions.**
+
+---
+
+## 10. Scientific References & Operational Precedents
 
 1. **Ngwira, C. M., McKinnell, L. A., Cilliers, P. J., & Gaunt, C. T. (2009).** *Modeling geomagnetically induced currents in the South African electric power network.* Space Weather, 7(10), S10004.
 2. **Gaunt, C. T., & Coetzee, G. (2007).** *Transformer failures in regions using power systems at mid-latitudes.* International Conference on Power Systems Transients (IPST).

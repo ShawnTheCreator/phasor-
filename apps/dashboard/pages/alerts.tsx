@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from '../components/Sidebar';
+import { DOTNET_BASE_URL } from '../lib/config';
 
 interface AlertItem {
   Id: string;
@@ -44,8 +45,8 @@ export default function AlertsPage(): JSX.Element {
     const loadAlerts = async (): Promise<void> => {
       try {
         const [resA, resL] = await Promise.all([
-          fetch('http://127.0.0.1:5000/api/alerts'),
-          fetch('http://127.0.0.1:5000/api/alerts/dispatch-log')
+          fetch(`${DOTNET_BASE_URL}/api/alerts`),
+          fetch(`${DOTNET_BASE_URL}/api/alerts/dispatch-log`)
         ]);
         if (resA.ok) {
           const d = await resA.json();
@@ -70,7 +71,7 @@ export default function AlertsPage(): JSX.Element {
   const handleConfirmAcknowledge = async (): Promise<void> => {
     if (!ackTargetId) return;
     try {
-      const res = await fetch(`http://127.0.0.1:5000/api/alerts/${ackTargetId}/ack`, {
+      const res = await fetch(`${DOTNET_BASE_URL}/api/alerts/${ackTargetId}/ack`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -100,7 +101,7 @@ export default function AlertsPage(): JSX.Element {
 
   const simulateDispatch = async (): Promise<void> => {
     try {
-      const res = await fetch('http://127.0.0.1:5000/api/alerts/dispatch', {
+      const res = await fetch(`${DOTNET_BASE_URL}/api/alerts/dispatch`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from '../components/Sidebar';
+import { API_BASE_URL } from '../lib/config';
 
 interface SappSubstation {
   id: string;
@@ -40,7 +41,7 @@ export default function GridExpansionPage(): JSX.Element {
   useEffect(() => {
     const loadGrid = async (): Promise<void> => {
       try {
-        const res = await fetch('http://localhost:8000/api/grid/sapp');
+        const res = await fetch(`${API_BASE_URL}/api/grid/sapp`);
         if (res.ok) {
           const d: SappResponse = await res.json();
           setData(d);

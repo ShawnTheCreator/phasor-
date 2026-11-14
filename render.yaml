@@ -1,0 +1,37 @@
+services:
+  # ============================================================================
+  # 1. FastAPI Scientific Computation & Multi-Hazard API
+  # ============================================================================
+  - type: web
+    name: phasor-api
+    runtime: python
+    region: frankfurt # Low-latency to SADC / Africa
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn server.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/status
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.8
+      - key: NOAA_SWPC_RTSW_URL
+        value: https://services.swpc.noaa.gov/products/solar-wind/plasma-1-day.json
+      - key: NOAA_MAG_URL
+        value: https://services.swpc.noaa.gov/products/solar-wind/mag-1-day.json
+      - key: SANSA_HERMANUS_API_URL
+        value: https://spaceweather.sansa.org.za/api/geomag/her
+      - key: AFRICAS_TALKING_USERNAME
+        value: phasor_sadc
+      - key: AFRICAS_TALKING_API_KEY
+        sync: false
+      - key: TWILIO_ACCOUNT_SID
+        sync: false
+      - key: TWILIO_AUTH_TOKEN
+        sync: false
+      - key: SAPP_API_TOKEN
+        sync: false
+      - key: GNSS_SEPTENTRIO_KEY
+        sync: false
+      - key: SPACE_TRACK_API_KEY
+        sync: false
+      - key: MONGODB_URI
+        sync: false

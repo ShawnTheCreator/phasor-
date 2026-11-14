@@ -5,6 +5,9 @@ import PinnedPipeline from './components/PinnedPipeline';
 import StormShowcase from './components/StormShowcase';
 import GlassyPhiLogo from './components/GlassyPhiLogo';
 
+const DASHBOARD_URL: string =
+  (import.meta.env.VITE_DASHBOARD_URL as string) || 'http://localhost:3000';
+
 export default function App(): JSX.Element {
   return (
     <div className="landing-root">
@@ -33,7 +36,7 @@ export default function App(): JSX.Element {
             <a href="#replay" className="hero-nav-link">Storm Replay</a>
             <a href="#science" className="hero-nav-link">Data Lineage</a>
             <a
-              href="http://localhost:3000"
+              href={DASHBOARD_URL}
               className="btn-pill-glass"
               target="_blank"
               rel="noreferrer"
@@ -60,7 +63,7 @@ export default function App(): JSX.Element {
 
           <div className="hero-action-buttons">
             <a
-              href="http://localhost:3000"
+              href={DASHBOARD_URL}
               className="btn-hero-red"
               target="_blank"
               rel="noreferrer"
@@ -123,7 +126,7 @@ export default function App(): JSX.Element {
         <div className="editorial-container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px' }}>
           <p>&copy; 2026 Phasor &bull; NASA International Space Apps Challenge &bull; All Rights Reserved.</p>
           <a
-            href="http://localhost:3000"
+            href={DASHBOARD_URL}
             className="btn-hero-red"
             style={{ padding: '8px 20px', fontSize: '0.85rem' }}
             target="_blank"

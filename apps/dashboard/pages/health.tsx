@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from '../components/Sidebar';
+import { API_BASE_URL } from '../lib/config';
 
 interface HospitalNode {
   id: string;
@@ -52,7 +53,7 @@ export default function HealthPage(): JSX.Element {
   useEffect(() => {
     const loadHealth = async (): Promise<void> => {
       try {
-        const res = await fetch('http://localhost:8000/api/health/resilience');
+        const res = await fetch(`${API_BASE_URL}/api/health/resilience`);
         if (res.ok) {
           const d: HealthResponse = await res.json();
           setData(d);

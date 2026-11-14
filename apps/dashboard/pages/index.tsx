@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Sidebar from '../components/Sidebar';
 import * as signalR from '@microsoft/signalr';
+import { DOTNET_BASE_URL } from '../lib/config';
 
 interface SubstationItem {
   SubstationId: string;
@@ -41,7 +42,7 @@ export default function CommandView(): JSX.Element {
     // 1. Initial REST fetch from C# API
     const loadCurrentRisk = async (): Promise<void> => {
       try {
-        const res = await fetch('http://127.0.0.1:5000/api/risk/current');
+        const res = await fetch(`${DOTNET_BASE_URL}/api/risk/current`);
         if (res.ok) {
           const data: GridRiskSummary = await res.json();
           setGridRisk(data);
@@ -57,7 +58,7 @@ export default function CommandView(): JSX.Element {
 
     // 2. Connect to C# SignalR Hub for push updates
     const connection = new signalR.HubConnectionBuilder()
-      .withUrl('http://127.0.0.1:5000/hubs/grid')
+      .withUrl(`${DOTNET_BASE_URL}/hubs/grid`)
       .withAutomaticReconnect()
       .build();
 

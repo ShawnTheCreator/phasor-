@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from '../components/Sidebar';
+import { API_BASE_URL } from '../lib/config';
 
 interface DecayPoint {
   day: number;
@@ -46,7 +47,7 @@ export default function SatellitesPage(): JSX.Element {
   useEffect(() => {
     const loadDrag = async (): Promise<void> => {
       try {
-        const res = await fetch('http://localhost:8000/api/satellites/drag');
+        const res = await fetch(`${API_BASE_URL}/api/satellites/drag`);
         if (res.ok) {
           const d: SatelliteResponse = await res.json();
           setData(d);

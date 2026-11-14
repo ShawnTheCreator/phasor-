@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from '../components/Sidebar';
+import { DOTNET_BASE_URL } from '../lib/config';
 
 interface ModelHorizon {
   horizon: string;
@@ -20,7 +21,7 @@ export default function ModelPage(): JSX.Element {
   useEffect(() => {
     const loadMetrics = async (): Promise<void> => {
       try {
-        const res = await fetch('http://127.0.0.1:5000/api/model/metrics');
+        const res = await fetch(`${DOTNET_BASE_URL}/api/model/metrics`);
         if (res.ok) {
           const d: ModelMetrics = await res.json();
           setMetrics(d);

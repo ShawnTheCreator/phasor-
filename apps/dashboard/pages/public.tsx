@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from '../components/Sidebar';
+import { API_BASE_URL } from '../lib/config';
 
 interface CriticalInfraNode {
   id: string;
@@ -37,7 +38,7 @@ export default function PublicSafetyPage(): JSX.Element {
   useEffect(() => {
     const loadSafety = async (): Promise<void> => {
       try {
-        const res = await fetch('http://localhost:8000/api/public/safety');
+        const res = await fetch(`${API_BASE_URL}/api/public/safety`);
         if (res.ok) {
           const d: PublicSafetyResponse = await res.json();
           setData(d);

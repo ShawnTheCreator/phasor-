@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from '../components/Sidebar';
+import { DOTNET_BASE_URL } from '../lib/config';
 
 interface HardwareTelemetry {
   node_id?: string;
@@ -64,7 +65,7 @@ export default function HardwarePage(): JSX.Element {
   useEffect(() => {
     const fetchTelemetry = async (): Promise<void> => {
       try {
-        const res = await fetch('http://127.0.0.1:5000/api/hardware/magnetometer');
+        const res = await fetch(`${DOTNET_BASE_URL}/api/hardware/magnetometer`);
         if (res.ok) {
           const d: HardwareTelemetry = await res.json();
           setTelemetry(d);
