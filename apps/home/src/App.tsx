@@ -5,8 +5,10 @@ import PinnedPipeline from './components/PinnedPipeline';
 import StormShowcase from './components/StormShowcase';
 import GlassyPhiLogo from './components/GlassyPhiLogo';
 
+const isProduction: boolean = Boolean(import.meta.env.PROD);
 const DASHBOARD_URL: string =
-  (import.meta.env.VITE_DASHBOARD_URL as string) || 'http://localhost:3000';
+  (import.meta.env.VITE_DASHBOARD_URL as string) ||
+  (isProduction ? '/dashboard' : 'http://localhost:3000');
 
 export default function App(): JSX.Element {
   return (
