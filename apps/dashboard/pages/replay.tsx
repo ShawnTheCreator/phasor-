@@ -49,7 +49,7 @@ export default function ReplayPage(): JSX.Element {
 
       <div className="main-wrapper">
         <header className="top-nav">
-          <h2 style={{ fontSize: '1.1rem', fontWeight: 800, margin: 0, color: '#0f172a' }}>
+          <h2 style={{ fontSize: '0.92rem', fontWeight: 600, margin: 0, color: 'var(--text-primary)' }}>
             Historical Storm Replay Theatre
           </h2>
           <div className="top-nav-right">
@@ -61,7 +61,7 @@ export default function ReplayPage(): JSX.Element {
 
         <main className="page-container">
           <section className="content-card">
-            <h3 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: '12px' }}>
+            <h3 style={{ fontSize: '0.84rem', fontWeight: 600, marginBottom: '10px' }}>
               Select Historical Benchmark Storm
             </h3>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '14px', marginBottom: '24px' }}>

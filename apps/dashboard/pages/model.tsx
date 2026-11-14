@@ -46,23 +46,23 @@ export default function ModelPage(): JSX.Element {
 
       <div className="main-wrapper">
         <header className="top-nav">
-          <h2 style={{ fontSize: '1.1rem', fontWeight: 800, margin: 0, color: '#0f172a' }}>
+          <h2 style={{ fontSize: '0.92rem', fontWeight: 600, margin: 0, color: 'var(--text-primary)' }}>
             Model Transparency & Scientific Validity (NASA Criterion)
           </h2>
         </header>
 
         <main className="page-container">
           <section className="content-card">
-            <div style={{ padding: '16px', background: '#f8fafc', borderRadius: '10px', border: '1px solid #eaecf0', marginBottom: '20px' }}>
-              <h3 style={{ fontSize: '1rem', fontWeight: 800, color: '#0f172a', marginBottom: '6px' }}>
+            <div style={{ padding: '12px 16px', background: '#f8fafc', borderRadius: '8px', border: '1px solid #eaecf0', marginBottom: '16px' }}>
+              <h3 style={{ fontSize: '0.88rem', fontWeight: 600, color: '#0f172a', marginBottom: '4px' }}>
                 Architecture: {metrics?.architecture || 'Bidirectional LSTM (2 Layers, 128 Units, PyTorch 2.3)'}
               </h3>
-              <p style={{ fontSize: '0.84rem', color: '#64748b', margin: 0 }}>
+              <p style={{ fontSize: '0.78rem', color: '#64748b', margin: 0 }}>
                 <strong>Training Provenance:</strong> {metrics?.training_provenance || 'NASA/NOAA DSCOVR L1 (2016-2024) + Kyoto WDC Dst (8,420,000 samples). 5-Fold Walk-Forward Cross Validation.'}
               </p>
             </div>
 
-            <h3 style={{ fontSize: '0.95rem', fontWeight: 700, marginBottom: '12px' }}>
+            <h3 style={{ fontSize: '0.84rem', fontWeight: 600, marginBottom: '10px' }}>
               Backtest Verification Metrics per Forecast Horizon
             </h3>
             <table className="projects-table">

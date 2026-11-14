@@ -130,51 +130,51 @@ export default function AviationPage(): JSX.Element {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '16px', marginBottom: '20px' }}>
             {/* Triad 1: HF Radio */}
             <div className="content-card" style={{ borderLeft: `4px solid ${triad?.hf_radio.color || '#991b1b'}` }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                <span style={{ fontSize: '0.8rem', fontWeight: 800, textTransform: 'uppercase', color: '#64748b' }}>Triad 1: HF Communications</span>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
+                <span style={{ fontSize: '0.68rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em', color: '#64748b' }}>Triad 1: HF Communications</span>
                 <span className={`status-pill ${(triad?.hf_radio.tier || 'SEVERE').toLowerCase()}`}>{triad?.hf_radio.tier || 'SEVERE'}</span>
               </div>
-              <div style={{ fontSize: '1.4rem', fontWeight: 800, color: '#0f172a', marginBottom: '4px' }}>
+              <div style={{ fontSize: '1.18rem', fontWeight: 700, color: '#0f172a', fontFamily: 'var(--font-mono)', fontVariantNumeric: 'tabular-nums', letterSpacing: '-0.02em', marginBottom: '4px' }}>
                 {triad?.hf_radio.riometer_db ?? 5.8} dB Absorption
               </div>
-              <div style={{ fontSize: '0.78rem', color: '#475569', marginBottom: '8px' }}>
+              <div style={{ fontSize: '0.76rem', color: '#475569', marginBottom: '6px' }}>
                 MUF Depression: <strong>{triad?.hf_radio.muf_depression_pct ?? 54}%</strong> (ICAO Threshold 30% / 50%)
               </div>
-              <div style={{ fontSize: '0.76rem', color: '#64748b', lineHeight: 1.4 }}>
+              <div style={{ fontSize: '0.72rem', color: '#64748b', lineHeight: 1.4 }}>
                 {triad?.hf_radio.bulletin || 'Primary HF radio unusable on polar/high-latitude legs. Switch to SATCOM CPDLC.'}
               </div>
             </div>
 
             {/* Triad 2: Radiation */}
             <div className="content-card" style={{ borderLeft: `4px solid ${triad?.radiation.color || '#991b1b'}` }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                <span style={{ fontSize: '0.8rem', fontWeight: 800, textTransform: 'uppercase', color: '#64748b' }}>Triad 2: Radiation at Altitude</span>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
+                <span style={{ fontSize: '0.68rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em', color: '#64748b' }}>Triad 2: Radiation at Altitude</span>
                 <span className={`status-pill ${(triad?.radiation.tier || 'SEVERE').toLowerCase()}`}>{triad?.radiation.tier || 'SEVERE'}</span>
               </div>
-              <div style={{ fontSize: '1.4rem', fontWeight: 800, color: '#991b1b', marginBottom: '4px' }}>
+              <div style={{ fontSize: '1.18rem', fontWeight: 700, color: '#991b1b', fontFamily: 'var(--font-mono)', fontVariantNumeric: 'tabular-nums', letterSpacing: '-0.02em', marginBottom: '4px' }}>
                 {triad?.radiation.dose_rate_fl390_usv_h ?? 82.5} µSv/h
               </div>
-              <div style={{ fontSize: '0.78rem', color: '#475569', marginBottom: '8px' }}>
+              <div style={{ fontSize: '0.76rem', color: '#475569', marginBottom: '6px' }}>
                 Step-down to FL310: <strong>{triad?.radiation.dose_rate_fl310_usv_h ?? 47.8} µSv/h</strong> (-42% exposure)
               </div>
-              <div style={{ fontSize: '0.76rem', color: '#64748b', lineHeight: 1.4 }}>
+              <div style={{ fontSize: '0.72rem', color: '#64748b', lineHeight: 1.4 }}>
                 {triad?.radiation.advisory || 'ICAO Severe Radiation Alert in effect across FL390–FL410.'}
               </div>
             </div>
 
             {/* Triad 3: GNSS & SATCOM */}
             <div className="content-card" style={{ borderLeft: `4px solid ${triad?.gnss_satcom.color || '#991b1b'}` }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                <span style={{ fontSize: '0.8rem', fontWeight: 800, textTransform: 'uppercase', color: '#64748b' }}>Triad 3: GNSS & SATCOM</span>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
+                <span style={{ fontSize: '0.68rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em', color: '#64748b' }}>Triad 3: GNSS & SATCOM</span>
                 <span className={`status-pill ${(triad?.gnss_satcom.tier || 'SEVERE').toLowerCase()}`}>{triad?.gnss_satcom.tier || 'SEVERE'}</span>
               </div>
-              <div style={{ fontSize: '1.4rem', fontWeight: 800, color: '#0f172a', marginBottom: '4px' }}>
+              <div style={{ fontSize: '1.18rem', fontWeight: 700, color: '#0f172a', fontFamily: 'var(--font-mono)', fontVariantNumeric: 'tabular-nums', letterSpacing: '-0.02em', marginBottom: '4px' }}>
                 ~{triad?.gnss_satcom.positional_error_m ?? 16.4} m Drift
               </div>
-              <div style={{ fontSize: '0.78rem', color: '#475569', marginBottom: '8px' }}>
+              <div style={{ fontSize: '0.76rem', color: '#475569', marginBottom: '6px' }}>
                 SATCOM Availability: <strong>{triad?.gnss_satcom.satcom_availability_pct ?? 78.5}%</strong>
               </div>
-              <div style={{ fontSize: '0.76rem', color: '#64748b', lineHeight: 1.4 }}>
+              <div style={{ fontSize: '0.72rem', color: '#64748b', lineHeight: 1.4 }}>
                 ADS-B timing jitter observed. Use ground VOR / DME for primary navigation.
               </div>
             </div>

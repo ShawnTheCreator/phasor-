@@ -145,57 +145,44 @@ export default function HardwarePage(): JSX.Element {
       <div className="main-wrapper">
         {/* Top Navbar */}
         <header className="top-nav">
-          <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-            <h2 style={{ fontSize: '1.15rem', fontWeight: 800, margin: 0, color: '#0f172a' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <h2 style={{ fontSize: '0.92rem', fontWeight: 600, margin: 0, color: 'var(--text-primary)' }}>
               Ground Magnetometer Hardware Telemetry
             </h2>
             <span style={{
               display: 'inline-flex',
               alignItems: 'center',
-              gap: '6px',
-              padding: '3px 10px',
+              gap: '5px',
+              padding: '2px 8px',
               borderRadius: '999px',
-              fontSize: '0.75rem',
-              fontWeight: 700,
+              fontSize: '0.68rem',
+              fontWeight: 600,
               backgroundColor: '#ecfdf5',
               color: '#059669',
               border: '1px solid #a7f3d0'
             }}>
-              <span style={{ width: '7px', height: '7px', borderRadius: '50%', backgroundColor: '#10b981' }}></span>
+              <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: '#10b981' }}></span>
               {telemetry.status} (20 Hz)
             </span>
           </div>
 
-          <div style={{ display: 'flex', gap: '10px' }}>
+          <div style={{ display: 'flex', gap: '8px' }}>
             <button
               onClick={handleSimulateDisturbance}
+              className={isSimulating ? 'btn-outline' : 'btn-red-primary'}
               style={{
-                backgroundColor: isSimulating ? '#475569' : '#991b1b',
-                color: '#ffffff',
-                border: 'none',
-                padding: '8px 16px',
-                borderRadius: '6px',
-                fontWeight: 700,
-                fontSize: '0.85rem',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px'
+                fontSize: '0.76rem',
+                padding: '6px 12px',
               }}
             >
               {isSimulating ? 'Reset Baseline' : 'Inject Storm Disturbance'}
             </button>
             <button
               onClick={handleTriggerCalibration}
+              className="btn-red-primary"
               style={{
-                backgroundColor: '#991b1b',
-                color: '#ffffff',
-                border: 'none',
-                padding: '8px 16px',
-                borderRadius: '6px',
-                fontWeight: 700,
-                fontSize: '0.85rem',
-                cursor: 'pointer'
+                fontSize: '0.76rem',
+                padding: '6px 12px',
               }}
             >
               Calibrate Sensor
@@ -216,10 +203,10 @@ export default function HardwarePage(): JSX.Element {
           }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '16px' }}>
               <div>
-                <h3 style={{ fontSize: '1.05rem', fontWeight: 800, color: '#0f172a', margin: '0 0 6px 0' }}>
+                <h3 style={{ fontSize: '0.92rem', fontWeight: 600, color: 'var(--text-primary)', margin: '0 0 4px 0' }}>
                   Raspberry Pi Pico RP2040 + PNI RM3100 3-Axis Magneto-Inductive Sensor
                 </h3>
-                <p style={{ fontSize: '0.86rem', color: '#64748b', margin: 0, lineHeight: 1.5 }}>
+                <p style={{ fontSize: '0.78rem', color: '#64748b', margin: 0, lineHeight: 1.45 }}>
                   Real-time ground truth magnetometer node stationed at <strong>{telemetry.location}</strong>.
                   Measures local geomagnetic field variations (ΔB) and rate-of-change (dB/dt),
                   providing ground verification for DSCOVR L1 solar wind forecasts and Faraday induction computations.
@@ -227,12 +214,12 @@ export default function HardwarePage(): JSX.Element {
               </div>
               <div style={{ display: 'flex', gap: '12px' }}>
                 <div style={{ textAlign: 'right' }}>
-                  <div style={{ fontSize: '0.72rem', color: '#94a3b8', textTransform: 'uppercase', fontWeight: 700 }}>Bus / Protocol</div>
-                  <div style={{ fontSize: '0.85rem', fontWeight: 700, color: '#0f172a' }}>I2C Fast Mode (400 kHz)</div>
+                  <div style={{ fontSize: '0.66rem', color: '#94a3b8', textTransform: 'uppercase', fontWeight: 600 }}>Bus / Protocol</div>
+                  <div style={{ fontSize: '0.78rem', fontWeight: 600, color: '#0f172a', fontFamily: 'var(--font-mono)' }}>I2C Fast Mode (400 kHz)</div>
                 </div>
                 <div style={{ textAlign: 'right' }}>
-                  <div style={{ fontSize: '0.72rem', color: '#94a3b8', textTransform: 'uppercase', fontWeight: 700 }}>Kalman Filter</div>
-                  <div style={{ fontSize: '0.85rem', fontWeight: 700, color: '#059669' }}>Active (Q=0.02, R=0.85)</div>
+                  <div style={{ fontSize: '0.66rem', color: '#94a3b8', textTransform: 'uppercase', fontWeight: 600 }}>Kalman Filter</div>
+                  <div style={{ fontSize: '0.78rem', fontWeight: 600, color: '#059669', fontFamily: 'var(--font-mono)' }}>Active (Q=0.02, R=0.85)</div>
                 </div>
               </div>
             </div>
@@ -428,24 +415,19 @@ void loop() {
             width: '90%',
             boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)'
           }}>
-            <h3 style={{ fontSize: '1.1rem', fontWeight: 800, color: '#0f172a', margin: '0 0 10px 0' }}>
+            <h3 style={{ fontSize: '0.95rem', fontWeight: 700, color: '#0f172a', margin: '0 0 8px 0' }}>
               {modalMsg.title}
             </h3>
-            <p style={{ fontSize: '0.9rem', color: '#475569', lineHeight: 1.5, margin: '0 0 20px 0' }}>
+            <p style={{ fontSize: '0.80rem', color: '#475569', lineHeight: 1.5, margin: '0 0 16px 0' }}>
               {modalMsg.text}
             </p>
             <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
               <button
                 onClick={() => setModalMsg(null)}
+                className="btn-red-primary"
                 style={{
-                  backgroundColor: '#991b1b',
-                  color: '#ffffff',
-                  border: 'none',
-                  padding: '8px 20px',
-                  borderRadius: '6px',
-                  fontWeight: 700,
-                  fontSize: '0.85rem',
-                  cursor: 'pointer'
+                  fontSize: '0.78rem',
+                  padding: '6px 16px',
                 }}
               >
                 Dismiss

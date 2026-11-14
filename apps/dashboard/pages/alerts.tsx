@@ -153,7 +153,7 @@ export default function AlertsPage(): JSX.Element {
 
       <div className="main-wrapper">
         <header className="top-nav">
-          <h2 style={{ fontSize: '1.1rem', fontWeight: 800, margin: 0, color: '#0f172a' }}>
+          <h2 style={{ fontSize: '0.92rem', fontWeight: 600, margin: 0, color: 'var(--text-primary)' }}>
             Operational Alert Engine & Notification Feed
           </h2>
           <div className="top-nav-right">
@@ -282,7 +282,7 @@ export default function AlertsPage(): JSX.Element {
             width: '90%',
             boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1)'
           }}>
-            <h3 style={{ fontSize: '1.1rem', fontWeight: 800, color: '#0f172a', margin: '0 0 10px 0' }}>
+            <h3 style={{ fontSize: '0.95rem', fontWeight: 700, color: '#0f172a', margin: '0 0 10px 0' }}>
               Acknowledge Space Weather Alert
             </h3>
             <p style={{ fontSize: '0.85rem', color: '#64748b', margin: '0 0 12px 0' }}>
@@ -361,7 +361,7 @@ export default function AlertsPage(): JSX.Element {
             width: '90%',
             boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1)'
           }}>
-            <h3 style={{ fontSize: '1.1rem', fontWeight: 800, color: '#0f172a', margin: '0 0 8px 0' }}>
+            <h3 style={{ fontSize: '0.95rem', fontWeight: 700, color: '#0f172a', margin: '0 0 8px 0' }}>
               {modalNotification.title}
             </h3>
             <p style={{ fontSize: '0.88rem', color: '#475569', lineHeight: 1.5, margin: '0 0 18px 0' }}>

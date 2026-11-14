@@ -244,18 +244,18 @@ export default function LoginPage(): JSX.Element {
 
         /* Title & Subtitle */
         .login-title {
-          font-size: 1.85rem;
+          font-size: 1.35rem;
           font-weight: 700;
           color: #0f172a;
-          margin: 0 0 8px 0;
-          letter-spacing: -0.02em;
+          margin: 0 0 6px 0;
+          letter-spacing: -0.025em;
           text-align: center;
         }
 
         .login-subtitle {
-          font-size: 0.92rem;
+          font-size: 0.82rem;
           color: #64748b;
-          margin: 0 0 28px 0;
+          margin: 0 0 22px 0;
           text-align: center;
         }
 
@@ -277,10 +277,10 @@ export default function LoginPage(): JSX.Element {
           background-color: #f1f5f9;
           border: 1px solid #e2e8f0;
           border-radius: 8px;
-          padding: 10px 14px;
-          font-size: 0.8rem;
+          padding: 8px 12px;
+          font-size: 0.78rem;
           color: #334155;
-          margin-bottom: 18px;
+          margin-bottom: 16px;
           display: flex;
           align-items: flex-start;
           gap: 8px;
@@ -292,7 +292,7 @@ export default function LoginPage(): JSX.Element {
           width: 100%;
           display: flex;
           flex-direction: column;
-          gap: 16px;
+          gap: 14px;
         }
 
         .login-field-group {
@@ -303,8 +303,8 @@ export default function LoginPage(): JSX.Element {
         /* Glass Input Fields */
         .login-glass-input {
           width: 100%;
-          padding: 13px 16px;
-          font-size: 0.95rem;
+          padding: 11px 14px;
+          font-size: 0.84rem;
           color: #0f172a;
           background: rgba(255, 255, 255, 0.8);
           border: 1.5px solid #cbd5e1;
@@ -348,23 +348,23 @@ export default function LoginPage(): JSX.Element {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          font-size: 0.88rem;
+          font-size: 0.78rem;
           margin-top: -2px;
-          margin-bottom: 4px;
+          margin-bottom: 2px;
         }
 
         .remember-me-label {
           display: flex;
           align-items: center;
-          gap: 8px;
+          gap: 7px;
           color: #475569;
           cursor: pointer;
           user-select: none;
         }
 
         .login-checkbox {
-          width: 17px;
-          height: 17px;
+          width: 15px;
+          height: 15px;
           accent-color: #991b1b;
           cursor: pointer;
           border-radius: 4px;
@@ -385,12 +385,12 @@ export default function LoginPage(): JSX.Element {
         /* RED LOG IN BUTTON */
         .btn-login-red {
           width: 100%;
-          padding: 13px;
+          padding: 10px 14px;
           background-color: #991b1b;
           color: #ffffff;
           border: none;
           border-radius: 9999px; /* Pill shape matching reference */
-          font-size: 0.98rem;
+          font-size: 0.86rem;
           font-weight: 600;
           cursor: pointer;
           transition: all 0.2s ease;
@@ -398,7 +398,7 @@ export default function LoginPage(): JSX.Element {
           display: flex;
           align-items: center;
           justify-content: center;
-          margin-top: 6px;
+          margin-top: 4px;
         }
 
         .btn-login-red:hover {
@@ -434,7 +434,7 @@ export default function LoginPage(): JSX.Element {
         .divider-text {
           padding: 0 12px;
           color: #94a3b8;
-          font-size: 0.78rem;
+          font-size: 0.72rem;
           font-weight: 600;
           letter-spacing: 0.05em;
         }
@@ -444,10 +444,10 @@ export default function LoginPage(): JSX.Element {
           background: none;
           border: none;
           color: #3b82f6;
-          font-size: 0.92rem;
+          font-size: 0.82rem;
           font-weight: 600;
           cursor: pointer;
-          padding: 8px 12px;
+          padding: 6px 10px;
           text-align: center;
           transition: all 0.15s ease;
           border-radius: 6px;
