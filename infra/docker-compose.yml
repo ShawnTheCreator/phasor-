@@ -1,0 +1,92 @@
+version: '3.8'
+
+services:
+  # 1. MongoDB Database
+  mongodb:
+    image: mongo:7.0
+    container_name: phasor-mongodb
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_DATABASE=phasor_spaceweather
+    volumes:
+      - mongo_data:/data/db
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # 2. Python ML Service (Internal Worker)
+  phasor-ml:
+    build:
+      context: ../services/ml
+      dockerfile: Dockerfile
+    container_name: phasor-ml
+    restart: unless-stopped
+    ports:
+      - "5001:5001"
+    environment:
+      - PORT=5001
+      - WORKERS=2
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:5001/metrics')"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+
+  # 3. C# ASP.NET Core API & Ingestion Engine (Primary Public API & Writer)
+  phasor-api:
+    build:
+      context: ../services/api
+      dockerfile: Dockerfile
+    container_name: phasor-api
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:5000
+      - MONGODB_URI=mongodb://mongodb:27017/phasor_spaceweather
+      - ML_SERVICE_URL=http://phasor-ml:5001
+    depends_on:
+      mongodb:
+        condition: service_healthy
+      phasor-ml:
+        condition: service_healthy
+
+  # 4. Next.js Operator Dashboard (Product)
+  phasor-dash:
+    build:
+      context: ../apps/dash
+      dockerfile: Dockerfile
+    container_name: phasor-dash
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - NEXT_PUBLIC_API_URL=http://localhost:5000
+      - NEXT_PUBLIC_SIGNALR_URL=http://localhost:5000/hubs/grid
+    depends_on:
+      - phasor-api
+
+  # 5. Vite + React Homepage (Public Story & Risk Badge)
+  phasor-home:
+    build:
+      context: ../apps/home
+      dockerfile: Dockerfile
+    container_name: phasor-home
+    restart: unless-stopped
+    ports:
+      - "5173:80"
+    environment:
+      - VITE_API_URL=http://localhost:5000
+    depends_on:
+      - phasor-api
+
+volumes:
+  mongo_data:
+    driver: local

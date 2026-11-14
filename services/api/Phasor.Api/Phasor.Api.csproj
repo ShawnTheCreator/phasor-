@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <ItemGroup>
+    <ProjectReference Include="..\Phasor.Domain\Phasor.Domain.csproj" />
+    <ProjectReference Include="..\Phasor.Engine\Phasor.Engine.csproj" />
+    <ProjectReference Include="..\Phasor.Ingest\Phasor.Ingest.csproj" />
+    <ProjectReference Include="..\Phasor.Notifications\Phasor.Notifications.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+</Project>

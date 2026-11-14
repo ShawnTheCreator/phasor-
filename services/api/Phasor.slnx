@@ -1,0 +1,8 @@
+<Solution>
+  <Project Path="Phasor.Api/Phasor.Api.csproj" />
+  <Project Path="Phasor.Domain/Phasor.Domain.csproj" />
+  <Project Path="Phasor.Engine/Phasor.Engine.csproj" />
+  <Project Path="Phasor.Ingest/Phasor.Ingest.csproj" />
+  <Project Path="Phasor.Notifications/Phasor.Notifications.csproj" />
+  <Project Path="Phasor.Tests/Phasor.Tests.csproj" />
+</Solution>
