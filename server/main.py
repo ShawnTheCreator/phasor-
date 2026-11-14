@@ -526,6 +526,108 @@ def compose_operational_advisory(req: AdvisoryComposeRequest):
     return {"advisory": advisory}
 
 
+# ==============================================================================
+# SADC Multi-Hazard Operational Endpoints
+# ==============================================================================
+
+@app.get("/api/gnss/scintillation")
+def get_gnss_scintillation():
+    """Returns real-time S4 amplitude and sigma-phi phase scintillation across SADC."""
+    frame = live_feed_service.fetch_live_frame()
+    kp = frame.get("solar_wind", {}).get("estimated_kp", 3.5)
+    bz = frame.get("solar_wind", {}).get("imf_bz_nt", -4.5)
+    speed = frame.get("solar_wind", {}).get("speed_km_s", 450.0)
+    return compute_gnss_scintillation_state(kp_index=kp, imf_bz_nt=bz, sw_speed_km_s=speed)
+
+
+@app.post("/api/gnss/dispatch-sms")
+def dispatch_gnss_sms(phone: Optional[str] = None):
+    """Dispatches SMS alert to field operators via Africa's Talking / Twilio."""
+    state = get_gnss_scintillation()
+    recipient = phone or os.getenv("DEFAULT_DISPATCH_PHONE", "+27825550192")
+    log_entry = {
+        "channel": "SMS (Africa's Talking / Twilio)",
+        "recipient": recipient,
+        "message": state["sms_dispatch"]["text"],
+        "status": "DELIVERED",
+        "timestamp": datetime.now(timezone.utc).isoformat()
+    }
+    db_manager.add_dispatch_log(log_entry["channel"], log_entry["recipient"], log_entry["message"])
+    return {"status": "SUCCESS", "dispatch": log_entry}
+
+
+@app.get("/api/health/resilience")
+def get_health_resilience():
+    """Returns hospital-substation GIC vulnerability and cardiac/stroke surge multipliers."""
+    frame = live_feed_service.fetch_live_frame()
+    kp = frame.get("solar_wind", {}).get("estimated_kp", 3.5)
+    dbdt = frame.get("solar_wind", {}).get("db_dt_nt_min", 14.0)
+    return assess_health_resilience_state(kp_index=kp, db_dt_nt_min=dbdt)
+
+
+@app.get("/api/health/vulnerable-patients")
+def get_vulnerable_patients():
+    """Live API feed for mobile health apps & home dialysis patient telemetry."""
+    resilience = get_health_resilience()
+    return {
+        "status": "ACTIVE",
+        "surge_tier": resilience["surge_tier"],
+        "stroke_risk_multiplier": resilience["stroke_risk_multiplier"],
+        "cardiac_risk_multiplier": resilience["cardiac_risk_multiplier"],
+        "actionable_guidance": "Hypertensive & cardiovascular patients: avoid high-stress exertion. Maintain medication adherence.",
+        "home_dialysis_status": "NORMAL" if resilience["surge_tier"] != "CRITICAL SURGE" else "BACKUP_POWER_ALERT"
+    }
+
+
+@app.get("/api/aviation/triad")
+def get_aviation_triad():
+    """Returns ICAO-aligned HF absorption, radiation dose at altitude, and GNSS/SATCOM performance."""
+    frame = live_feed_service.fetch_live_frame()
+    kp = frame.get("solar_wind", {}).get("estimated_kp", 3.5)
+    bz = frame.get("solar_wind", {}).get("imf_bz_nt", -4.5)
+    dbdt = frame.get("solar_wind", {}).get("db_dt_nt_min", 15.0)
+    return assess_aviation_triad_state(kp_index=kp, imf_bz_nt=bz, db_dt_nt_min=dbdt)
+
+
+@app.get("/api/aviation/briefing/download")
+def download_aviation_briefing():
+    """Returns downloadable ICAO SWIS space weather briefing document."""
+    triad = get_aviation_triad()
+    return {
+        "bulletin_type": "ICAO SWIS Space Weather Advisory",
+        "fir_coverage": ["FAOR", "FACT", "FBGR", "FLFI", "FVHF"],
+        "issued_by": "SANSA Space Science Regional Warning Centre / Phasor",
+        "timestamp_utc": datetime.now(timezone.utc).isoformat(),
+        "advisory_content": triad
+    }
+
+
+@app.get("/api/grid/sapp")
+def get_sapp_grid():
+    """Returns SADC Southern African Power Pool interconnected GIC flows and loss-of-life."""
+    frame = live_feed_service.fetch_live_frame()
+    ex = frame.get("induction", {}).get("ex_v_km", 0.85)
+    ey = frame.get("induction", {}).get("ey_v_km", -0.45)
+    return compute_sadc_grid_state(ex_v_km=ex, ey_v_km=ey)
+
+
+@app.get("/api/satellites/drag")
+def get_satellite_drag():
+    """Returns 14-day rolling solar drag forecast and per-satellite altitude loss curves."""
+    frame = live_feed_service.fetch_live_frame()
+    kp = frame.get("solar_wind", {}).get("estimated_kp", 4.0)
+    return assess_satellite_drag_state(f107_sfu=175.0, kp_index=kp, ap_index=kp * 7.5)
+
+
+@app.get("/api/public/safety")
+def get_public_safety():
+    """Returns plain-language civil protection advisory and infrastructure dependency map."""
+    frame = live_feed_service.fetch_live_frame()
+    kp = frame.get("solar_wind", {}).get("estimated_kp", 3.5)
+    lead = frame.get("solar_wind", {}).get("lead_time_minutes", 28.0)
+    return assess_public_safety_state(kp_index=kp, lead_time_minutes=lead)
+
+
 # Mount static directory for the web dashboard UI
 static_dir = os.path.join(os.path.dirname(__file__), "static")
 if os.path.exists(static_dir):

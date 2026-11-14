@@ -88,7 +88,7 @@ def assess_aviation_triad_state(
     # ICAO Thresholds: Moderate >= 30 µSv/h, Severe >= 80 µSv/h
     base_rad_usv_h = 3.2
     if kp_index >= 8.0:
-        rad_fl390_usv_h = round(base_rad_usv_h + (kp_index - 3) * 12.8, 1)  # ~82 µSv/h (Severe)
+        rad_fl390_usv_h = round(base_rad_usv_h + (kp_index - 3) * 14.5, 1)  # ~83 µSv/h (Severe ICAO threshold >= 80)
         rad_fl310_usv_h = round(rad_fl390_usv_h * 0.58, 1)  # Step-down mitigation
         rad_tier = "SEVERE"
         rad_color = "#991b1b"

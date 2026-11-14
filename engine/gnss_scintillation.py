@@ -176,7 +176,7 @@ def compute_gnss_scintillation_state(
             "expected_pos_error_m": pos_error_m,
         })
 
-    # Overall SADC GNSS Risk Tier
+    # Overall SADC GNSS Risk Tier & SMS Dispatch logic
     if max_s4 >= 0.50:
         overall_tier = "SEVERE"
         overall_color = "#991b1b"
@@ -184,7 +184,7 @@ def compute_gnss_scintillation_state(
     elif max_s4 >= 0.20:
         overall_tier = "MODERATE"
         overall_color = "#f59e0b"
-        sms_recommended = True
+        sms_recommended = False  # Advisory only; reserve SMS for SEVERE loss-of-lock
     else:
         overall_tier = "LOW"
         overall_color = "#10b981"
