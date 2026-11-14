@@ -62,15 +62,8 @@ export default function LoginPage(): JSX.Element {
         <div className="login-left-pane">
           {/* Glass Card Inner Container */}
           <div className="login-glass-card">
-            {/* Top Logo Badge: Glassy Phi (Φ) Symbol with red glow */}
-            <div className="login-logo-wrapper">
-              <div className="login-logo-badge">
-                <span className="login-logo-phi">Φ</span>
-              </div>
-            </div>
-
             {/* Header */}
-            <h1 className="login-title">Welcome back!</h1>
+            <h1 className="login-title">Login</h1>
             <p className="login-subtitle">
               Don&apos;t have an account yet?{' '}
               <a href="#signup" onClick={handleSignUp} className="login-signup-link">
@@ -203,38 +196,6 @@ export default function LoginPage(): JSX.Element {
             =================================================================== */}
         <div className="login-right-pane">
           <RedLiquidBackground />
-
-          {/* Floating Glass Information Pills on the Liquid Canvas */}
-          <div className="right-overlay-content">
-            <div className="right-top-badge">
-              <span className="live-status-dot" />
-              <span>SADC Operational Grid &bull; Hermanus Node (HER)</span>
-            </div>
-
-            <div className="right-bottom-card">
-              <div className="right-card-pill">NASA L1 Telemetry</div>
-              <h2 className="right-card-title">Real-time GIC Early Warning</h2>
-              <p className="right-card-desc">
-                Predicting geomagnetic saturation across the Kaapvaal Craton 15–45 minutes before ground impact.
-              </p>
-              <div className="right-card-stats">
-                <div>
-                  <div className="stat-label">LEAD TIME</div>
-                  <div className="stat-value">28 mins</div>
-                </div>
-                <div style={{ width: '1px', backgroundColor: 'rgba(255,255,255,0.15)' }} />
-                <div>
-                  <div className="stat-label">SAPP NODES</div>
-                  <div className="stat-value">12 Connected</div>
-                </div>
-                <div style={{ width: '1px', backgroundColor: 'rgba(255,255,255,0.15)' }} />
-                <div>
-                  <div className="stat-label">S4 SEVERITY</div>
-                  <div className="stat-value" style={{ color: '#fca5a5' }}>0.78 Peak</div>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
 
@@ -279,32 +240,6 @@ export default function LoginPage(): JSX.Element {
           border-radius: 20px;
           padding: 36px 32px;
           box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
-        }
-
-        /* Logo Badge */
-        .login-logo-wrapper {
-          margin-bottom: 24px;
-        }
-
-        .login-logo-badge {
-          width: 48px;
-          height: 48px;
-          border-radius: 50%;
-          background: rgba(239, 68, 68, 0.08);
-          border: 1.5px solid rgba(239, 68, 68, 0.25);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          box-shadow: 0 4px 14px rgba(239, 68, 68, 0.15);
-          backdrop-filter: blur(8px);
-        }
-
-        .login-logo-phi {
-          font-size: 1.55rem;
-          font-weight: 800;
-          color: #ef4444;
-          line-height: 1;
-          text-shadow: 0 0 10px rgba(239, 68, 68, 0.35);
         }
 
         /* Title & Subtitle */
@@ -568,116 +503,7 @@ export default function LoginPage(): JSX.Element {
           flex: 1;
           position: relative;
           background-color: #060102;
-          display: flex;
-          flex-direction: column;
-          justifyContent: space-between;
-          padding: 40px;
           overflow: hidden;
-        }
-
-        .right-overlay-content {
-          position: relative;
-          z-index: 2;
-          width: 100%;
-          height: 100%;
-          display: flex;
-          flex-direction: column;
-          justifyContent: space-between;
-          pointer-events: none;
-        }
-
-        .right-top-badge {
-          align-self: flex-end;
-          display: inline-flex;
-          align-items: center;
-          gap: 8px;
-          padding: 8px 16px;
-          border-radius: 9999px;
-          background: rgba(15, 23, 42, 0.65);
-          backdrop-filter: blur(16px);
-          -webkit-backdrop-filter: blur(16px);
-          border: 1px solid rgba(255, 255, 255, 0.15);
-          color: #f1f5f9;
-          font-size: 0.82rem;
-          font-weight: 500;
-          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
-        }
-
-        .live-status-dot {
-          width: 8px;
-          height: 8px;
-          border-radius: 50%;
-          background-color: #10b981;
-          box-shadow: 0 0 8px #10b981;
-          animation: pulseDot 2s infinite;
-        }
-
-        @keyframes pulseDot {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0.4; }
-        }
-
-        .right-bottom-card {
-          max-width: 480px;
-          background: rgba(15, 23, 42, 0.7);
-          backdrop-filter: blur(24px);
-          -webkit-backdrop-filter: blur(24px);
-          border: 1px solid rgba(255, 255, 255, 0.15);
-          border-radius: 16px;
-          padding: 24px 28px;
-          box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-          color: #ffffff;
-        }
-
-        .right-card-pill {
-          display: inline-block;
-          font-size: 0.72rem;
-          font-weight: 700;
-          text-transform: uppercase;
-          letter-spacing: 0.08em;
-          color: #ef4444;
-          background: rgba(239, 68, 68, 0.15);
-          border: 1px solid rgba(239, 68, 68, 0.35);
-          padding: 3px 10px;
-          border-radius: 999px;
-          margin-bottom: 12px;
-        }
-
-        .right-card-title {
-          font-size: 1.45rem;
-          font-weight: 700;
-          margin: 0 0 8px 0;
-          letter-spacing: -0.01em;
-          color: #ffffff;
-        }
-
-        .right-card-desc {
-          font-size: 0.88rem;
-          line-height: 1.5;
-          color: #cbd5e1;
-          margin: 0 0 18px 0;
-        }
-
-        .right-card-stats {
-          display: flex;
-          align-items: center;
-          gap: 20px;
-          border-top: 1px solid rgba(255, 255, 255, 0.12);
-          padding-top: 16px;
-        }
-
-        .stat-label {
-          font-size: 0.68rem;
-          font-weight: 700;
-          letter-spacing: 0.06em;
-          color: #94a3b8;
-          margin-bottom: 2px;
-        }
-
-        .stat-value {
-          font-size: 1rem;
-          font-weight: 700;
-          color: #ffffff;
         }
 
         /* Responsive Breakpoint for Mobile/Tablet */

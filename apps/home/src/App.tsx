@@ -4,6 +4,7 @@ import CrumbleText from './components/CrumbleText';
 import PinnedPipeline from './components/PinnedPipeline';
 import StormShowcase from './components/StormShowcase';
 import GlassyPhiLogo from './components/GlassyPhiLogo';
+import CookieConsent from './components/CookieConsent';
 
 const isProduction: boolean = Boolean(import.meta.env.PROD);
 const DASHBOARD_URL: string =
@@ -138,6 +139,9 @@ export default function App(): JSX.Element {
           </a>
         </div>
       </footer>
+
+      {/* Modern Cookie & Telemetry Consent Banner */}
+      <CookieConsent />
     </div>
   );
 }
