@@ -323,12 +323,6 @@ export default function MultiHazardBentoSection({ dashboardUrl }: MultiHazardBen
       <div className="editorial-container">
         {/* Top Minimal Editorial Title Bar */}
         <div style={{ marginBottom: '32px' }}>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
-            <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#991b1b' }} />
-            <span style={{ fontSize: '0.74rem', fontWeight: 700, color: '#991b1b', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
-              Multi-Hazard Operations
-            </span>
-          </div>
           <h2 style={{ fontSize: 'clamp(2rem, 3.5vw, 2.75rem)', fontWeight: 800, letterSpacing: '-0.03em', color: '#0f172a', margin: '0 0 10px 0' }}>
             Protecting the skies, the waves, and the cities below.
           </h2>
@@ -354,8 +348,9 @@ export default function MultiHazardBentoSection({ dashboardUrl }: MultiHazardBen
                 backgroundColor: '#f8fafc',
                 border: '1px solid #e2e8f0',
                 borderRadius: '16px',
-                padding: '32px 28px',
-                minHeight: '190px',
+                padding: '36px 30px',
+                flex: 1,
+                minHeight: '220px',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'space-between',
@@ -370,123 +365,65 @@ export default function MultiHazardBentoSection({ dashboardUrl }: MultiHazardBen
                 </span>
               </div>
               <div>
-                <h3 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#0f172a', letterSpacing: '-0.02em', margin: '0 0 6px 0' }}>
+                <h3 style={{ fontSize: '1.55rem', fontWeight: 800, color: '#0f172a', letterSpacing: '-0.02em', margin: '0 0 8px 0' }}>
                   Introducing Phasor Multi-Hazard
                 </h3>
-                <p style={{ fontSize: '0.84rem', color: '#64748b', margin: 0, lineHeight: 1.5 }}>
+                <p style={{ fontSize: '0.86rem', color: '#64748b', margin: 0, lineHeight: 1.55 }}>
                   Fusing NASA L1 space telemetry with regional lithospheric models to give civil defense, air traffic, and hospital operators a 28-minute advance warning.
                 </p>
               </div>
             </div>
 
             {/* 2. Morgan Stanley style card: Muted Slate-Blue Logo Lockup Card */}
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <div
-                style={{
-                  backgroundColor: '#94a3b8',
-                  borderRadius: '16px',
-                  padding: '36px 24px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '20px',
-                  border: '1px solid #64748b',
-                  minHeight: '180px',
-                  position: 'relative',
-                  overflow: 'hidden',
-                }}
-              >
-                {/* Background Video Slot (User can paste MP4 URL) */}
-                {/* <video src="" autoPlay muted playsInline onEnded={...} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} /> */}
-                <div style={{ position: 'absolute', top: '14px', left: '16px' }}>
-                  <span style={{ fontSize: '0.66rem', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', color: '#ffffff', backgroundColor: 'rgba(0,0,0,0.3)', padding: '3px 8px', borderRadius: '4px' }}>
-                    ▾ POWER & HEALTH
-                  </span>
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', zIndex: 2 }}>
-                  <span style={{ fontSize: '1.5rem', fontWeight: 900, color: '#0f172a', letterSpacing: '-0.04em' }}>
-                    PHASOR
-                  </span>
-                </div>
-                <div style={{ width: '1px', height: '36px', backgroundColor: '#475569', zIndex: 2 }} />
-                <div style={{ display: 'flex', flexDirection: 'column', zIndex: 2 }}>
-                  <span style={{ fontSize: '1.15rem', fontWeight: 800, color: '#0f172a', letterSpacing: '0.02em' }}>
-                    SAPP Intertie
-                  </span>
-                  <span style={{ fontSize: '0.68rem', color: '#334155', fontWeight: 600 }}>
-                    6 Interconnected Countries
-                  </span>
-                </div>
+            <a
+              href={`${dashboardUrl}/grid`}
+              target="_blank"
+              rel="noreferrer"
+              style={{
+                backgroundColor: '#94a3b8',
+                borderRadius: '16px',
+                padding: '36px 24px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '20px',
+                border: '1px solid #64748b',
+                flex: 1,
+                minHeight: '220px',
+                position: 'relative',
+                overflow: 'hidden',
+                textDecoration: 'none',
+                transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-2px)';
+                e.currentTarget.style.boxShadow = '0 8px 24px rgba(0, 0, 0, 0.08)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = 'none';
+              }}
+            >
+              <div style={{ position: 'absolute', top: '14px', left: '16px' }}>
+                <span style={{ fontSize: '0.66rem', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', color: '#ffffff', backgroundColor: 'rgba(0,0,0,0.3)', padding: '3px 8px', borderRadius: '4px' }}>
+                  ▾ POWER & HEALTH
+                </span>
               </div>
-              <div style={{ marginTop: '10px' }}>
-                <h4 style={{ fontSize: '0.9rem', fontWeight: 600, color: '#0f172a', margin: '0 0 3px 0' }}>
-                  How Southern African power pools automatically reroute 400 MW before transformer saturation
-                </h4>
-                <a href={`${dashboardUrl}/grid`} target="_blank" rel="noreferrer" style={{ fontSize: '0.78rem', color: '#991b1b', fontWeight: 600, textDecoration: 'none' }}>
-                  View SAPP Interconnected Grid ↗
-                </a>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', zIndex: 2 }}>
+                <span style={{ fontSize: '1.6rem', fontWeight: 900, color: '#0f172a', letterSpacing: '-0.04em' }}>
+                  PHASOR
+                </span>
               </div>
-            </div>
-
-            {/* 3. SWE-Bench style card: Scientific Research & Metric Benchmark Card */}
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <div
-                style={{
-                  backgroundColor: '#f1f5f9',
-                  borderRadius: '16px',
-                  padding: '20px',
-                  border: '1px solid #e2e8f0',
-                  minHeight: '170px',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'space-between',
-                  position: 'relative',
-                }}
-              >
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-                  <span style={{ fontSize: '0.66rem', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', color: '#475569' }}>
-                    ▾ RESEARCH & VALIDATION
-                  </span>
-                  <span style={{ fontSize: '0.68rem', fontFamily: 'monospace', fontWeight: 700, color: '#059669' }}>
-                    R² = 0.961 (T+1h)
-                  </span>
-                </div>
-
-                {/* Benchmark Bar Chart Mockup (matching SWE-bench card) */}
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  <div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.72rem', color: '#334155', marginBottom: '2px', fontWeight: 600 }}>
-                      <span>Phasor 1D MT (Kaapvaal)</span>
-                      <span>96.1%</span>
-                    </div>
-                    <div style={{ width: '100%', height: '8px', backgroundColor: '#e2e8f0', borderRadius: '4px', overflow: 'hidden' }}>
-                      <div style={{ width: '96.1%', height: '100%', backgroundColor: '#991b1b', borderRadius: '4px' }} />
-                    </div>
-                  </div>
-                  <div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.72rem', color: '#64748b', marginBottom: '2px' }}>
-                      <span>Standard 1D Halfspace</span>
-                      <span>68.4%</span>
-                    </div>
-                    <div style={{ width: '100%', height: '8px', backgroundColor: '#e2e8f0', borderRadius: '4px', overflow: 'hidden' }}>
-                      <div style={{ width: '68.4%', height: '100%', backgroundColor: '#94a3b8', borderRadius: '4px' }} />
-                    </div>
-                  </div>
-                </div>
-
-                <div style={{ fontSize: '0.72rem', color: '#64748b', marginTop: '10px' }}>
-                  Validated against Kyoto WDC 8.42M Dst samples & USGS EarthScope MTArray
-                </div>
+              <div style={{ width: '1px', height: '40px', backgroundColor: '#475569', zIndex: 2 }} />
+              <div style={{ display: 'flex', flexDirection: 'column', zIndex: 2 }}>
+                <span style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0f172a', letterSpacing: '0.02em' }}>
+                  SAPP Intertie
+                </span>
+                <span style={{ fontSize: '0.7rem', color: '#334155', fontWeight: 600 }}>
+                  6 Interconnected Countries
+                </span>
               </div>
-              <div style={{ marginTop: '10px' }}>
-                <h4 style={{ fontSize: '0.9rem', fontWeight: 600, color: '#0f172a', margin: '0 0 3px 0' }}>
-                  Deep-Earth Magnetotelluric Validation: 1D Layered Conductivity
-                </h4>
-                <a href={`${dashboardUrl}/model`} target="_blank" rel="noreferrer" style={{ fontSize: '0.78rem', color: '#991b1b', fontWeight: 600, textDecoration: 'none' }}>
-                  Inspect ML LSTM Model Metrics ↗
-                </a>
-              </div>
-            </div>
+            </a>
           </div>
 
           {/* =======================================================================
