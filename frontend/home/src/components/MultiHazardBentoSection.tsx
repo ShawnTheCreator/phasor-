@@ -47,22 +47,35 @@ function BentoVideoCard({
   const [hasEnded, setHasEnded] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
 
-  // Play once when scrolled into view, stop when ended ("play end then stop")
+  // Play once ONLY when scrolled into view, stop when ended ("play end then stop")
   useEffect(() => {
     const video = videoRef.current;
     if (!video || !videoUrl) return;
 
+    // Ensure it starts paused so it never plays off-screen before being scrolled into view
+    video.pause();
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting && !hasEnded) {
-            video.play().then(() => setIsPlaying(true)).catch(() => {
-              // Browser autoplay policy catch
-            });
+          if (entry.isIntersecting) {
+            // User scrolled into view: start playing now
+            if (!hasEnded) {
+              const playPromise = video.play();
+              if (playPromise !== undefined) {
+                playPromise.then(() => setIsPlaying(true)).catch(() => {});
+              }
+            }
+          } else {
+            // User scrolled away before video ended: pause so they don't miss the rest
+            if (!hasEnded && !video.paused) {
+              video.pause();
+              setIsPlaying(false);
+            }
           }
         });
       },
-      { threshold: 0.3 }
+      { threshold: 0.15, rootMargin: '0px 0px -40px 0px' }
     );
 
     observer.observe(video);
@@ -87,6 +100,15 @@ function BentoVideoCard({
     }
   };
 
+  const handleCardClick = () => {
+    if (videoUrl && videoRef.current && hasEnded) {
+      videoRef.current.currentTime = 0;
+      videoRef.current.play();
+      setHasEnded(false);
+      setIsPlaying(true);
+    }
+  };
+
   return (
     <div
       style={{
@@ -98,6 +120,7 @@ function BentoVideoCard({
       }}
     >
       <div
+        onClick={handleCardClick}
         style={{
           position: 'relative',
           width: '100%',
@@ -111,6 +134,7 @@ function BentoVideoCard({
           padding: textPosition === 'inside-bottom' ? '20px 24px' : '14px 16px',
           border: '1px solid rgba(0, 0, 0, 0.08)',
           boxShadow: '0 2px 10px rgba(0, 0, 0, 0.04)',
+          cursor: hasEnded ? 'pointer' : 'default',
           transition: 'transform 0.2s ease, box-shadow 0.2s ease',
         }}
         onMouseEnter={(e) => {
@@ -122,14 +146,13 @@ function BentoVideoCard({
           e.currentTarget.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.04)';
         }}
       >
-        {/* Actual Video Element (plays once, then stops at end) */}
+        {/* Actual Video Element (strictly scroll-triggered, never autoplays on page load) */}
         {videoUrl ? (
           <video
             ref={videoRef}
             src={videoUrl}
             muted
             playsInline
-            autoPlay
             loop={false}
             preload="auto"
             onEnded={handleVideoEnded}
