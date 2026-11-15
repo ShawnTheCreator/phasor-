@@ -335,105 +335,28 @@ export default function MultiHazardBentoSection({ dashboardUrl }: MultiHazardBen
             BENTO GRID CONTAINER (Matching Scale AI layout from reference photo)
             ========================================================================= */}
         <div className="bento-grid-container">
-          {/* =======================================================================
-              LEFT COLUMN (Columns 1 to 5)
-              - Top: "Introducing Phasor Defense" (Scale Labs style minimal card)
-              - Mid: "Phasor | SAPP Grid" (Morgan Stanley style slate card)
-              - Bottom: "MT Craton Impedance Benchmark" (SWE-bench style chart card)
-              ======================================================================= */}
-          <div className="bento-col-left">
-            {/* 1. Scale Labs style card: Clean White Minimal Card */}
-            <div
-              style={{
-                backgroundColor: '#f8fafc',
-                border: '1px solid #e2e8f0',
-                borderRadius: '16px',
-                padding: '36px 30px',
-                flex: 1,
-                minHeight: '220px',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between',
+          {/* Card 1: SAPP Intertie (Morgan Stanley Style Card) */}
+          <div className="bento-card-span-5">
+            <BentoVideoCard
+              isLargeHero={true}
+              textPosition="inside-bottom"
+              posterBg="#94a3b8"
+              badge="POWER & SAPP"
+              heroLockup={{
+                leftLogo: 'PHASOR',
+                rightLogo: 'SAPP INTERTIE',
+                rightSub: '6 Interconnected Countries',
               }}
-            >
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span style={{ fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.08em', color: '#991b1b', textTransform: 'uppercase' }}>
-                  Phasor Platform 2.0
-                </span>
-                <span style={{ fontSize: '0.72rem', backgroundColor: '#e2e8f0', padding: '2px 8px', borderRadius: '4px', fontWeight: 600, color: '#475569' }}>
-                  6 Operational Pictures
-                </span>
-              </div>
-              <div>
-                <h3 style={{ fontSize: '1.55rem', fontWeight: 800, color: '#0f172a', letterSpacing: '-0.02em', margin: '0 0 8px 0' }}>
-                  Introducing Phasor Multi-Hazard
-                </h3>
-                <p style={{ fontSize: '0.86rem', color: '#64748b', margin: 0, lineHeight: 1.55 }}>
-                  Fusing NASA L1 space telemetry with regional lithospheric models to give civil defense, air traffic, and hospital operators a 28-minute advance warning.
-                </p>
-              </div>
-            </div>
-
-            {/* 2. Morgan Stanley style card: Muted Slate-Blue Logo Lockup Card */}
-            <a
-              href={`${dashboardUrl}/grid`}
-              target="_blank"
-              rel="noreferrer"
-              style={{
-                backgroundColor: '#94a3b8',
-                borderRadius: '16px',
-                padding: '36px 24px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '20px',
-                border: '1px solid #64748b',
-                flex: 1,
-                minHeight: '220px',
-                position: 'relative',
-                overflow: 'hidden',
-                textDecoration: 'none',
-                transition: 'transform 0.2s ease, box-shadow 0.2s ease',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-2px)';
-                e.currentTarget.style.boxShadow = '0 8px 24px rgba(0, 0, 0, 0.08)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = 'none';
-              }}
-            >
-              <div style={{ position: 'absolute', top: '14px', left: '16px' }}>
-                <span style={{ fontSize: '0.66rem', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', color: '#ffffff', backgroundColor: 'rgba(0,0,0,0.3)', padding: '3px 8px', borderRadius: '4px' }}>
-                  ▾ POWER & HEALTH
-                </span>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', zIndex: 2 }}>
-                <span style={{ fontSize: '1.6rem', fontWeight: 900, color: '#0f172a', letterSpacing: '-0.04em' }}>
-                  PHASOR
-                </span>
-              </div>
-              <div style={{ width: '1px', height: '40px', backgroundColor: '#475569', zIndex: 2 }} />
-              <div style={{ display: 'flex', flexDirection: 'column', zIndex: 2 }}>
-                <span style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0f172a', letterSpacing: '0.02em' }}>
-                  SAPP Intertie
-                </span>
-                <span style={{ fontSize: '0.7rem', color: '#334155', fontWeight: 600 }}>
-                  6 Interconnected Countries
-                </span>
-              </div>
-            </a>
+              title="SAPP Regional Grid Interconnection"
+              subtitle="Automatic 400 MW load-flow rerouting before transformer core saturation occurs."
+              linkUrl={`${dashboardUrl}/grid`}
+              ctaText="View SAPP Interconnected Grid ↗"
+              videoUrl=""
+            />
           </div>
 
-          {/* =======================================================================
-              RIGHT SECTION (Columns 6 to 12)
-              - Top: Large Hero Card (Scale AI Mayo Clinic style, Forest Green / Dark Obsidian)
-              - Middle: 2 Split Cards (US Capitol & Tanks style)
-              - Bottom: Wide Card (Qatar style) + Right Card (Robotic Arm style)
-              ======================================================================= */}
-          <div className="bento-col-right">
-            {/* 4. Large Hero Card: Mayo Clinic style (Deep Forest Green / Obsidian Aviation Card) */}
+          {/* Card 2: Commercial Aviation (Mayo Clinic Style Large Hero Card) */}
+          <div className="bento-card-span-7">
             <BentoVideoCard
               isLargeHero={true}
               textPosition="inside-bottom"
@@ -451,72 +374,70 @@ export default function MultiHazardBentoSection({ dashboardUrl }: MultiHazardBen
               // USER VIDEO SLOT: Replace with your copyright-free aviation video URL (e.g. cockpit clouds, airliner wing)
               videoUrl=""
             />
+          </div>
 
-            {/* 5 & 6. Middle Split Row: Two Cards Side-by-Side (US Capitol & Tanks style) */}
-            <div className="bento-split-row">
-              {/* Card 5: HF Radio & Ionospheric Absorption (US Capitol style) */}
-              <BentoVideoCard
-                aspectRatio="16/10"
-                textPosition="below"
-                posterBg="linear-gradient(135deg, #1e293b 0%, #0f172a 100%)"
-                badge="HF RADIO COMMS"
-                title="Ionospheric Riometer Fadeout: Real-Time MUF Depression"
-                subtitle="Solar X-ray flares induce 5.8 dB D-layer absorption. Phasor alerts maritime and defense operators before complete radio blackout."
-                linkUrl={`${dashboardUrl}/aviation`}
-                ctaText="View Riometer Curves ↗"
-                // USER VIDEO SLOT: Replace with your radio tower / satellite dish video URL
-                videoUrl=""
-              />
+          {/* Card 3: HF Radio Comms (US Capitol Style Card) */}
+          <div className="bento-card-span-6">
+            <BentoVideoCard
+              aspectRatio="16/10"
+              textPosition="below"
+              posterBg="linear-gradient(135deg, #1e293b 0%, #0f172a 100%)"
+              badge="HF RADIO COMMS"
+              title="Ionospheric Riometer Fadeout: Real-Time MUF Depression"
+              subtitle="Solar X-ray flares induce 5.8 dB D-layer absorption. Phasor alerts maritime and defense operators before complete radio blackout."
+              linkUrl={`${dashboardUrl}/aviation`}
+              ctaText="View Riometer Curves ↗"
+              // USER VIDEO SLOT: Replace with your radio tower / satellite dish video URL
+              videoUrl=""
+            />
+          </div>
 
-              {/* Card 6: GNSS Scintillation & Autonomous Drones (Tanks / Tactical style) */}
-              <BentoVideoCard
-                aspectRatio="16/10"
-                textPosition="below"
-                posterBg="linear-gradient(135deg, #1c1917 0%, #292524 100%)"
-                badge="PRECISION GNSS"
-                title="Equatorial Plasma Bubbles: Drone & Autonomous RTK Failover"
-                subtitle="Scintillation (S4 > 0.60) causes 15m cycle slips. Phasor forecasts eastward drift to switch autonomous farm machinery to INS dead-reckoning."
-                linkUrl={`${dashboardUrl}/gnss`}
-                ctaText="Open GNSS Map ↗"
-                // USER VIDEO SLOT: Replace with your autonomous drone / field tractor video URL
-                videoUrl=""
-              />
-            </div>
+          {/* Card 4: Precision GNSS (Tanks / Tactical Style Card) */}
+          <div className="bento-card-span-6">
+            <BentoVideoCard
+              aspectRatio="16/10"
+              textPosition="below"
+              posterBg="linear-gradient(135deg, #1c1917 0%, #292524 100%)"
+              badge="PRECISION GNSS"
+              title="Equatorial Plasma Bubbles: Drone & Autonomous RTK Failover"
+              subtitle="Scintillation (S4 > 0.60) causes 15m cycle slips. Phasor forecasts eastward drift to switch autonomous farm machinery to INS dead-reckoning."
+              linkUrl={`${dashboardUrl}/gnss`}
+              ctaText="Open GNSS Map ↗"
+              // USER VIDEO SLOT: Replace with your autonomous drone / field tractor video URL
+              videoUrl=""
+            />
+          </div>
 
-            {/* 7 & 8. Bottom Row: Wide Card (Qatar building style) + Right Card (Robotic Arm style) */}
-            <div className="bento-bottom-row">
-              {/* Card 7: Hospital Trauma Centers (Qatar wide landscape card style) */}
-              <div className="bento-bottom-wide">
-                <BentoVideoCard
-                  aspectRatio="16/10"
-                  textPosition="inside-bottom"
-                  posterBg="linear-gradient(135deg, #1e1b4b 0%, #0f172a 100%)"
-                  badge="HOSPITAL RESILIENCE"
-                  title="Hospital Grid Feeder Shield: Protecting ICU Backup"
-                  subtitle="Topologically coupling 8 major tertiary hospitals to 400 kV substations while projecting +58% stroke and 2.15x cardiac surge loads."
-                  linkUrl={`${dashboardUrl}/health`}
-                  ctaText="View Hospital Grid Matrix ↗"
-                  // USER VIDEO SLOT: Replace with your hospital / medical ICU video URL
-                  videoUrl=""
-                />
-              </div>
+          {/* Card 5: Hospital Resilience (Qatar Arch Wide Landscape Card) */}
+          <div className="bento-card-span-7">
+            <BentoVideoCard
+              aspectRatio="16/10"
+              textPosition="inside-bottom"
+              posterBg="linear-gradient(135deg, #1e1b4b 0%, #0f172a 100%)"
+              badge="HOSPITAL RESILIENCE"
+              title="Hospital Grid Feeder Shield: Protecting ICU Backup"
+              subtitle="Topologically coupling 8 major tertiary hospitals to 400 kV substations while projecting +58% stroke and 2.15x cardiac surge loads."
+              linkUrl={`${dashboardUrl}/health`}
+              ctaText="View Hospital Grid Matrix ↗"
+              // USER VIDEO SLOT: Replace with your hospital / medical ICU video URL
+              videoUrl=""
+            />
+          </div>
 
-              {/* Card 8: LEO Satellites (Robotic Arm / Physical AI style) */}
-              <div className="bento-bottom-narrow">
-                <BentoVideoCard
-                  aspectRatio="16/10"
-                  textPosition="below"
-                  posterBg="linear-gradient(135deg, #020617 0%, #0f172a 100%)"
-                  badge="ORBITAL DRAG"
-                  title="Thermospheric Swelling: 7-Day Orbit-Raise"
-                  subtitle="NRLMSISE-00 density models predict drag spikes on LEO constellations for safe thruster burn timing."
-                  linkUrl={`${dashboardUrl}/satellites`}
-                  ctaText="Inspect LEO Fleet ↗"
-                  // USER VIDEO SLOT: Replace with your satellite / space orbit video URL
-                  videoUrl=""
-                />
-              </div>
-            </div>
+          {/* Card 6: LEO Satellites (Robotic Arm / Physical AI Style Card) */}
+          <div className="bento-card-span-5">
+            <BentoVideoCard
+              aspectRatio="16/10"
+              textPosition="below"
+              posterBg="linear-gradient(135deg, #020617 0%, #0f172a 100%)"
+              badge="ORBITAL DRAG"
+              title="Thermospheric Swelling: 7-Day Orbit-Raise"
+              subtitle="NRLMSISE-00 density models predict drag spikes on LEO constellations for safe thruster burn timing."
+              linkUrl={`${dashboardUrl}/satellites`}
+              ctaText="Inspect LEO Fleet ↗"
+              // USER VIDEO SLOT: Replace with your satellite / space orbit video URL
+              videoUrl=""
+            />
           </div>
         </div>
       </div>
