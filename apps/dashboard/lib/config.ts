@@ -11,5 +11,6 @@ export const API_BASE_URL: string =
 
 export const DOTNET_BASE_URL: string =
   (process.env.NEXT_PUBLIC_DOTNET_URL ? process.env.NEXT_PUBLIC_DOTNET_URL.replace(/\/$/, '') : '') ||
+  (process.env.NEXT_PUBLIC_CSHARP_URL ? process.env.NEXT_PUBLIC_CSHARP_URL.replace(/\/$/, '') : '') ||
   (process.env.NEXT_PUBLIC_API_URL ? process.env.NEXT_PUBLIC_API_URL.replace(/\/$/, '') : '') ||
   (isProduction ? '' : 'http://localhost:5000');
