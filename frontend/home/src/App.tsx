@@ -44,7 +44,8 @@ export default function App(): JSX.Element {
             <a href="#how-it-works" className="hero-nav-link">How It Works</a>
             <a href="#replay" className="hero-nav-link">Storm Replay</a>
             <a href="#multi-hazard" className="hero-nav-link">Multi-Hazard</a>
-            <a href="#science" className="hero-nav-link">Data Lineage</a>
+            <a href={`${DASHBOARD_URL}/model`} className="hero-nav-link" target="_blank" rel="noreferrer" style={{ color: '#ef4444', fontWeight: 600 }}>Research ↗</a>
+            <a href="#science" className="hero-nav-link">Provenance</a>
             <button
               onClick={() => setIsDemoOpen(true)}
               className="hero-nav-link"
@@ -85,11 +86,19 @@ export default function App(): JSX.Element {
               target="_blank"
               rel="noreferrer"
             >
-              <span>Demo</span>
+              <span>Launch Dashboard</span>
               <span>↗</span>
             </a>
+            <a
+              href={`${DASHBOARD_URL}/model`}
+              className="btn-hero-glass"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <span>Scientific Research (R² = 0.961) ↗</span>
+            </a>
             <a href="#how-it-works" className="btn-hero-glass">
-              <span>Explore Physics</span>
+              <span>Explore Physics &darr;</span>
             </a>
           </div>
         </div>
@@ -113,7 +122,7 @@ export default function App(): JSX.Element {
           - Verified YouTube videos, real metrics, and official scientific citations
           ========================================================================= */}
       <section id="replay" className="storm-section-wrapper">
-        <StormShowcase />
+        <StormShowcase dashboardUrl={DASHBOARD_URL} />
       </section>
 
       {/* =========================================================================
@@ -125,23 +134,53 @@ export default function App(): JSX.Element {
       <MultiHazardBentoSection dashboardUrl={DASHBOARD_URL} />
 
       {/* =========================================================================
-          OPEN SCIENCE DATA PROVENANCE
+          OPEN SCIENCE DATA PROVENANCE & RESEARCH
           ========================================================================= */}
       <section id="science" className="editorial-sub-section" style={{ borderTop: '1px solid #e2e8f0' }}>
         <div className="editorial-container">
           <div className="editorial-header">
             <div className="editorial-pill-marker" />
-            <h2 className="editorial-title">Open science provenance</h2>
+            <h2 className="editorial-title">Open science provenance & Scientific Research</h2>
             <p className="editorial-sub-desc">
-              Built with free and open data from NASA, NOAA, SANSA Space Science, and Kyoto World Data Center.
+              Built with free and open scientific telemetry from NASA, NOAA, SANSA Space Science, and Kyoto World Data Center. All neural architectures, lithospheric impedance tensors, and ground-truth backtests are publicly verifiable.
             </p>
           </div>
 
-          <div style={{ display: 'flex', gap: '32px', flexWrap: 'wrap', color: '#64748b', fontSize: '0.92rem', fontWeight: 500 }}>
-            <div>&bull; NASA/NOAA DSCOVR L1 RTSW</div>
-            <div>&bull; SANSA Space Science Hermanus (HER)</div>
-            <div>&bull; Kyoto WDC Dst Ground Truth</div>
-            <div>&bull; USGS / EarthScope MTArray</div>
+          <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap', alignItems: 'center', marginBottom: '28px' }}>
+            <a
+              href={`${DASHBOARD_URL}/model`}
+              target="_blank"
+              rel="noreferrer"
+              className="btn-hero-red"
+              style={{ padding: '10px 22px', fontSize: '0.88rem', textDecoration: 'none' }}
+            >
+              <span>Inspect ML LSTM Model & Research (R² = 0.961)</span>
+              <span>↗</span>
+            </a>
+            <a
+              href={`${DASHBOARD_URL}/public`}
+              target="_blank"
+              rel="noreferrer"
+              className="btn-pill-glass"
+              style={{ padding: '10px 20px', fontSize: '0.88rem', textDecoration: 'none', color: '#0f172a', borderColor: '#cbd5e1' }}
+            >
+              <span>Public Civil Defense Feeds ↗</span>
+            </a>
+          </div>
+
+          <div style={{ display: 'flex', gap: '28px', flexWrap: 'wrap', fontSize: '0.92rem', fontWeight: 600 }}>
+            <a href="https://services.swpc.noaa.gov/products/solar-wind/" target="_blank" rel="noreferrer" style={{ color: '#991b1b', textDecoration: 'none' }}>
+              &bull; NASA/NOAA DSCOVR L1 RTSW ↗
+            </a>
+            <a href="https://spaceweather.sansa.org.za/" target="_blank" rel="noreferrer" style={{ color: '#991b1b', textDecoration: 'none' }}>
+              &bull; SANSA Space Science Hermanus (HER) ↗
+            </a>
+            <a href="https://wdc.kugi.kyoto-u.ac.jp/" target="_blank" rel="noreferrer" style={{ color: '#991b1b', textDecoration: 'none' }}>
+              &bull; Kyoto WDC Dst Ground Truth ↗
+            </a>
+            <a href="https://www.usgs.gov/programs/geomagnetism" target="_blank" rel="noreferrer" style={{ color: '#991b1b', textDecoration: 'none' }}>
+              &bull; USGS / EarthScope MTArray ↗
+            </a>
           </div>
         </div>
       </section>

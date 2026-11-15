@@ -97,7 +97,7 @@ export default function ExpandingBrandFooter({
             +
           </span>
 
-          {/* Column 1: Philosophy / Overview */}
+          {/* Column 1: Philosophy / How It Works */}
           <div style={colStyle}>
             <a href="#how-it-works" style={linkStyle}>
               Philosophy
@@ -105,7 +105,15 @@ export default function ExpandingBrandFooter({
             <span style={tickStyle}>|</span>
           </div>
 
-          {/* Column 2: Works / SAPP Grid */}
+          {/* Column 2: Research & ML Verification */}
+          <div style={colStyle}>
+            <a href={`${dashboardUrl}/model`} target="_blank" rel="noreferrer" style={{ ...linkStyle, color: '#f87171' }}>
+              Research ↗
+            </a>
+            <span style={tickStyle}>|</span>
+          </div>
+
+          {/* Column 3: Works / SAPP Grid */}
           <div style={colStyle}>
             <a href={`${dashboardUrl}/grid`} target="_blank" rel="noreferrer" style={linkStyle}>
               Works
@@ -113,7 +121,7 @@ export default function ExpandingBrandFooter({
             <span style={tickStyle}>|</span>
           </div>
 
-          {/* Column 3: Services / Aviation */}
+          {/* Column 4: Services / Aviation */}
           <div style={colStyle}>
             <a href={`${dashboardUrl}/aviation`} target="_blank" rel="noreferrer" style={linkStyle}>
               Services
@@ -121,7 +129,7 @@ export default function ExpandingBrandFooter({
             <span style={tickStyle}>|</span>
           </div>
 
-          {/* Column 4: Process / Multi-Hazard */}
+          {/* Column 5: Process / Multi-Hazard */}
           <div style={colStyle}>
             <a href="#multi-hazard" style={linkStyle}>
               Process
@@ -129,7 +137,15 @@ export default function ExpandingBrandFooter({
             <span style={tickStyle}>|</span>
           </div>
 
-          {/* Column 5: Company / Satellites */}
+          {/* Column 6: Live Alerts */}
+          <div style={colStyle}>
+            <a href={`${dashboardUrl}/alerts`} target="_blank" rel="noreferrer" style={linkStyle}>
+              Alerts
+            </a>
+            <span style={tickStyle}>|</span>
+          </div>
+
+          {/* Column 7: Company / Briefing */}
           <div style={colStyle}>
             <button
               onClick={onOpenDemo}
@@ -147,7 +163,7 @@ export default function ExpandingBrandFooter({
             <span style={tickStyle}>|</span>
           </div>
 
-          {/* Column 6: Contact / Login */}
+          {/* Column 8: Contact / Login */}
           <div style={colStyle}>
             <a href={`${dashboardUrl}/login`} target="_blank" rel="noreferrer" style={linkStyle}>
               Contact

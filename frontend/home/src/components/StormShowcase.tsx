@@ -40,7 +40,11 @@ const STORMS: StormEvent[] = [
   },
 ];
 
-export default function StormShowcase(): JSX.Element {
+interface StormShowcaseProps {
+  dashboardUrl?: string;
+}
+
+export default function StormShowcase({ dashboardUrl }: StormShowcaseProps): JSX.Element {
   const runwayRef = useRef<HTMLDivElement | null>(null);
   const [progress, setProgress] = useState<number>(0);
   const [pinMode, setPinMode] = useState<'top' | 'fixed' | 'bottom'>('top');
@@ -154,14 +158,27 @@ export default function StormShowcase(): JSX.Element {
                       <div className="simple-storm-content">
                         <h3 className="simple-storm-title">{storm.title}</h3>
                         <p className="simple-storm-desc">{storm.description}</p>
-                        <a
-                          href={storm.reportUrl}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="simple-storm-btn"
-                        >
-                          LEARN MORE
-                        </a>
+                        <div style={{ display: 'flex', gap: '10px', marginTop: '16px', flexWrap: 'wrap' }}>
+                          <a
+                            href={storm.reportUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="simple-storm-btn"
+                          >
+                            OFFICIAL REPORT ↗
+                          </a>
+                          {dashboardUrl && (
+                            <a
+                              href={`${dashboardUrl}/replay`}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="simple-storm-btn"
+                              style={{ backgroundColor: '#0f172a', borderColor: '#0f172a' }}
+                            >
+                              REPLAY THEATRE ↗
+                            </a>
+                          )}
+                        </div>
                       </div>
                     </div>
                   </div>
