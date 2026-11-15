@@ -104,13 +104,6 @@ export default function MultiHazardRadarDiagram({
         {/* SVG Radar Spider Chart */}
         <div style={{ flex: '0 0 auto' }}>
           <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
-            <defs>
-              <linearGradient id="radar-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#991b1b" stopOpacity="0.45" />
-                <stop offset="100%" stopColor="#ef4444" stopOpacity="0.15" />
-              </linearGradient>
-            </defs>
-
             {/* Concentric Guide Polygons (20%, 40%, 60%, 80%, 100%) */}
             {[20, 40, 60, 80, 100].map((lvl, idx) => {
               const pts = axes.map((_, i) => {
@@ -157,9 +150,9 @@ export default function MultiHazardRadarDiagram({
             {/* Filled Threat Area Polygon */}
             <polygon
               points={polygonPoints}
-              fill="url(#radar-grad)"
+              fill="rgba(153, 27, 27, 0.08)"
               stroke="#991b1b"
-              strokeWidth="2.5"
+              strokeWidth="2"
             />
 
             {/* Axis Data Points & Markers */}

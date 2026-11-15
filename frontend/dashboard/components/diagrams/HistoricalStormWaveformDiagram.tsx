@@ -109,13 +109,6 @@ export default function HistoricalStormWaveformDiagram({
       {/* SVG Waveform Chart */}
       <div style={{ padding: '12px 16px', position: 'relative' }}>
         <svg viewBox={`0 0 ${svgWidth} ${svgHeight}`} style={{ width: '100%', height: 'auto', display: 'block' }}>
-          <defs>
-            <linearGradient id="dst-danger-grad" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="#ef4444" stopOpacity="0.05" />
-              <stop offset="100%" stopColor="#ef4444" stopOpacity="0.35" />
-            </linearGradient>
-          </defs>
-
           {/* Zero baseline */}
           <line
             x1={paddingLeft}
@@ -160,10 +153,10 @@ export default function HistoricalStormWaveformDiagram({
           })}
 
           {/* Dst Danger Area Fill */}
-          <path d={dstAreaPath} fill="url(#dst-danger-grad)" />
+          <path d={dstAreaPath} fill="rgba(153, 27, 27, 0.05)" />
 
           {/* Dst Line */}
-          <path d={dstPath} fill="none" stroke="#991b1b" strokeWidth="2.5" strokeLinecap="round" />
+          <path d={dstPath} fill="none" stroke="#991b1b" strokeWidth="2" strokeLinecap="round" />
 
           {/* Playhead Scrub Line */}
           {(() => {

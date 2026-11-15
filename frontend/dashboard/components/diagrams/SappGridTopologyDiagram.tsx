@@ -85,32 +85,25 @@ export default function SappGridTopologyDiagram(): JSX.Element {
 
       {/* SVG Single Line Diagram */}
       <div style={{ display: 'flex', flexWrap: 'wrap', minHeight: '260px' }}>
-        <div style={{ flex: '1 1 420px', minWidth: '300px', backgroundColor: '#090d16', position: 'relative' }}>
+        <div style={{ flex: '1 1 420px', minWidth: '300px', backgroundColor: '#f8fafc', position: 'relative' }}>
           <svg viewBox="0 0 540 260" style={{ width: '100%', height: '100%', display: 'block' }}>
-            <defs>
-              <linearGradient id="sapp-hvdc-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#34d399" />
-                <stop offset="100%" stopColor="#059669" />
-              </linearGradient>
-            </defs>
-
             {/* Cross-border interconnector transmission lines */}
             {/* Songo -> Apollo HVDC */}
-            <line x1="440" y1="60" x2="330" y2="160" stroke="url(#sapp-hvdc-grad)" strokeWidth="3" strokeDasharray="6 4" strokeDashoffset={-pulse * 1.5} />
-            <text x="400" y="105" fill="#34d399" fontSize="7.5" fontWeight="bold">Songo-Apollo &plusmn;533kV HVDC</text>
+            <line x1="440" y1="60" x2="330" y2="160" stroke="#059669" strokeWidth="2.5" strokeDasharray="6 3" />
+            <text x="400" y="105" fill="#059669" fontSize="7.5" fontWeight="bold">Songo-Apollo ±533kV HVDC</text>
 
             {/* Insukamini -> Phokoje */}
-            <line x1="370" y1="90" x2="260" y2="110" stroke="#38bdf8" strokeWidth="2.5" />
+            <line x1="370" y1="90" x2="260" y2="110" stroke="#2563eb" strokeWidth="2" />
             
             {/* Phokoje -> Apollo */}
-            <line x1="260" y1="110" x2="330" y2="160" stroke="#38bdf8" strokeWidth="2.5" />
+            <line x1="260" y1="110" x2="330" y2="160" stroke="#2563eb" strokeWidth="2" />
 
             {/* Apollo -> Hydra 765kV */}
-            <line x1="330" y1="160" x2="280" y2="220" stroke="#ef4444" strokeWidth="3.5" strokeDasharray="8 6" strokeDashoffset={-pulse * 2} />
-            <text x="315" y="195" fill="#f87171" fontSize="7.5" fontWeight="bold">765kV</text>
+            <line x1="330" y1="160" x2="280" y2="220" stroke="#991b1b" strokeWidth="2.5" />
+            <text x="315" y="195" fill="#991b1b" fontSize="7.5" fontWeight="bold">765kV</text>
 
             {/* Auas -> Hydra */}
-            <line x1="90" y1="150" x2="280" y2="220" stroke="#38bdf8" strokeWidth="2" />
+            <line x1="90" y1="150" x2="280" y2="220" stroke="#2563eb" strokeWidth="2" />
 
             {/* Substation Nodes */}
             {substations.map(sub => {
@@ -119,25 +112,25 @@ export default function SappGridTopologyDiagram(): JSX.Element {
               return (
                 <g key={sub.id} onClick={() => setSelectedId(sub.id)} style={{ cursor: 'pointer' }}>
                   {/* Transformer Star-Winding Symbol */}
-                  <circle cx={sub.x} cy={sub.y} r={isSel ? 10 : 8} fill={sub.isBlocked ? '#10b981' : isHigh ? '#991b1b' : '#3b82f6'} stroke="#ffffff" strokeWidth="2" />
+                  <circle cx={sub.x} cy={sub.y} r={isSel ? 8.5 : 7} fill={sub.isBlocked ? '#10b981' : isHigh ? '#991b1b' : '#2563eb'} stroke="#ffffff" strokeWidth="1.5" />
                   
                   {/* Neutral Grounding Line */}
-                  <line x1={sub.x} y1={sub.y + (isSel ? 10 : 8)} x2={sub.x} y2={sub.y + 22} stroke="#94a3b8" strokeWidth="1.5" />
+                  <line x1={sub.x} y1={sub.y + (isSel ? 8.5 : 7)} x2={sub.x} y2={sub.y + 20} stroke="#94a3b8" strokeWidth="1.2" />
                   {/* Ground Earth Symbol (3 horizontal lines) */}
-                  <line x1={sub.x - 7} y1={sub.y + 22} x2={sub.x + 7} y2={sub.y + 22} stroke="#94a3b8" strokeWidth="1.5" />
-                  <line x1={sub.x - 4} y1={sub.y + 25} x2={sub.x + 4} y2={sub.y + 25} stroke="#94a3b8" strokeWidth="1.2" />
-                  <line x1={sub.x - 2} y1={sub.y + 28} x2={sub.x + 2} y2={sub.y + 28} stroke="#94a3b8" strokeWidth="1" />
+                  <line x1={sub.x - 6} y1={sub.y + 20} x2={sub.x + 6} y2={sub.y + 20} stroke="#94a3b8" strokeWidth="1.2" />
+                  <line x1={sub.x - 3.5} y1={sub.y + 23} x2={sub.x + 3.5} y2={sub.y + 23} stroke="#94a3b8" strokeWidth="1" />
+                  <line x1={sub.x - 1.5} y1={sub.y + 26} x2={sub.x + 1.5} y2={sub.y + 26} stroke="#94a3b8" strokeWidth="0.8" />
 
                   {/* Neutral Blocking Capacitor Indicator */}
                   {sub.hasBlocking && (
-                    <g transform={`translate(${sub.x + 4}, ${sub.y + 13})`}>
-                      <rect x="0" y="0" width="12" height="7" fill="#10b981" rx="1.5" />
-                      <text x="6" y="5.5" fill="#ffffff" fontSize="5" fontWeight="bold" textAnchor="middle">BLOCKED</text>
+                    <g transform={`translate(${sub.x + 4}, ${sub.y + 11})`}>
+                      <rect x="0" y="0" width="12" height="6.5" fill="#10b981" rx="1" />
+                      <text x="6" y="5" fill="#ffffff" fontSize="4.5" fontWeight="bold" textAnchor="middle">BLOCKED</text>
                     </g>
                   )}
 
                   {/* Name Label */}
-                  <text x={sub.x} y={sub.y - 12} fill={isSel ? '#ffffff' : '#cbd5e1'} fontSize={isSel ? '9.5' : '8'} fontWeight={isSel ? 'bold' : 'normal'} textAnchor="middle">
+                  <text x={sub.x} y={sub.y - 10} fill="#0f172a" fontSize={isSel ? '9' : '8'} fontWeight={isSel ? '700' : '600'} textAnchor="middle">
                     {sub.name}
                   </text>
                 </g>

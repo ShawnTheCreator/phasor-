@@ -18,7 +18,7 @@
   --btn-red: #991b1b;           /* Rich deep dark red */
   --btn-red-hover: #7f1d1d;     /* Even darker red on hover */
   --btn-red-active: #450a0a;    /* Deep burgundy when active */
-  --btn-red-shadow: rgba(153, 27, 27, 0.28);
+  --btn-red-shadow: rgba(0, 0, 0, 0.05); /* Clean subtle drop shadow, no glowing halo */
   --red-soft: #fef2f2;
   --red-border: #fecaca;
   

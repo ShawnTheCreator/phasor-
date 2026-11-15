@@ -145,22 +145,11 @@ export default function TransformerCoreSaturationDiagram({
                   <circle
                     cx={ptX}
                     cy={clampedY}
-                    r={isSaturated ? 5 : 3.5}
+                    r={isSaturated ? 4.5 : 3.5}
                     fill={isSaturated ? '#991b1b' : '#0284c7'}
                     stroke="#ffffff"
                     strokeWidth="1.5"
                   />
-                  {isSaturated && (
-                    <circle
-                      cx={ptX}
-                      cy={clampedY}
-                      r="9"
-                      fill="none"
-                      stroke="#ef4444"
-                      strokeWidth="1"
-                      opacity="0.7"
-                    />
-                  )}
                 </g>
               );
             })()}

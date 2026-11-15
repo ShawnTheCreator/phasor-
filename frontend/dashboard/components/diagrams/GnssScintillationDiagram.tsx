@@ -69,42 +69,34 @@ export default function GnssScintillationDiagram(): JSX.Element {
         </span>
       </div>
 
-      {/* SVG Canvas */}
-      <div style={{ position: 'relative', backgroundColor: '#090d16', overflow: 'hidden' }}>
+      {/* SVG Canvas - Clean Light Cartographic View */}
+      <div style={{ position: 'relative', backgroundColor: '#f8fafc', overflow: 'hidden' }}>
         <svg viewBox={`0 0 ${svgWidth} ${svgHeight}`} style={{ width: '100%', height: 'auto', display: 'block' }}>
-          <defs>
-            <radialGradient id="epb-plume-grad" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stopColor="#ef4444" stopOpacity="0.6" />
-              <stop offset="60%" stopColor="#f59e0b" stopOpacity="0.25" />
-              <stop offset="100%" stopColor="#f59e0b" stopOpacity="0" />
-            </radialGradient>
-          </defs>
-
           {/* Latitude guide lines */}
           {[-15, -20, -25, -30, -35].map(lat => (
             <g key={lat}>
-              <line x1="0" y1={getY(lat)} x2={svgWidth} y2={getY(lat)} stroke="rgba(255,255,255,0.08)" strokeWidth="1" strokeDasharray="3 3" />
-              <text x="8" y={getY(lat) - 3} fill="#64748b" fontSize="7.5" fontFamily="monospace">{lat}&deg;S</text>
+              <line x1="0" y1={getY(lat)} x2={svgWidth} y2={getY(lat)} stroke="#e2e8f0" strokeWidth="1" strokeDasharray="3 3" />
+              <text x="8" y={getY(lat) - 3} fill="#94a3b8" fontSize="7.5" fontFamily="monospace">{lat}°S</text>
             </g>
           ))}
 
           {/* Equatorial Ionization Anomaly (EIA) Crest Zone (-12 to -18 Lat) */}
-          <rect x="0" y={getY(-10)} width={svgWidth} height={getY(-18) - getY(-10)} fill="rgba(239, 68, 68, 0.08)" />
-          <text x={svgWidth - 10} y={getY(-12)} fill="#f87171" fontSize="8" fontWeight="bold" textAnchor="end">
-            Equatorial Ionization Anomaly (EIA Crest) - Peak Rayleigh-Taylor Instability
+          <rect x="0" y={getY(-10)} width={svgWidth} height={getY(-18) - getY(-10)} fill="rgba(239, 68, 68, 0.05)" />
+          <text x={svgWidth - 10} y={getY(-12)} fill="#991b1b" fontSize="8" fontWeight="bold" textAnchor="end">
+            Equatorial Ionization Anomaly (EIA Crest) - Rayleigh-Taylor Instability Zone
           </text>
 
-          {/* Drifting Plasma Bubble Plumes (animated eastward) */}
+          {/* Drifting Plasma Bubble Plumes (Clean Flat Contours) */}
           {[16, 23, 30].map((baseLng, i) => {
             const currentLng = baseLng + (driftOffset * 0.12);
             const plumeX = getX(currentLng > 36 ? currentLng - 24 : currentLng);
             const plumeY = getY(-16);
             return (
               <g key={i}>
-                <ellipse cx={plumeX} cy={plumeY} rx="45" ry="32" fill="url(#epb-plume-grad)" />
-                <line x1={plumeX} y1={plumeY - 25} x2={plumeX} y2={plumeY + 25} stroke="#fca5a5" strokeWidth="1.2" strokeDasharray="2 2" />
-                <text x={plumeX} y={plumeY + 36} fill="#fca5a5" fontSize="7" fontWeight="bold" textAnchor="middle">
-                  EPB Plume #{i + 1} (120 m/s &rarr;)
+                <ellipse cx={plumeX} cy={plumeY} rx="45" ry="30" fill="rgba(239, 68, 68, 0.06)" stroke="#fca5a5" strokeWidth="1" strokeDasharray="3 2" />
+                <line x1={plumeX} y1={plumeY - 22} x2={plumeX} y2={plumeY + 22} stroke="#f87171" strokeWidth="1" strokeDasharray="2 2" />
+                <text x={plumeX} y={plumeY + 34} fill="#b91c1c" fontSize="7" fontWeight="bold" textAnchor="middle">
+                  EPB Plume #{i + 1} (120 m/s →)
                 </text>
               </g>
             );
@@ -114,42 +106,40 @@ export default function GnssScintillationDiagram(): JSX.Element {
           {stations.map(st => {
             const x = getX(st.lng);
             const y = getY(st.lat);
-            const isHigh = st.s4 > 0.4;
-            const color = st.s4 >= 0.5 ? '#ef4444' : st.s4 >= 0.3 ? '#f59e0b' : '#10b981';
+            const color = st.s4 >= 0.5 ? '#991b1b' : st.s4 >= 0.3 ? '#d97706' : '#059669';
 
             return (
               <g key={st.id}>
-                {isHigh && (
-                  <circle cx={x} cy={y} r="14" fill="none" stroke={color} strokeWidth="1" strokeDasharray="3 3" />
-                )}
-                <circle cx={x} cy={y} r="5" fill={color} stroke="#ffffff" strokeWidth="1.5" />
-                <text x={x} y={y - 8} fill="#ffffff" fontSize="8" fontWeight="bold" textAnchor="middle">
+                <circle cx={x} cy={y} r="4.5" fill={color} stroke="#ffffff" strokeWidth="1.5" />
+                <text x={x} y={y - 8} fill="#0f172a" fontSize="8" fontWeight="700" textAnchor="middle">
                   {st.name} ({st.country})
                 </text>
-                <text x={x} y={y + 14} fill={color} fontSize="7.5" fontFamily="monospace" fontWeight="bold" textAnchor="middle">
-                  S4 = {st.s4} &bull; &plusmn;{st.errorM}m
+                <text x={x} y={y + 13} fill={color} fontSize="7.5" fontFamily="monospace" fontWeight="bold" textAnchor="middle">
+                  S4 = {st.s4} • ±{st.errorM}m
                 </text>
               </g>
             );
           })}
         </svg>
 
-        {/* Legend */}
+        {/* Legend - Clean White Card */}
         <div style={{
           position: 'absolute',
           bottom: '8px',
           right: '8px',
-          backgroundColor: 'rgba(15, 23, 42, 0.85)',
+          backgroundColor: '#ffffff',
           padding: '6px 10px',
           borderRadius: '4px',
+          border: '1px solid #e2e8f0',
           fontSize: '0.68rem',
-          color: '#cbd5e1',
+          color: '#475569',
           display: 'flex',
-          gap: '12px'
+          gap: '12px',
+          boxShadow: '0 1px 3px rgba(0,0,0,0.04)'
         }}>
-          <div><span style={{ color: '#ef4444' }}>&#9679;</span> S4 &gt; 0.5 (Severe Loss-of-Lock)</div>
-          <div><span style={{ color: '#f59e0b' }}>&#9679;</span> S4 0.3 - 0.5 (Degraded RTK)</div>
-          <div><span style={{ color: '#10b981' }}>&#9679;</span> S4 &lt; 0.3 (Nominal)</div>
+          <div><span style={{ color: '#991b1b', fontWeight: 'bold' }}>●</span> S4 &gt; 0.5 (Severe Loss-of-Lock)</div>
+          <div><span style={{ color: '#d97706', fontWeight: 'bold' }}>●</span> S4 0.3 - 0.5 (Degraded RTK)</div>
+          <div><span style={{ color: '#059669', fontWeight: 'bold' }}>●</span> S4 &lt; 0.3 (Nominal)</div>
         </div>
       </div>
     </div>

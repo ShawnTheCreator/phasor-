@@ -236,13 +236,6 @@ export default function RealtimeTelemetryOscilloscope({
           style={{ width: '100%', height: 'auto', display: 'block', overflow: 'visible' }}
           onMouseLeave={() => setHoveredIdx(null)}
         >
-          <defs>
-            <linearGradient id="gic-glow-grad" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="#ef4444" stopOpacity="0.25" />
-              <stop offset="100%" stopColor="#ef4444" stopOpacity="0.0" />
-            </linearGradient>
-          </defs>
-
           {/* Background Grid Lines */}
           {[0, 0.25, 0.5, 0.75, 1].map((pct, i) => {
             const y = paddingTop + plotHeight * pct;
@@ -304,12 +297,12 @@ export default function RealtimeTelemetryOscilloscope({
           {/* 1. Neutral GIC (Red Curve with Area Fill) */}
           {(activeChannel === 'all' || activeChannel === 'gic') && (
             <>
-              <path d={gicAreaPath} fill="url(#gic-glow-grad)" />
+              <path d={gicAreaPath} fill="rgba(153, 27, 27, 0.05)" />
               <path
                 d={gicPath}
                 fill="none"
                 stroke="#991b1b"
-                strokeWidth="2.5"
+                strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
               />

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 export interface GridSubstation {
   id: string;
@@ -78,15 +78,6 @@ export default function InteractiveGridMapDiagram({
 }: InteractiveGridMapDiagramProps): JSX.Element {
   const [selected, setSelected] = useState<GridSubstation>(substations[1] || DEFAULT_SUBSTATIONS[1]); // Default Hydra
   const [activeLayer, setActiveLayer] = useState<'all' | '765kv' | '400kv' | 'hvdc'>('all');
-  const [pulseTick, setPulseTick] = useState<number>(0);
-
-  // Real-time animation ticker for current flow pulses
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setPulseTick(prev => (prev + 1) % 100);
-    }, 60);
-    return () => clearInterval(timer);
-  }, []);
 
   // Compute geoelectric field vector angle and magnitude
   const eMag = Math.sqrt(exVkm * exVkm + eyVkm * eyVkm);
@@ -99,10 +90,10 @@ export default function InteractiveGridMapDiagram({
 
   const getSubstationColor = (tier: string) => {
     switch (tier) {
-      case 'CRITICAL': return '#991b1b'; // Dark Red
+      case 'CRITICAL': return '#991b1b'; // Deep Dark Red
       case 'WATCH': return '#d97706';    // Amber/Gold
-      case 'ADVISORY': return '#2563eb'; // Blue
-      default: return '#10b981';         // Emerald
+      case 'ADVISORY': return '#2563eb'; // Technical Blue
+      default: return '#059669';         // Emerald Green
     }
   };
 
@@ -117,7 +108,7 @@ export default function InteractiveGridMapDiagram({
       flexDirection: 'column',
       width: '100%',
       backgroundColor: '#ffffff',
-      borderRadius: '10px',
+      borderRadius: '8px',
       border: '1px solid #e2e8f0',
       overflow: 'hidden'
     }}>
@@ -127,7 +118,7 @@ export default function InteractiveGridMapDiagram({
         alignItems: 'center',
         justifyContent: 'space-between',
         padding: '10px 16px',
-        backgroundColor: '#f8fafc',
+        backgroundColor: '#ffffff',
         borderBottom: '1px solid #e2e8f0',
         flexWrap: 'wrap',
         gap: '8px'
@@ -138,14 +129,13 @@ export default function InteractiveGridMapDiagram({
             width: '8px',
             height: '8px',
             borderRadius: '50%',
-            backgroundColor: '#10b981',
-            boxShadow: '0 0 6px #10b981'
+            backgroundColor: '#10b981'
           }} />
           <strong style={{ fontSize: '0.84rem', color: '#0f172a' }}>
             SAPP Transmission Network & GIC Vector Topology
           </strong>
           <span style={{ fontSize: '0.72rem', color: '#64748b', marginLeft: '4px' }}>
-            (Interactive SVG &bull; Live Currents)
+            (Interactive Vector Schematic)
           </span>
         </div>
 
@@ -162,7 +152,7 @@ export default function InteractiveGridMapDiagram({
                 padding: '3px 9px',
                 borderRadius: '4px',
                 border: '1px solid',
-                borderColor: activeLayer === layer ? '#991b1b' : '#cbd5e1',
+                borderColor: activeLayer === layer ? '#991b1b' : '#e2e8f0',
                 backgroundColor: activeLayer === layer ? '#991b1b' : '#ffffff',
                 color: activeLayer === layer ? '#ffffff' : '#475569',
                 cursor: 'pointer',
@@ -177,76 +167,33 @@ export default function InteractiveGridMapDiagram({
 
       {/* SVG Canvas and Telemetry Split Pane */}
       <div style={{ display: 'flex', flexWrap: 'wrap', position: 'relative', width: '100%', minHeight: '380px' }}>
-        {/* Main Vector SVG Map */}
-        <div style={{ flex: '1 1 540px', minWidth: '320px', position: 'relative', backgroundColor: '#090d16', overflow: 'hidden' }}>
-          {/* Subtle Grid Background */}
-          <div style={{
-            position: 'absolute',
-            inset: 0,
-            backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1px)',
-            backgroundSize: '24px 24px',
-            pointerEvents: 'none'
-          }} />
-
+        {/* Main Vector SVG Map - Clean Light Slate Theme (No Dark Box, No Glows) */}
+        <div style={{ flex: '1 1 540px', minWidth: '320px', position: 'relative', backgroundColor: '#f8fafc', overflow: 'hidden' }}>
           <svg
             viewBox="0 0 800 450"
             style={{ width: '100%', height: '100%', display: 'block' }}
           >
-            <defs>
-              {/* Glowing Filter for High-Risk Nodes */}
-              <filter id="glow-red" x="-30%" y="-30%" width="160%" height="160%">
-                <feGaussianBlur stdDeviation="3.5" result="blur" />
-                <feMerge>
-                  <feMergeNode in="blur" />
-                  <feMergeNode in="SourceGraphic" />
-                </feMerge>
-              </filter>
-              <filter id="glow-amber" x="-30%" y="-30%" width="160%" height="160%">
-                <feGaussianBlur stdDeviation="2.5" result="blur" />
-                <feMerge>
-                  <feMergeNode in="blur" />
-                  <feMergeNode in="SourceGraphic" />
-                </feMerge>
-              </filter>
-
-              {/* Linear Gradients for Transmission Corridors */}
-              <linearGradient id="grad-765" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#ef4444" stopOpacity="0.85" />
-                <stop offset="50%" stopColor="#f87171" stopOpacity="1" />
-                <stop offset="100%" stopColor="#b91c1c" stopOpacity="0.85" />
-              </linearGradient>
-              <linearGradient id="grad-400" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#38bdf8" stopOpacity="0.6" />
-                <stop offset="100%" stopColor="#0284c7" stopOpacity="0.8" />
-              </linearGradient>
-              <linearGradient id="grad-hvdc" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#34d399" stopOpacity="0.8" />
-                <stop offset="100%" stopColor="#059669" stopOpacity="0.9" />
-              </linearGradient>
-            </defs>
-
-            {/* Regional Province / Geographic Outlines (Indicative simplified borders) */}
+            {/* Regional Province / Geographic Outlines */}
             <path
               d="M 120 140 L 260 170 L 410 110 L 450 60 L 580 40 L 730 35 L 750 90 L 640 180 L 620 280 L 520 380 L 370 410 L 240 420 L 170 390 L 110 240 Z"
-              fill="rgba(30, 41, 59, 0.45)"
-              stroke="rgba(71, 85, 105, 0.4)"
+              fill="#ffffff"
+              stroke="#e2e8f0"
               strokeWidth="1.5"
-              strokeDasharray="4 4"
             />
 
             {/* Geologic Subsurface Boundary: Kaapvaal Craton Strike Line */}
             <path
               d="M 370 190 Q 480 150 590 120"
               fill="none"
-              stroke="rgba(245, 158, 11, 0.3)"
-              strokeWidth="1.5"
-              strokeDasharray="6 3"
+              stroke="#cbd5e1"
+              strokeWidth="1.2"
+              strokeDasharray="5 3"
             />
-            <text x="460" y="140" fill="rgba(245, 158, 11, 0.5)" fontSize="9" fontFamily="monospace">
-              Kaapvaal Craton (High Resistivity &rho; &gt; 5,000 &Omega;&middot;m)
+            <text x="460" y="140" fill="#94a3b8" fontSize="8.5" fontFamily="monospace">
+              Kaapvaal Craton Boundary (&rho; &gt; 5,000 &Omega;&middot;m)
             </text>
 
-            {/* Render Transmission Corridors (Lines) */}
+            {/* Render Transmission Corridors (Clean Solid Lines) */}
             {filteredLines.map(line => {
               const fromSub = substations.find(s => s.id === line.from);
               const toSub = substations.find(s => s.id === line.to);
@@ -254,12 +201,11 @@ export default function InteractiveGridMapDiagram({
 
               const is765 = line.type === '765kv';
               const isHvdc = line.type === 'hvdc';
-              const strokeColor = is765 ? 'url(#grad-765)' : isHvdc ? 'url(#grad-hvdc)' : 'url(#grad-400)';
-              const strokeWidth = is765 ? 3.5 : isHvdc ? 3 : 2;
+              const strokeColor = is765 ? '#991b1b' : isHvdc ? '#059669' : '#2563eb';
+              const strokeWidth = is765 ? 2.5 : isHvdc ? 2.2 : 1.8;
 
               return (
                 <g key={line.id}>
-                  {/* Base Glow Line */}
                   <line
                     x1={fromSub.x}
                     y1={fromSub.y}
@@ -268,32 +214,17 @@ export default function InteractiveGridMapDiagram({
                     stroke={strokeColor}
                     strokeWidth={strokeWidth}
                     strokeLinecap="round"
-                    opacity={0.8}
-                  />
-
-                  {/* Dynamic Animated Pulse Line */}
-                  <line
-                    x1={fromSub.x}
-                    y1={fromSub.y}
-                    x2={toSub.x}
-                    y2={toSub.y}
-                    stroke={is765 ? '#fee2e2' : isHvdc ? '#a7f3d0' : '#bae6fd'}
-                    strokeWidth={strokeWidth * 0.7}
-                    strokeLinecap="round"
-                    strokeDasharray="8 24"
-                    strokeDashoffset={-pulseTick * (is765 ? 2.5 : 1.5)}
-                    opacity={0.9}
+                    strokeDasharray={isHvdc ? '6 3' : undefined}
                   />
                 </g>
               );
             })}
 
-            {/* Render Substation Nodes */}
+            {/* Render Substation Nodes (Crisp Flat Circles) */}
             {substations.map(sub => {
               const isSelected = selected?.id === sub.id;
               const color = getSubstationColor(sub.riskTier);
-              const isHighRisk = sub.riskTier === 'CRITICAL' || sub.riskTier === 'WATCH';
-              const radius = sub.voltageKv === 765 ? 8 : sub.voltageKv === 533 ? 7 : 6;
+              const radius = sub.voltageKv === 765 ? 7 : sub.voltageKv === 533 ? 6.5 : 5.5;
 
               return (
                 <g
@@ -301,29 +232,15 @@ export default function InteractiveGridMapDiagram({
                   onClick={() => handleSelect(sub)}
                   style={{ cursor: 'pointer' }}
                 >
-                  {/* Expanding Pulsing Ring for High Risk Substations */}
-                  {isHighRisk && (
-                    <circle
-                      cx={sub.x}
-                      cy={sub.y}
-                      r={radius + (pulseTick % 20) * 0.9}
-                      fill="none"
-                      stroke={color}
-                      strokeWidth="1.5"
-                      opacity={Math.max(0, 1 - (pulseTick % 20) / 20)}
-                    />
-                  )}
-
-                  {/* Selection Ring */}
+                  {/* Selection Outline */}
                   {isSelected && (
                     <circle
                       cx={sub.x}
                       cy={sub.y}
-                      r={radius + 6}
+                      r={radius + 4}
                       fill="none"
-                      stroke="#ffffff"
-                      strokeWidth="2"
-                      strokeDasharray="3 3"
+                      stroke="#0f172a"
+                      strokeWidth="1.5"
                     />
                   )}
 
@@ -334,19 +251,18 @@ export default function InteractiveGridMapDiagram({
                     r={radius}
                     fill={color}
                     stroke="#ffffff"
-                    strokeWidth="2"
-                    filter={sub.riskTier === 'CRITICAL' ? 'url(#glow-red)' : sub.riskTier === 'WATCH' ? 'url(#glow-amber)' : undefined}
+                    strokeWidth="1.5"
                   />
 
                   {/* Substation Label */}
                   <text
                     x={sub.x}
                     y={sub.y - radius - 5}
-                    fill={isSelected ? '#ffffff' : '#cbd5e1'}
+                    fill="#0f172a"
                     fontSize={isSelected ? '10' : '8.5'}
-                    fontWeight={isSelected ? 'bold' : 'normal'}
+                    fontWeight={isSelected ? '700' : '600'}
                     textAnchor="middle"
-                    style={{ pointerEvents: 'none', textShadow: '0 1px 3px rgba(0,0,0,0.9)' }}
+                    style={{ pointerEvents: 'none' }}
                   >
                     {sub.id}
                   </text>
@@ -355,12 +271,12 @@ export default function InteractiveGridMapDiagram({
                   <text
                     x={sub.x}
                     y={sub.y + radius + 11}
-                    fill={Math.abs(sub.neutralGicAmps) > 20 ? '#fca5a5' : '#94a3b8'}
+                    fill={Math.abs(sub.neutralGicAmps) > 20 ? '#991b1b' : '#64748b'}
                     fontSize="7.5"
                     fontFamily="monospace"
-                    fontWeight="bold"
+                    fontWeight="700"
                     textAnchor="middle"
-                    style={{ pointerEvents: 'none', textShadow: '0 1px 3px rgba(0,0,0,0.9)' }}
+                    style={{ pointerEvents: 'none' }}
                   >
                     {sub.neutralGicAmps}A
                   </text>
@@ -369,87 +285,86 @@ export default function InteractiveGridMapDiagram({
             })}
           </svg>
 
-          {/* Compass & Induced Geoelectric Field Vector Overlay */}
+          {/* Compass & Induced Geoelectric Field Vector Overlay - Clean White Card */}
           <div style={{
             position: 'absolute',
             bottom: '12px',
             left: '12px',
-            backgroundColor: 'rgba(15, 23, 42, 0.85)',
-            backdropFilter: 'blur(6px)',
-            borderRadius: '8px',
+            backgroundColor: '#ffffff',
+            borderRadius: '6px',
             padding: '8px 12px',
-            border: '1px solid rgba(255, 255, 255, 0.1)',
+            border: '1px solid #e2e8f0',
             display: 'flex',
             alignItems: 'center',
             gap: '12px',
-            color: '#f8fafc',
-            boxShadow: '0 4px 12px rgba(0,0,0,0.4)'
+            color: '#0f172a',
+            boxShadow: '0 1px 3px rgba(0,0,0,0.05)'
           }}>
             {/* SVG Polar Compass */}
-            <svg width="44" height="44" viewBox="-24 -24 48 48">
-              <circle r="20" fill="none" stroke="rgba(255,255,255,0.2)" strokeWidth="1" />
-              <line x1="0" y1="-20" x2="0" y2="20" stroke="rgba(255,255,255,0.15)" strokeWidth="1" />
-              <line x1="-20" y1="0" x2="20" y2="0" stroke="rgba(255,255,255,0.15)" strokeWidth="1" />
-              <text x="0" y="-13" fill="#94a3b8" fontSize="7" textAnchor="middle" fontWeight="bold">N</text>
-              <text x="14" y="2" fill="#94a3b8" fontSize="7" textAnchor="middle" fontWeight="bold">E</text>
+            <svg width="40" height="40" viewBox="-22 -22 44 44">
+              <circle r="18" fill="none" stroke="#e2e8f0" strokeWidth="1" />
+              <line x1="0" y1="-18" x2="0" y2="18" stroke="#f1f5f9" strokeWidth="1" />
+              <line x1="-18" y1="0" x2="18" y2="0" stroke="#f1f5f9" strokeWidth="1" />
+              <text x="0" y="-11" fill="#94a3b8" fontSize="6.5" textAnchor="middle" fontWeight="bold">N</text>
+              <text x="12" y="2" fill="#94a3b8" fontSize="6.5" textAnchor="middle" fontWeight="bold">E</text>
 
-              {/* Dynamic E-Field Vector Arrow */}
+              {/* Clean E-Field Vector Arrow */}
               <g transform={`rotate(${eAngleDeg})`}>
                 <line
                   x1="0"
                   y1="0"
-                  x2={Math.min(18, Math.max(8, eMag * 100))}
+                  x2={Math.min(16, Math.max(8, eMag * 90))}
                   y2="0"
-                  stroke="#ef4444"
-                  strokeWidth="2.5"
+                  stroke="#991b1b"
+                  strokeWidth="2"
                   strokeLinecap="round"
                 />
                 <polygon
-                  points={`${Math.min(18, Math.max(8, eMag * 100)) + 3},0 ${Math.min(18, Math.max(8, eMag * 100)) - 2},-3 ${Math.min(18, Math.max(8, eMag * 100)) - 2},3`}
-                  fill="#ef4444"
+                  points={`${Math.min(16, Math.max(8, eMag * 90)) + 3},0 ${Math.min(16, Math.max(8, eMag * 90)) - 2},-2.5 ${Math.min(16, Math.max(8, eMag * 90)) - 2},2.5`}
+                  fill="#991b1b"
                 />
               </g>
             </svg>
 
             <div>
-              <div style={{ fontSize: '0.68rem', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                Induced Geoelectric Field
+              <div style={{ fontSize: '0.65rem', color: '#64748b', textTransform: 'uppercase', fontWeight: 600 }}>
+                Induced E-Field
               </div>
-              <div style={{ fontSize: '0.85rem', fontWeight: 800, color: '#f8fafc', fontFamily: 'monospace' }}>
+              <div style={{ fontSize: '0.82rem', fontWeight: 700, color: '#0f172a', fontFamily: 'monospace' }}>
                 |E| = {eMag.toFixed(3)} V/km
               </div>
-              <div style={{ fontSize: '0.7rem', color: '#cbd5e1' }}>
-                Ex: <span style={{ fontFamily: 'monospace' }}>{exVkm > 0 ? `+${exVkm}` : exVkm}</span> &bull; Ey: <span style={{ fontFamily: 'monospace' }}>{eyVkm > 0 ? `+${eyVkm}` : eyVkm}</span> V/km
+              <div style={{ fontSize: '0.68rem', color: '#64748b' }}>
+                Ex: <span style={{ fontFamily: 'monospace' }}>{exVkm > 0 ? `+${exVkm}` : exVkm}</span> &bull; Ey: <span style={{ fontFamily: 'monospace' }}>{eyVkm > 0 ? `+${eyVkm}` : eyVkm}</span>
               </div>
             </div>
           </div>
 
-          {/* Map Legend */}
+          {/* Map Legend - Clean White Card */}
           <div style={{
             position: 'absolute',
             top: '12px',
             right: '12px',
-            backgroundColor: 'rgba(15, 23, 42, 0.85)',
-            backdropFilter: 'blur(6px)',
+            backgroundColor: '#ffffff',
             borderRadius: '6px',
             padding: '6px 10px',
-            border: '1px solid rgba(255, 255, 255, 0.1)',
+            border: '1px solid #e2e8f0',
             fontSize: '0.7rem',
-            color: '#cbd5e1',
+            color: '#475569',
             display: 'flex',
             flexDirection: 'column',
-            gap: '4px'
+            gap: '4px',
+            boxShadow: '0 1px 3px rgba(0,0,0,0.04)'
           }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <span style={{ width: '14px', height: '3px', backgroundColor: '#ef4444', borderRadius: '2px' }} />
+              <span style={{ width: '12px', height: '2.5px', backgroundColor: '#991b1b', borderRadius: '1px' }} />
               <span>765 kV Super-Grid</span>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <span style={{ width: '14px', height: '2px', backgroundColor: '#38bdf8', borderRadius: '2px' }} />
+              <span style={{ width: '12px', height: '2px', backgroundColor: '#2563eb', borderRadius: '1px' }} />
               <span>400 kV Transmission</span>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <span style={{ width: '14px', height: '2px', backgroundColor: '#34d399', borderRadius: '2px' }} />
+              <span style={{ width: '12px', height: '2px', backgroundColor: '#059669', borderRadius: '1px' }} />
               <span>±533 kV HVDC Link</span>
             </div>
           </div>
@@ -472,7 +387,7 @@ export default function InteractiveGridMapDiagram({
                 fontSize: '0.65rem',
                 fontWeight: 700,
                 textTransform: 'uppercase',
-                letterSpacing: '0.08em',
+                letterSpacing: '0.04em',
                 padding: '2px 6px',
                 borderRadius: '4px',
                 backgroundColor: selected.riskTier === 'CRITICAL' ? '#fef2f2' : selected.riskTier === 'WATCH' ? '#fffbeb' : '#f0fdf4',
@@ -495,7 +410,7 @@ export default function InteractiveGridMapDiagram({
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
               {/* Neutral GIC */}
               <div style={{ padding: '8px 10px', backgroundColor: '#f8fafc', borderRadius: '6px', border: '1px solid #eaecf0' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.72rem', color: '#64748b', marginBottom: '2px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.72rem', color: '#64748b', marginBottom: '4px' }}>
                   <span>Neutral GIC Current:</span>
                   <strong style={{
                     color: Math.abs(selected.neutralGicAmps) > 20 ? '#991b1b' : '#0f172a',
@@ -504,31 +419,30 @@ export default function InteractiveGridMapDiagram({
                     {selected.neutralGicAmps} A
                   </strong>
                 </div>
-                <div style={{ width: '100%', height: '5px', backgroundColor: '#e2e8f0', borderRadius: '3px', overflow: 'hidden' }}>
+                <div style={{ width: '100%', height: '4px', backgroundColor: '#e2e8f0', borderRadius: '2px', overflow: 'hidden' }}>
                   <div style={{
                     width: `${Math.min(100, (Math.abs(selected.neutralGicAmps) / 35) * 100)}%`,
                     height: '100%',
                     backgroundColor: Math.abs(selected.neutralGicAmps) > 20 ? '#991b1b' : '#d97706',
-                    borderRadius: '3px',
-                    transition: 'width 0.3s ease'
+                    borderRadius: '2px'
                   }} />
                 </div>
               </div>
 
               {/* Reactive Loss (Q_loss) */}
               <div style={{ padding: '8px 10px', backgroundColor: '#f8fafc', borderRadius: '6px', border: '1px solid #eaecf0' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.72rem', color: '#64748b', marginBottom: '2px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.72rem', color: '#64748b', marginBottom: '4px' }}>
                   <span>Reactive Deficit (Q_loss):</span>
                   <strong style={{ color: '#0f172a', fontFamily: 'monospace' }}>
                     {selected.qLossMvar} MVAR
                   </strong>
                 </div>
-                <div style={{ width: '100%', height: '5px', backgroundColor: '#e2e8f0', borderRadius: '3px', overflow: 'hidden' }}>
+                <div style={{ width: '100%', height: '4px', backgroundColor: '#e2e8f0', borderRadius: '2px', overflow: 'hidden' }}>
                   <div style={{
                     width: `${Math.min(100, (selected.qLossMvar / 15) * 100)}%`,
                     height: '100%',
-                    backgroundColor: '#6366f1',
-                    borderRadius: '3px'
+                    backgroundColor: '#2563eb',
+                    borderRadius: '2px'
                   }} />
                 </div>
               </div>
@@ -558,10 +472,11 @@ export default function InteractiveGridMapDiagram({
             color: '#64748b',
             lineHeight: 1.4,
             padding: '8px',
-            backgroundColor: '#f1f5f9',
-            borderRadius: '6px'
+            backgroundColor: '#f8fafc',
+            borderRadius: '6px',
+            border: '1px solid #eaecf0'
           }}>
-            &#9888; <strong>Mitigation Directive:</strong> When neutral current exceeds 20A, initiate automatic tertiary-winding capacitor bank insertion to arrest reactive power drain.
+            &#9888; <strong>Mitigation Directive:</strong> When neutral current exceeds 20A, initiate automatic tertiary-winding capacitor bank insertion.
           </div>
         </div>
       </div>
