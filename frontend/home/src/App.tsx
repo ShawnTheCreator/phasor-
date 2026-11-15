@@ -80,9 +80,12 @@ export default function App(): JSX.Element {
         </header>
 
         {/* Hero Centered Content: Crumbling Phasor on Scroll with Tactile Pop Entrance */}
-        <div className="hero-content">
-          <div className={isSiteRevealed ? 'hero-title-pop' : 'hero-title-idle'}>
-            <CrumbleText />
+        <div className="hero-content" style={{ overflow: 'visible' }}>
+          <div
+            className={isSiteRevealed ? 'hero-title-pop' : 'hero-title-idle'}
+            style={{ width: '100%', overflow: 'visible', display: 'flex', justifyContent: 'center' }}
+          >
+            <CrumbleText isRevealed={isSiteRevealed} />
           </div>
 
           <div className={`hero-role-tag ${isSiteRevealed ? 'hero-tag-pop' : 'hero-tag-idle'}`}>

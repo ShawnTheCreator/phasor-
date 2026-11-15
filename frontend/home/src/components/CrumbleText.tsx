@@ -28,11 +28,16 @@ interface DustParticle {
   opacity: number;
 }
 
-export default function CrumbleText(): JSX.Element {
+interface CrumbleTextProps {
+  isRevealed?: boolean;
+}
+
+export default function CrumbleText({ isRevealed = true }: CrumbleTextProps): JSX.Element {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const scrollRef = useRef<number>(0);
   const animFrameRef = useRef<number | null>(null);
+  const reinitRef = useRef<(() => void) | null>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -54,23 +59,25 @@ export default function CrumbleText(): JSX.Element {
 
     const initShatter = (): void => {
       dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const viewportW = typeof window !== 'undefined' ? window.innerWidth : 1200;
       const rect = container.getBoundingClientRect();
-      const width = Math.max(rect.width, 320);
+      // Ensure canvas has full generous width across any display so letters never clip
+      const width = Math.max(viewportW, rect.width || 1200);
 
       // Font size calculation matching CSS clamp(4.5rem, 11vw, 9.8rem)
       const baseRem = 16;
       const minPx = 4.5 * baseRem;
       const maxPx = 9.8 * baseRem;
-      const preferredPx = window.innerWidth * 0.11;
+      const preferredPx = viewportW * 0.11;
       const fontSizeCss = Math.min(maxPx, Math.max(minPx, preferredPx));
       const fontSize = fontSizeCss * dpr;
 
-      // Tight DOM height so it doesn't push down following elements
-      const textDomHeight = Math.ceil(fontSizeCss * 0.95);
+      // Generous DOM height (135% of font size) ensures complete clearance for ascenders (P, h) and descenders
+      const textDomHeight = Math.ceil(fontSizeCss * 1.35);
       container.style.height = `${textDomHeight}px`;
 
       // Canvas height has extra headroom below for falling fragments without affecting layout
-      const canvasDomHeight = textDomHeight + 400;
+      const canvasDomHeight = textDomHeight + 450;
 
       canvas.width = width * dpr;
       canvas.height = canvasDomHeight * dpr;
@@ -86,24 +93,25 @@ export default function CrumbleText(): JSX.Element {
       offCtx.textBaseline = 'middle';
 
       const centerX = (width * dpr) / 2;
-      const centerY = (textDomHeight * dpr) / 2; // Perfectly centered inside tight text bounds
+      // Vertically centered inside generous textDomHeight with ample margin above and below
+      const centerY = (textDomHeight * dpr) / 2;
 
-      // Measure text
+      // Measure text accurately
       const metrics = offCtx.measureText('Phasor');
       const textWidth = metrics.width;
-      const textHeight = fontSize * 0.92;
+      const textHeight = fontSize * 1.08;
 
       textBounds = {
-        x: centerX - textWidth / 2 - 16 * dpr,
-        y: centerY - textHeight / 2 - 8 * dpr,
-        w: textWidth + 32 * dpr,
-        h: textHeight + 16 * dpr,
+        x: Math.max(0, centerX - textWidth / 2 - 32 * dpr),
+        y: Math.max(0, centerY - textHeight / 2 - 24 * dpr),
+        w: Math.min(offscreen.width, textWidth + 64 * dpr),
+        h: Math.min(offscreen.height, textHeight + 48 * dpr),
       };
 
-      // Draw pristine text in offscreen canvas
+      // Draw pristine text in offscreen canvas with soft glow shadow
       offCtx.fillStyle = '#ffffff';
       offCtx.shadowColor = 'rgba(0, 0, 0, 0.65)';
-      offCtx.shadowBlur = 32 * dpr;
+      offCtx.shadowBlur = 24 * dpr;
       offCtx.shadowOffsetY = 4 * dpr;
       offCtx.fillText('Phasor', centerX, centerY);
 
@@ -188,26 +196,28 @@ export default function CrumbleText(): JSX.Element {
             cx: sx + cellW / 2,
             cy: sy + cellH / 2,
             pStart,
-            fallSpeed,
-            driftX,
             rotSpeed,
+            driftX,
+            fallSpeed,
           });
 
-          // Add dust particles for crumbling texture
+          // Add subtle micro dust particles
           if (idx % 3 === 0) {
             dustParticles.push({
-              x: sx + cellW / 2 + jx(idx * 3),
-              y: sy + cellH / 2 + jy(idx * 3),
-              size: (1.5 + (idx % 3) * 1.5) * dpr,
-              driftX: ((idx % 2 === 0 ? 1 : -1) * (30 + (idx % 5) * 20)) * dpr,
-              fallSpeed: (600 + (idx % 4) * 150) * dpr,
-              pStart: pStart * 0.85,
+              x: sx + cellW * 0.5,
+              y: sy + cellH * 0.5,
+              size: (1.5 + (idx % 3) * 1.2) * dpr,
+              driftX: ((idx % 5 - 2) * 50) * dpr,
+              fallSpeed: (300 + (idx % 4) * 160) * dpr,
+              pStart: pStart + 0.02,
               opacity: 0.75 + (idx % 3) * 0.1,
             });
           }
         }
       }
     };
+
+    reinitRef.current = initShatter;
 
     // Render loop
     const render = (): void => {
@@ -218,7 +228,7 @@ export default function CrumbleText(): JSX.Element {
       const progress = Math.min(1, Math.max(0, scrollY / 380));
 
       if (progress === 0) {
-        // Pristine intact text
+        // Pristine intact text (renders whole offscreen canvas flawlessly without cutouts)
         ctx.drawImage(offscreen, 0, 0);
       } else {
         // Draw crumbling shards
@@ -322,10 +332,21 @@ export default function CrumbleText(): JSX.Element {
     };
   }, []);
 
+  // When site finishes loading / revealing, re-initialize shatter bounds at pristine scale
+  useEffect(() => {
+    if (isRevealed && reinitRef.current) {
+      const timer = setTimeout(() => {
+        if (reinitRef.current) reinitRef.current();
+      }, 50);
+      return () => clearTimeout(timer);
+    }
+  }, [isRevealed]);
+
   return (
     <div
       ref={containerRef}
       className="crumble-text-container"
+      style={{ overflow: 'visible', width: '100%' }}
     >
       <canvas
         ref={canvasRef}
