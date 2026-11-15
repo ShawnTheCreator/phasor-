@@ -6,6 +6,7 @@ import StormShowcase from './components/StormShowcase';
 import GlassyPhiLogo from './components/GlassyPhiLogo';
 import CookieConsent from './components/CookieConsent';
 import BookDemoModal from './components/BookDemoModal';
+import MultiHazardDefenseSection from './components/MultiHazardDefenseSection';
 
 const isProduction: boolean = Boolean(import.meta.env.PROD);
 const rawDashboardEnv: string = (import.meta.env.VITE_DASHBOARD_URL as string) || '';
@@ -41,6 +42,7 @@ export default function App(): JSX.Element {
           <nav className="hero-nav-links">
             <a href="#how-it-works" className="hero-nav-link">How It Works</a>
             <a href="#replay" className="hero-nav-link">Storm Replay</a>
+            <a href="#multi-hazard" className="hero-nav-link">Multi-Hazard</a>
             <a href="#science" className="hero-nav-link">Data Lineage</a>
             <button
               onClick={() => setIsDemoOpen(true)}
@@ -112,6 +114,13 @@ export default function App(): JSX.Element {
       <section id="replay" className="storm-section-wrapper">
         <StormShowcase />
       </section>
+
+      {/* =========================================================================
+          FOURTH SECTION: MULTI-HAZARD DEFENSE (PLANES, RADIO, GPS, HOSPITALS, LEO)
+          - What happens to planes, HF radios, GPS satellites, hospitals & remote field workers
+          - How Phasor shields operations with real-time early warning and mitigation
+          ========================================================================= */}
+      <MultiHazardDefenseSection dashboardUrl={DASHBOARD_URL} />
 
       {/* =========================================================================
           OPEN SCIENCE DATA PROVENANCE
