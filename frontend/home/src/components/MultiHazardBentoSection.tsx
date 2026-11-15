@@ -35,7 +35,7 @@ function BentoVideoCard({
   badge,
   title,
   subtitle,
-  aspectRatio = '16/10',
+  aspectRatio = '16/9',
   textPosition = 'below',
   isLargeHero = false,
   heroLockup,
@@ -101,14 +101,14 @@ function BentoVideoCard({
         style={{
           position: 'relative',
           width: '100%',
-          aspectRatio: isLargeHero ? '16/11' : aspectRatio,
+          aspectRatio: isLargeHero ? '16/9.5' : aspectRatio,
           borderRadius: '16px',
           overflow: 'hidden',
           background: posterBg,
           display: 'flex',
           flexDirection: 'column',
           justifyContent: textPosition === 'inside-bottom' ? 'space-between' : 'flex-start',
-          padding: textPosition === 'inside-bottom' ? '24px' : '16px',
+          padding: textPosition === 'inside-bottom' ? '20px 24px' : '14px 16px',
           border: '1px solid rgba(0, 0, 0, 0.08)',
           boxShadow: '0 2px 10px rgba(0, 0, 0, 0.04)',
           transition: 'transform 0.2s ease, box-shadow 0.2s ease',
@@ -321,14 +321,14 @@ function BentoVideoCard({
 
 export default function MultiHazardBentoSection({ dashboardUrl }: MultiHazardBentoSectionProps): JSX.Element {
   return (
-    <section id="multi-hazard" className="editorial-sub-section" style={{ backgroundColor: '#ffffff', color: '#0f172a', padding: '80px 0 100px 0' }}>
-      <div className="editorial-container">
+    <section id="multi-hazard" className="editorial-sub-section" style={{ backgroundColor: '#ffffff', color: '#0f172a', padding: '64px 0 88px 0' }}>
+      <div className="editorial-container" style={{ maxWidth: '1080px', margin: '0 auto', padding: '0 clamp(20px, 4vw, 40px)', boxSizing: 'border-box' }}>
         {/* Top Minimal Editorial Title Bar */}
-        <div style={{ marginBottom: '32px' }}>
-          <h2 style={{ fontSize: 'clamp(2rem, 3.5vw, 2.75rem)', fontWeight: 800, letterSpacing: '-0.03em', color: '#0f172a', margin: '0 0 10px 0' }}>
+        <div style={{ marginBottom: '28px' }}>
+          <h2 style={{ fontSize: 'clamp(1.85rem, 3.2vw, 2.45rem)', fontWeight: 800, letterSpacing: '-0.03em', color: '#0f172a', margin: '0 0 10px 0' }}>
             Protecting the skies, the waves, and the cities below.
           </h2>
-          <p style={{ fontSize: '1.02rem', color: '#64748b', maxWidth: '780px', lineHeight: 1.6, margin: 0 }}>
+          <p style={{ fontSize: '0.98rem', color: '#64748b', maxWidth: '720px', lineHeight: 1.6, margin: 0 }}>
             Geomagnetic storms cascade through every layer of technological civilization. Here is how Phasor’s specialized early-warning engines shield critical infrastructure before contact is lost.
           </p>
         </div>
@@ -341,7 +341,7 @@ export default function MultiHazardBentoSection({ dashboardUrl }: MultiHazardBen
           <div className="bento-card-span-5">
             <BentoVideoCard
               isLargeHero={false}
-              aspectRatio="16/10"
+              aspectRatio="16/9"
               textPosition="below"
               posterBg="#0f172a"
               badge="REGIONAL POWER POOL"
@@ -357,6 +357,7 @@ export default function MultiHazardBentoSection({ dashboardUrl }: MultiHazardBen
           <div className="bento-card-span-7">
             <BentoVideoCard
               isLargeHero={true}
+              aspectRatio="16/9.5"
               textPosition="inside-bottom"
               posterBg="#09121a"
               badge="COMMERCIAL AVIATION"
@@ -371,7 +372,7 @@ export default function MultiHazardBentoSection({ dashboardUrl }: MultiHazardBen
           {/* Card 3: HF Radio Comms (Radio Satellite Video Card) */}
           <div className="bento-card-span-6">
             <BentoVideoCard
-              aspectRatio="16/10"
+              aspectRatio="16/9"
               textPosition="below"
               posterBg="#0f172a"
               badge="HF RADIO COMMS"
@@ -386,7 +387,7 @@ export default function MultiHazardBentoSection({ dashboardUrl }: MultiHazardBen
           {/* Card 4: Precision GNSS & Drones (Drone Video Card) */}
           <div className="bento-card-span-6">
             <BentoVideoCard
-              aspectRatio="16/10"
+              aspectRatio="16/9"
               textPosition="below"
               posterBg="#090d16"
               badge="PRECISION GNSS & DRONES"
@@ -401,7 +402,7 @@ export default function MultiHazardBentoSection({ dashboardUrl }: MultiHazardBen
           {/* Card 5: Hospital Resilience (Medical ICU Video Card) */}
           <div className="bento-card-span-7">
             <BentoVideoCard
-              aspectRatio="16/10"
+              aspectRatio="16/9.5"
               textPosition="inside-bottom"
               posterBg="#090d16"
               badge="HOSPITAL RESILIENCE"
@@ -416,7 +417,7 @@ export default function MultiHazardBentoSection({ dashboardUrl }: MultiHazardBen
           {/* Card 6: LEO Satellites (Orbit Video Card) */}
           <div className="bento-card-span-5">
             <BentoVideoCard
-              aspectRatio="16/10"
+              aspectRatio="16/9"
               textPosition="below"
               posterBg="#020617"
               badge="ORBITAL DRAG"
