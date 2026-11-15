@@ -23,17 +23,18 @@ export default function GlassyPhiLogo(): JSX.Element {
   const [morphT, setMorphT] = useState<number>(0); // 0 = Φ (Uppercase), 1 = φ (Lowercase)
   const [logoOpacity, setLogoOpacity] = useState<number>(1); // 1 = Visible, 0 = Disappeared
   const [isLight, setIsLight] = useState<boolean>(false);
+  const [footerProgress, setFooterProgress] = useState<number>(0); // 0 = In corner, 1 = Centered & expanded into footer
 
   const prevYRef = useRef<number>(0);
   const lastTimeRef = useRef<number>(performance.now());
   const rafRef = useRef<number | null>(null);
 
   // =========================================================================
-  // SECTION-DRIVEN LOGO MORPHING & FADE:
+  // SECTION-DRIVEN LOGO MORPHING, VISIBILITY & EXPANDING FOOTER DOCKING:
   // 1. Section 1 (Hero): Logo is solid UPPERCASE Φ.
-  // 2. Entering Section 2 (PinnedPipeline): Logo morphs to LOWERCASE φ.
-  // 3. Section 2 to Section 3 (StormShowcase): Logo smoothly fades and disappears.
-  // 4. Section 3 and beyond: Logo is completely disappeared (opacity 0).
+  // 2. Entering Section 2 (PinnedPipeline): Logo morphs to LOWERCASE φ and switches to light theme.
+  // 3. Section 3 (StormShowcase) & Section 4 (MultiHazard): Logo APPEARS and remains visible!
+  // 4. Past Section 4: Logo slowly glides inward from corner and expands into the footer.
   // =========================================================================
   useEffect(() => {
     let currentVel = 0;
@@ -64,6 +65,7 @@ export default function GlassyPhiLogo(): JSX.Element {
       // Section geometry checks
       const section2 = document.getElementById('how-it-works');
       const section3 = document.getElementById('replay');
+      const section4 = document.getElementById('multi-hazard');
       const vh = window.innerHeight || 800;
 
       // 1. Morph between Φ and φ only when getting to Section 2
@@ -94,28 +96,53 @@ export default function GlassyPhiLogo(): JSX.Element {
         newIsLight = currentY > vh * 2.5;
       }
 
-      // 2. Fading from the second section to the third section, then disappearing
-      let newOpacity = 1.0;
+      // 2. Sections 3 & 4: Logo appears and stays active with light theme!
       if (section3) {
         const r3 = section3.getBoundingClientRect();
-        // Fade zone: as Section 2 finishes and Section 3 rises into view
-        const fadeStart = vh * 0.85;
-        const fadeEnd = vh * 0.15;
-        if (r3.top >= fadeStart) {
-          newOpacity = 1.0; // Fully visible in Section 1 & Section 2
-        } else if (r3.top <= fadeEnd) {
-          newOpacity = 0.0; // Completely disappeared in Section 3 and beyond
-        } else {
-          const raw = (r3.top - fadeEnd) / (fadeStart - fadeEnd);
-          newOpacity = raw * raw * (3 - 2 * raw); // Smooth cubic fade-out
+        if (r3.top < vh * 0.8) {
+          newIsLight = true;
+          newMorphT = 1;
         }
+      }
+
+      if (section4) {
+        const r4 = section4.getBoundingClientRect();
+        if (r4.top < vh * 0.8) {
+          newIsLight = true;
+          newMorphT = 1;
+        }
+      }
+
+      // 3. Past the 4th Section: Logo slowly starts to enter from the corner and expands to footer!
+      let newFooterProg = 0;
+      let newOpacity = 1.0;
+
+      if (section4) {
+        const r4 = section4.getBoundingClientRect();
+        // Trigger as user scrolls past the bottom of Section 4 into Section 5 and Footer
+        const enterStart = vh * 0.85;
+        const enterEnd = -vh * 0.35;
+        if (r4.bottom >= enterStart) {
+          newFooterProg = 0;
+        } else if (r4.bottom <= enterEnd) {
+          newFooterProg = 1;
+        } else {
+          const raw = (enterStart - r4.bottom) / (enterStart - enterEnd);
+          newFooterProg = Math.max(0, Math.min(1, raw * raw * (3 - 2 * raw)));
+        }
+      }
+
+      // As it fully docks into the footer (newFooterProg > 0.82), smoothly dissolve into the footer's dedicated expanded logo
+      if (newFooterProg > 0.82) {
+        newOpacity = Math.max(0, (1 - newFooterProg) / 0.18);
       } else {
-        newOpacity = currentY > vh * 5.0 ? 0 : 1;
+        newOpacity = 1.0;
       }
 
       setMorphT(newMorphT);
       setLogoOpacity(newOpacity);
       setIsLight(newIsLight);
+      setFooterProgress(newFooterProg);
 
       rafRef.current = requestAnimationFrame(update);
     };
@@ -161,6 +188,18 @@ export default function GlassyPhiLogo(): JSX.Element {
   const moldScaleY = 1 + Math.min(0.09, Math.abs(velocity) * 0.0035);
   const baseScale = isHovered ? 1.12 : 1.0;
 
+  // Dynamics for gliding into center & expanding as user scrolls past Section 4
+  const cornerLeft = typeof window !== 'undefined' ? Math.min(56, Math.max(16, window.innerWidth * 0.04)) : 32;
+  const screenW = typeof window !== 'undefined' ? window.innerWidth : 1200;
+  const screenH = typeof window !== 'undefined' ? window.innerHeight : 800;
+
+  const targetDeltaX = screenW / 2 - cornerLeft - 28;
+  const targetDeltaY = screenH * 0.44;
+
+  const enterX = footerProgress * targetDeltaX;
+  const enterY = footerProgress * targetDeltaY;
+  const expandScale = 1 + footerProgress * 3.4;
+
   // Clicking smoothly scrolls back to the top of the page
   const handleClick = (e: React.MouseEvent): void => {
     e.preventDefault();
@@ -171,10 +210,10 @@ export default function GlassyPhiLogo(): JSX.Element {
     <aside
       className="glassy-phi-logo-anchor"
       style={{
-        transform: `perspective(900px) translate3d(${swayX}px, ${bobY}px, 0px) rotateX(${pitchX}deg) skewX(${skewX}deg) scale(${baseScale}) scaleY(${moldScaleY})`,
+        transform: `perspective(900px) translate3d(${swayX + enterX}px, ${bobY + enterY}px, 0px) rotateX(${pitchX * (1 - footerProgress)}deg) skewX(${skewX * (1 - footerProgress)}deg) scale(${baseScale * expandScale}) scaleY(${moldScaleY})`,
         opacity: logoOpacity,
         visibility: logoOpacity > 0.005 ? 'visible' : 'hidden',
-        pointerEvents: logoOpacity > 0.08 ? 'auto' : 'none',
+        pointerEvents: logoOpacity > 0.08 && footerProgress < 0.8 ? 'auto' : 'none',
         transition: 'opacity 0.15s ease-out, visibility 0.15s ease-out',
       }}
     >

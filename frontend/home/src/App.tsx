@@ -7,6 +7,7 @@ import GlassyPhiLogo from './components/GlassyPhiLogo';
 import CookieConsent from './components/CookieConsent';
 import BookDemoModal from './components/BookDemoModal';
 import MultiHazardBentoSection from './components/MultiHazardBentoSection';
+import ExpandingBrandFooter from './components/ExpandingBrandFooter';
 
 const isProduction: boolean = Boolean(import.meta.env.PROD);
 const rawDashboardEnv: string = (import.meta.env.VITE_DASHBOARD_URL as string) || '';
@@ -145,39 +146,16 @@ export default function App(): JSX.Element {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="editorial-footer">
-        <div className="editorial-container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px' }}>
-          <p>&copy; 2026 Phasor &bull; NASA International Space Apps Challenge &bull; All Rights Reserved.</p>
-          <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-            <a
-              href={DASHBOARD_URL}
-              className="btn-hero-red"
-              style={{ padding: '8px 18px', fontSize: '0.84rem', textDecoration: 'none' }}
-              target="_blank"
-              rel="noreferrer"
-            >
-              Demo ↗
-            </a>
-            <button
-              onClick={() => setIsDemoOpen(true)}
-              className="btn-pill-glass"
-              style={{ padding: '8px 16px', fontSize: '0.84rem', cursor: 'pointer', border: '1px solid rgba(255,255,255,0.3)' }}
-            >
-              Book a Demo
-            </button>
-            <a
-              href={`${DASHBOARD_URL}/login`}
-              className="btn-pill-glass"
-              style={{ padding: '8px 16px', fontSize: '0.84rem', textDecoration: 'none' }}
-              target="_blank"
-              rel="noreferrer"
-            >
-              Login ↗
-            </a>
-          </div>
-        </div>
-      </footer>
+      {/* =========================================================================
+          EXPANDING BRAND & FORMULA FOOTER
+          - When scrolling past the 4th section (Multi-Hazard), the logo slowly enters
+            from the corner and expands into this grand cinematic footer stage.
+          - Expands the electromagnetic induction governing formula with glow & scale.
+          ========================================================================= */}
+      <ExpandingBrandFooter
+        dashboardUrl={DASHBOARD_URL}
+        onOpenDemo={() => setIsDemoOpen(true)}
+      />
 
       {/* Interactive VIP Demo Booking Modal */}
       <BookDemoModal
