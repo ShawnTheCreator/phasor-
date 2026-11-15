@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { HOME_URL } from '../lib/config';
 
 export default function Sidebar(): JSX.Element {
   const router = useRouter();
@@ -8,14 +9,34 @@ export default function Sidebar(): JSX.Element {
 
   return (
     <aside className="sidebar">
-      {/* 1. Header (Anchored at top) */}
-      <div className="logo-header" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+      {/* 1. Header (Anchored at top - Links back to Public Home) */}
+      <a
+        href={HOME_URL}
+        className="logo-header"
+        title="Return to Public Homepage"
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '10px',
+          textDecoration: 'none',
+          color: 'inherit',
+          cursor: 'pointer',
+          padding: '4px 6px',
+          borderRadius: '8px',
+          transition: 'background-color 0.15s ease',
+        }}
+      >
         <span className="logo-phi-symbol" style={{ fontSize: '1.45rem', fontWeight: 800, color: '#ef4444', lineHeight: 1, textShadow: '0 0 12px rgba(239, 68, 68, 0.4)' }}>Φ</span>
         <div>
-          <div className="logo-text">Phasor</div>
+          <div className="logo-text" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <span>Phasor</span>
+            <span style={{ fontSize: '0.62rem', color: '#991b1b', fontWeight: 700, backgroundColor: '#fef2f2', padding: '1px 5px', borderRadius: '4px', border: '1px solid #fecaca' }}>
+              ↖ Home
+            </span>
+          </div>
           <div style={{ fontSize: '0.68rem', color: '#94a3b8', letterSpacing: '0.04em', fontWeight: 600 }}>SADC MULTI-HAZARD</div>
         </div>
-      </div>
+      </a>
 
       {/* 2. Scrollable Middle Body */}
       <div className="sidebar-scroll-body">
@@ -184,6 +205,28 @@ export default function Sidebar(): JSX.Element {
             Lock
           </button>
         </div>
+
+        <a
+          href={HOME_URL}
+          className="nav-item"
+          style={{
+            color: '#991b1b',
+            backgroundColor: '#fef2f2',
+            border: '1px solid #fecaca',
+            marginBottom: '8px',
+            textDecoration: 'none',
+            fontSize: '0.76rem',
+            fontWeight: 600,
+          }}
+          title="Leave dashboard and return to public website"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" style={{ width: '15px', height: '15px' }}>
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
+          <span>Exit to Public Home</span>
+          <span style={{ marginLeft: 'auto', fontSize: '0.72rem', fontWeight: 700 }}>↖</span>
+        </a>
 
         <div className="nav-item" style={{ color: 'var(--text-muted)' }}>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">

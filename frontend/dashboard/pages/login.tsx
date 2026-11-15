@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import RedLiquidBackground from '../components/RedLiquidBackground';
+import { HOME_URL } from '../lib/config';
 
 export default function LoginPage(): JSX.Element {
   const router = useRouter();
@@ -175,6 +176,28 @@ export default function LoginPage(): JSX.Element {
               >
                 Log in with SSO
               </button>
+
+              {/* Back to Homepage Link */}
+              <div style={{ marginTop: '12px', textAlign: 'center' }}>
+                <a
+                  href={HOME_URL}
+                  style={{
+                    fontSize: '0.78rem',
+                    color: '#64748b',
+                    textDecoration: 'none',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '5px',
+                    fontWeight: 500,
+                    cursor: 'pointer',
+                  }}
+                  onMouseOver={(e) => (e.currentTarget.style.color = '#991b1b')}
+                  onMouseOut={(e) => (e.currentTarget.style.color = '#64748b')}
+                >
+                  <span>&larr;</span>
+                  <span>Return to Homepage</span>
+                </a>
+              </div>
             </form>
           </div>
 

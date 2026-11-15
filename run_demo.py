@@ -12,10 +12,12 @@ from pathlib import Path
 import argparse
 import unittest
 
-# Ensure backend/ai_model packages (engine, data, hardware) are discovered
-_AI_MODEL_PATH = Path(__file__).resolve().parent / "backend" / "ai_model"
-if str(_AI_MODEL_PATH) not in sys.path:
-    sys.path.insert(0, str(_AI_MODEL_PATH))
+# Ensure backend/engine packages (engine, data, hardware) are discovered
+_ENGINE_PATH = Path(__file__).resolve().parent / "backend" / "engine"
+if not _ENGINE_PATH.exists():
+    _ENGINE_PATH = Path(__file__).resolve().parent / "backend" / "ai_model"
+if str(_ENGINE_PATH) not in sys.path:
+    sys.path.insert(0, str(_ENGINE_PATH))
 
 def print_banner():
     banner = r"""
@@ -35,7 +37,7 @@ def print_banner():
 def verify_system():
     print("[*] Running automated physics & network conservation test suite...")
     loader = unittest.TestLoader()
-    suite = loader.discover(str(_AI_MODEL_PATH / "tests"))
+    suite = loader.discover(str(_ENGINE_PATH / "tests"))
     runner = unittest.TextTestRunner(verbosity=1)
     result = runner.run(suite)
     

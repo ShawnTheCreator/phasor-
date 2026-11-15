@@ -5,7 +5,7 @@ services:
   - type: web
     name: phasor-api
     runtime: python
-    rootDir: backend/ai_model
+    rootDir: backend/engine
     region: frankfurt # Low-latency to SADC / Africa
     plan: free
     buildCommand: pip install -r requirements.txt

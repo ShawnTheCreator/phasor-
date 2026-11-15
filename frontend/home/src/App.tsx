@@ -7,9 +7,10 @@ import GlassyPhiLogo from './components/GlassyPhiLogo';
 import CookieConsent from './components/CookieConsent';
 
 const isProduction: boolean = Boolean(import.meta.env.PROD);
-const DASHBOARD_URL: string =
-  (import.meta.env.VITE_DASHBOARD_URL as string) ||
-  (isProduction ? '/dashboard' : 'http://localhost:3000');
+const rawDashboardEnv: string = (import.meta.env.VITE_DASHBOARD_URL as string) || '';
+const DASHBOARD_URL: string = rawDashboardEnv
+  ? rawDashboardEnv.replace(/\/$/, '')
+  : (isProduction ? '/dashboard' : 'http://localhost:3000');
 
 export default function App(): JSX.Element {
   return (
