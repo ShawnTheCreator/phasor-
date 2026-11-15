@@ -70,6 +70,10 @@ var alertsStore = new List<Alert>
     }
 };
 
+// 0. Health Check & Root Ping
+app.MapGet("/", () => Results.Ok(new { status = "HEALTHY", service = "Phasor C# Ingestion Engine", version = "1.0.0" }));
+app.MapGet("/api/status", () => Results.Ok(new { status = "HEALTHY", service = "Phasor C# Ingestion Engine", timestamp = DateTime.UtcNow }));
+
 // 1. Current Grid Risk
 app.MapGet("/api/risk/current", (IIngestionService ingest) =>
 {
