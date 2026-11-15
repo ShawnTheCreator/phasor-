@@ -8,6 +8,8 @@ import CookieConsent from './components/CookieConsent';
 import BookDemoModal from './components/BookDemoModal';
 import MultiHazardBentoSection from './components/MultiHazardBentoSection';
 import ExpandingBrandFooter from './components/ExpandingBrandFooter';
+import CinematicLoader from './components/CinematicLoader';
+import BriefingPopup from './components/BriefingPopup';
 
 const isProduction: boolean = Boolean(import.meta.env.PROD);
 const rawDashboardEnv: string = (import.meta.env.VITE_DASHBOARD_URL as string) || '';
@@ -17,9 +19,43 @@ const DASHBOARD_URL: string = rawDashboardEnv
 
 export default function App(): JSX.Element {
   const [isDemoOpen, setIsDemoOpen] = useState(false);
+  const [isSiteRevealed, setIsSiteRevealed] = useState(false);
+  const [isBriefingOpen, setIsBriefingOpen] = useState(false);
+
+  const handleLoaderComplete = () => {
+    setIsSiteRevealed(true);
+    // Slow popup glides in 1.4 seconds after the site is slowly revealed
+    setTimeout(() => {
+      setIsBriefingOpen(true);
+    }, 1400);
+  };
 
   return (
-    <div className="landing-root">
+    <div
+      className={`landing-root ${isSiteRevealed ? 'site-revealed' : 'site-preloading'}`}
+      style={{
+        opacity: isSiteRevealed ? 1 : 0.92,
+        transition: 'opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
+      }}
+    >
+      {/* =========================================================================
+          CINEMATIC INITIALIZATION LOADER
+          - Smoothly reveals the site with telemetry progress
+          - Can be bypassed instantly by pressing ESC or clicking anywhere
+          ========================================================================= */}
+      <CinematicLoader onComplete={handleLoaderComplete} />
+
+      {/* =========================================================================
+          SLOW-REVEALING MISSION BRIEFING HUD POPUP
+          - Appears gracefully after the site is revealed with gentle entrance
+          - Displays live telemetry status and link to mission control dashboard
+          ========================================================================= */}
+      <BriefingPopup
+        isOpen={isBriefingOpen}
+        onClose={() => setIsBriefingOpen(false)}
+        dashboardUrl={DASHBOARD_URL}
+      />
+
       {/* =========================================================================
           FIXED GLASSY PHI (Φ) LOGO IN THE LEFT CORNER
           - Greek letter Phi (Φ) representing magnetic flux & phasor phase angle
@@ -156,10 +192,7 @@ export default function App(): JSX.Element {
       </section>
 
       {/* =========================================================================
-          EXPANDING BRAND & FORMULA FOOTER
-          - When scrolling past the 4th section (Multi-Hazard), the logo slowly enters
-            from the corner and expands into this grand cinematic footer stage.
-          - Expands the electromagnetic induction governing formula with glow & scale.
+          EXPANDING MONUMENTAL EDITORIAL FOOTER
           ========================================================================= */}
       <ExpandingBrandFooter
         dashboardUrl={DASHBOARD_URL}
