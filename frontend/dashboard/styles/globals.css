@@ -332,9 +332,17 @@ body {
   gap: 8px;
   background-color: #f8fafc;
   border: 1px solid var(--border-light);
-  padding: 6px 12px;
+  padding: 7px 14px;
   border-radius: var(--radius-sm);
-  width: 320px;
+  width: 480px;
+  max-width: 540px;
+  transition: all 0.15s ease;
+}
+
+.search-box:focus-within {
+  border-color: #cbd5e1;
+  background-color: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 }
 
 .search-box input {

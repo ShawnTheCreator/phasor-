@@ -113,11 +113,6 @@ export default function CommandView(): JSX.Element {
           </div>
 
           <div className="top-nav-right">
-            <div className="btn-outline" style={{ fontSize: '0.8rem', padding: '7px 14px' }}>
-              <span className="color-dot" style={{ backgroundColor: '#10b981', display: 'inline-block' }}></span>
-              <span>C# SignalR Live</span>
-            </div>
-
             <Link href="/replay" className="btn-red-primary" style={{ textDecoration: 'none' }}>
               <span>+ Replay G5 Storm</span>
               <span style={{ fontSize: '0.7rem' }}>&#9660;</span>
