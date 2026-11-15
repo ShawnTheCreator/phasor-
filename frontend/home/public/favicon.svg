@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="homeBgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#b91c1c" />
+      <stop offset="55%" stop-color="#7f1d1d" />
+      <stop offset="100%" stop-color="#450a0a" />
+    </linearGradient>
+    <linearGradient id="homePhiGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="100%" stop-color="#fecaca" />
+    </linearGradient>
+  </defs>
+  <!-- Cosmic Crimson Squircle Badge -->
+  <rect x="2" y="2" width="60" height="60" rx="16" fill="url(#homeBgGrad)" stroke="#f87171" stroke-width="2" stroke-opacity="0.4" />
+  
+  <!-- Outer magnetic flux ring indicator -->
+  <circle cx="32" cy="32" r="26" fill="none" stroke="#ef4444" stroke-width="1.2" stroke-dasharray="3 3" opacity="0.45" />
+
+  <!-- Classical Greek Letter Phi (Φ) -->
+  <!-- Vertical Axis with Rounded Terminals -->
+  <line x1="32" y1="10" x2="32" y2="54" stroke="url(#homePhiGrad)" stroke-width="5" stroke-linecap="round" />
+  <!-- Classical Serif Caps -->
+  <line x1="24" y1="11" x2="40" y2="11" stroke="url(#homePhiGrad)" stroke-width="3" stroke-linecap="round" />
+  <line x1="24" y1="53" x2="40" y2="53" stroke="url(#homePhiGrad)" stroke-width="3" stroke-linecap="round" />
+  <!-- Central Circular Flux Loop -->
+  <circle cx="32" cy="32" r="13" fill="none" stroke="url(#homePhiGrad)" stroke-width="5" />
+</svg>
