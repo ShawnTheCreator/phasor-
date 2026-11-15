@@ -5,7 +5,7 @@ Tests for MongoDB Data Layer & Dynamic Live Space Weather Feed.
 import unittest
 from data.db import MongoManager
 from data.live_feed_service import LiveSpaceWeatherFeed
-from server.main import (
+from main import (
     get_database_status,
     get_operational_directives,
     add_operational_directive,

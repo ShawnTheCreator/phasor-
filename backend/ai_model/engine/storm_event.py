@@ -19,8 +19,16 @@ from data.conductivity_models import KAAPVAAL_CRATON_MODEL
 
 
 class StormEventManager:
-    def __init__(self, data_path: str = "data/may_2024_g5_storm.json"):
-        self.data_path = data_path
+    def __init__(self, data_path: Optional[str] = None):
+        if data_path and os.path.exists(data_path):
+            self.data_path = data_path
+        else:
+            # Check relative to engine directory
+            default_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data", "may_2024_g5_storm.json")
+            if os.path.exists(default_path):
+                self.data_path = default_path
+            else:
+                self.data_path = data_path or "data/may_2024_g5_storm.json"
         self.solver = GICNetworkSolver()
         self.records: List[Dict[str, Any]] = []
         self.metadata: Dict[str, Any] = {}

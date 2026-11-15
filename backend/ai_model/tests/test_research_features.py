@@ -3,7 +3,7 @@ Unit & Integration Tests for the 12 Research-Backed Features of Phasor.
 """
 
 import unittest
-from server.main import (
+from main import (
     app,
     get_solar_wind_console,
     get_regional_geoelectric_map,

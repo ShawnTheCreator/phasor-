@@ -8,6 +8,15 @@ Integrates:
 - Hardware ground magnetometer interface.
 """
 
+import sys
+import os
+from pathlib import Path
+
+# Ensure self-contained resolution of engine, data, and hardware packages
+_AI_MODEL_DIR = Path(__file__).resolve().parent
+if str(_AI_MODEL_DIR) not in sys.path:
+    sys.path.insert(0, str(_AI_MODEL_DIR))
+
 from fastapi import FastAPI, HTTPException
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
@@ -49,7 +58,8 @@ app.add_middleware(
 )
 
 # Initialize core engines
-storm_manager = StormEventManager("data/may_2024_g5_storm.json")
+_DATASET_PATH = _AI_MODEL_DIR / "data" / "may_2024_g5_storm.json"
+storm_manager = StormEventManager(str(_DATASET_PATH) if _DATASET_PATH.exists() else "data/may_2024_g5_storm.json")
 custom_solver = GICNetworkSolver()
 ground_sensor = GroundStationMagnetometer(use_hardware=False)
 

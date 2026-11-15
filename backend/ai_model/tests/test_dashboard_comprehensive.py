@@ -12,7 +12,7 @@ Validates:
 
 import unittest
 import numpy as np
-from server.main import (
+from main import (
     get_system_status,
     get_grid,
     get_storm_timeline,

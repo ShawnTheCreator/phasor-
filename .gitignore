@@ -36,7 +36,8 @@ wheels/
 .installed.cfg
 *.egg
 .pytest_cache/
-!apps/dashboard/lib/
+!frontend/dashboard/lib/
+/apps/
 
 # .NET build artifacts
 bin/

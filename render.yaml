@@ -1,18 +1,21 @@
 services:
   # ============================================================================
-  # 1. FastAPI Scientific Computation & Multi-Hazard API
+  # 1. Python FastAPI Multi-Hazard Scientific Engine & AI Models
   # ============================================================================
   - type: web
     name: phasor-api
     runtime: python
+    rootDir: backend/ai_model
     region: frankfurt # Low-latency to SADC / Africa
     plan: free
     buildCommand: pip install -r requirements.txt
-    startCommand: uvicorn server.main:app --host 0.0.0.0 --port $PORT
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
     healthCheckPath: /api/status
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.8
+      - key: CSHARP_API_URL
+        value: https://phasor-0asw.onrender.com
       - key: NOAA_SWPC_RTSW_URL
         value: https://services.swpc.noaa.gov/products/solar-wind/plasma-1-day.json
       - key: NOAA_MAG_URL
@@ -35,3 +38,20 @@ services:
         sync: false
       - key: MONGODB_URI
         sync: false
+
+  # ============================================================================
+  # 2. C# ASP.NET Core GIC & SignalR Ingestion Engine
+  # ============================================================================
+  - type: web
+    name: phasor-csharp
+    runtime: docker
+    rootDir: backend/general_backend
+    dockerContext: .
+    dockerfilePath: Dockerfile
+    region: frankfurt
+    plan: free
+    envVars:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+      - key: ASPNETCORE_URLS
+        value: http://+:5000
