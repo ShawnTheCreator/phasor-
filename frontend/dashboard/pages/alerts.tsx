@@ -216,8 +216,20 @@ export default function AlertsPage(): JSX.Element {
                       borderTop: '1px dashed #e2e8f0',
                       fontSize: '0.78rem'
                     }}>
-                      <span style={{ color: a.IsAcknowledged ? '#059669' : '#dc2626', fontWeight: 600 }}>
-                        {a.IsAcknowledged ? `✓ Acknowledged` : '● Unacknowledged'}
+                      <span style={{ color: a.IsAcknowledged ? '#059669' : '#dc2626', fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
+                        {a.IsAcknowledged ? (
+                          <>
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                              <polyline points="20 6 9 17 4 12" />
+                            </svg>
+                            <span>Acknowledged</span>
+                          </>
+                        ) : (
+                          <>
+                            <span style={{ width: '7px', height: '7px', borderRadius: '50%', backgroundColor: '#dc2626', display: 'inline-block' }} />
+                            <span>Unacknowledged</span>
+                          </>
+                        )}
                       </span>
                       {!a.IsAcknowledged && (
                         <button

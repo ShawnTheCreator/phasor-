@@ -71,15 +71,32 @@ export default function SappGridTopologyDiagram(): JSX.Element {
           style={{
             fontSize: '0.72rem',
             fontWeight: 700,
-            padding: '4px 10px',
+            padding: '5px 12px',
             borderRadius: '4px',
             backgroundColor: reroutingActive ? '#15803d' : '#991b1b',
             color: '#ffffff',
             border: 'none',
-            cursor: 'pointer'
+            cursor: 'pointer',
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '6px'
           }}
         >
-          {reroutingActive ? '✓ 400 MW Songo-Apollo Reroute Active' : '⚡ Simulate PSS/E Load Rerouting'}
+          {reroutingActive ? (
+            <>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+              <span>400 MW Songo-Apollo Reroute Active</span>
+            </>
+          ) : (
+            <>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" fill="currentColor" fillOpacity="0.2" />
+              </svg>
+              <span>Simulate PSS/E Load Rerouting</span>
+            </>
+          )}
         </button>
       </div>
 

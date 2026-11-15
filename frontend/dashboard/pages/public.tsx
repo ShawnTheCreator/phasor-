@@ -79,9 +79,12 @@ export default function PublicSafetyPage(): JSX.Element {
             <button
               className="btn-red-primary"
               onClick={handleSimulateBroadcast}
-              style={{ gap: '6px' }}
+              style={{ gap: '8px', display: 'inline-flex', alignItems: 'center' }}
             >
-              <span>📢</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" />
+              </svg>
               <span>{broadcastSent ? 'Broadcast Live (Active)' : 'Broadcast Advisory'}</span>
             </button>
           </div>
@@ -117,7 +120,17 @@ export default function PublicSafetyPage(): JSX.Element {
           >
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <span style={{ fontSize: '1.1rem' }}>{data?.severity === 'SEVERE' ? '🚨' : '🛡️'}</span>
+                {data?.severity === 'SEVERE' ? (
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#dc2626" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="12" y1="8" x2="12" y2="12" />
+                    <line x1="12" y1="16" x2="12.01" y2="16" />
+                  </svg>
+                ) : (
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#059669" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                  </svg>
+                )}
                 <h2 style={{ fontSize: '0.88rem', fontWeight: 700, margin: 0, color: data?.color || '#991b1b' }}>
                   {data?.headline || 'CIVIL PROTECTION BULLETIN: NOMINAL SPACE WEATHER'}
                 </h2>
@@ -244,8 +257,12 @@ export default function PublicSafetyPage(): JSX.Element {
             <div className="modal-backdrop show">
               <div className="modal-dialog">
                 <div className="modal-header">
-                  <span className="modal-title-text" style={{ color: '#991b1b' }}>
-                    📢 {modalMsg.title}
+                  <span className="modal-title-text" style={{ color: '#991b1b', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                      <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" />
+                    </svg>
+                    <span>{modalMsg.title}</span>
                   </span>
                   <button className="modal-close-btn" onClick={() => setModalMsg(null)}>&times;</button>
                 </div>

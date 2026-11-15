@@ -37,7 +37,7 @@ export default function Hardware3DViewer({
 
     // 1. Scene & Camera
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x0a0f1d);
+    scene.background = new THREE.Color(0xffffff);
 
     const camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 1000);
     camera.position.set(65, 55, 75);
@@ -58,26 +58,26 @@ export default function Hardware3DViewer({
     container.appendChild(renderer.domElement);
 
     // 3. Studio Cleanroom Lighting
-    const ambientLight = new THREE.AmbientLight(0xdbeafe, 1.1);
+    const ambientLight = new THREE.AmbientLight(0xf8fafc, 1.4);
     scene.add(ambientLight);
 
-    const keyLight = new THREE.DirectionalLight(0xffffff, 2.2);
+    const keyLight = new THREE.DirectionalLight(0xffffff, 2.4);
     keyLight.position.set(45, 80, 40);
     keyLight.castShadow = true;
     keyLight.shadow.mapSize.width = 1024;
     keyLight.shadow.mapSize.height = 1024;
     scene.add(keyLight);
 
-    const rimLight = new THREE.DirectionalLight(0x38bdf8, 1.5);
+    const rimLight = new THREE.DirectionalLight(0x38bdf8, 1.2);
     rimLight.position.set(-50, 40, -45);
     scene.add(rimLight);
 
-    const underLight = new THREE.DirectionalLight(0x64748b, 0.6);
+    const underLight = new THREE.DirectionalLight(0x94a3b8, 0.7);
     underLight.position.set(0, -30, 0);
     scene.add(underLight);
 
     // 4. Ground Inspection Grid
-    const gridHelper = new THREE.GridHelper(120, 24, 0x38bdf8, 0x1e293b);
+    const gridHelper = new THREE.GridHelper(120, 24, 0x0284c7, 0xe2e8f0);
     gridHelper.position.y = -12;
     scene.add(gridHelper);
 
@@ -510,9 +510,9 @@ export default function Hardware3DViewer({
       width: '100%',
       borderRadius: '12px',
       overflow: 'hidden',
-      border: '1px solid #1e293b',
-      boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 8px 10px -6px rgba(0, 0, 0, 0.3)',
-      backgroundColor: '#0a0f1d'
+      border: '1px solid #e2e8f0',
+      boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.02)',
+      backgroundColor: '#ffffff'
     }}>
       {/* 3D WebGL Canvas Container */}
       <div ref={containerRef} style={{ width: '100%', height: '420px', cursor: 'grab' }} />
@@ -530,21 +530,22 @@ export default function Hardware3DViewer({
       }}>
         {/* Left: Device Spec Pill */}
         <div style={{
-          backgroundColor: 'rgba(15, 23, 42, 0.85)',
+          backgroundColor: 'rgba(255, 255, 255, 0.94)',
           backdropFilter: 'blur(8px)',
-          border: '1px solid rgba(56, 189, 248, 0.3)',
+          border: '1px solid #cbd5e1',
           borderRadius: '8px',
           padding: '8px 14px',
-          color: '#ffffff',
+          color: '#0f172a',
           fontFamily: 'monospace',
-          fontSize: '0.74rem'
+          fontSize: '0.74rem',
+          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.06)'
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#22c55e', display: 'inline-block', boxShadow: '0 0 8px #22c55e' }} />
-            <strong style={{ color: '#38bdf8' }}>RP2040 + PNI RM3100 3D DIGITAL TWIN</strong>
+            <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#16a34a', display: 'inline-block', boxShadow: '0 0 8px #16a34a' }} />
+            <strong style={{ color: '#0284c7' }}>RP2040 + PNI RM3100 3D DIGITAL TWIN</strong>
           </div>
-          <div style={{ color: '#94a3b8', marginTop: '4px', fontSize: '0.7rem' }}>
-            |B|: <span style={{ color: '#f8fafc', fontWeight: 'bold' }}>{bTotal.toFixed(1)} nT</span> | Vector: ({bx.toFixed(0)}, {by.toFixed(0)}, {bz.toFixed(0)})
+          <div style={{ color: '#475569', marginTop: '4px', fontSize: '0.72rem' }}>
+            |B|: <span style={{ color: '#0f172a', fontWeight: 'bold' }}>{bTotal.toFixed(1)} nT</span> | Vector: ({bx.toFixed(0)}, {by.toFixed(0)}, {bz.toFixed(0)})
           </div>
         </div>
 
@@ -553,30 +554,45 @@ export default function Hardware3DViewer({
           <button
             onClick={() => setAutoRotate(r => !r)}
             style={{
-              backgroundColor: autoRotate ? '#0284c7' : 'rgba(15, 23, 42, 0.85)',
-              color: '#ffffff',
-              border: '1px solid rgba(255, 255, 255, 0.2)',
+              backgroundColor: autoRotate ? '#0284c7' : 'rgba(255, 255, 255, 0.94)',
+              color: autoRotate ? '#ffffff' : '#0f172a',
+              border: '1px solid #cbd5e1',
               borderRadius: '6px',
-              padding: '6px 10px',
-              fontSize: '0.7rem',
+              padding: '6px 12px',
+              fontSize: '0.72rem',
               fontWeight: 600,
-              cursor: 'pointer'
+              cursor: 'pointer',
+              boxShadow: '0 2px 6px rgba(0,0,0,0.05)',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px'
             }}
           >
-            {autoRotate ? '⏸ Pause Orbit' : '▶ Auto-Rotate'}
+            {autoRotate ? (
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor">
+                <rect x="6" y="4" width="4" height="16" />
+                <rect x="14" y="4" width="4" height="16" />
+              </svg>
+            ) : (
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor">
+                <polygon points="5 3 19 12 5 21 5 3" />
+              </svg>
+            )}
+            <span>{autoRotate ? 'Pause Orbit' : 'Auto-Rotate'}</span>
           </button>
 
           <button
             onClick={() => setViewMode(m => m === 'exploded' ? 'assembled' : 'exploded')}
             style={{
-              backgroundColor: viewMode === 'exploded' ? '#991b1b' : 'rgba(15, 23, 42, 0.85)',
-              color: '#ffffff',
-              border: '1px solid rgba(255, 255, 255, 0.2)',
+              backgroundColor: viewMode === 'exploded' ? '#dc2626' : 'rgba(255, 255, 255, 0.94)',
+              color: viewMode === 'exploded' ? '#ffffff' : '#0f172a',
+              border: '1px solid #cbd5e1',
               borderRadius: '6px',
-              padding: '6px 10px',
-              fontSize: '0.7rem',
+              padding: '6px 12px',
+              fontSize: '0.72rem',
               fontWeight: 600,
-              cursor: 'pointer'
+              cursor: 'pointer',
+              boxShadow: '0 2px 6px rgba(0,0,0,0.05)'
             }}
           >
             {viewMode === 'exploded' ? 'Assemble CAD' : 'Exploded View'}
@@ -585,14 +601,15 @@ export default function Hardware3DViewer({
           <button
             onClick={() => setViewMode(m => m === 'flux' ? 'assembled' : 'flux')}
             style={{
-              backgroundColor: viewMode === 'flux' ? '#10b981' : 'rgba(15, 23, 42, 0.85)',
-              color: '#ffffff',
-              border: '1px solid rgba(255, 255, 255, 0.2)',
+              backgroundColor: viewMode === 'flux' ? '#059669' : 'rgba(255, 255, 255, 0.94)',
+              color: viewMode === 'flux' ? '#ffffff' : '#0f172a',
+              border: '1px solid #cbd5e1',
               borderRadius: '6px',
-              padding: '6px 10px',
-              fontSize: '0.7rem',
+              padding: '6px 12px',
+              fontSize: '0.72rem',
               fontWeight: 600,
-              cursor: 'pointer'
+              cursor: 'pointer',
+              boxShadow: '0 2px 6px rgba(0,0,0,0.05)'
             }}
           >
             Flux Lines
@@ -610,17 +627,21 @@ export default function Hardware3DViewer({
         justifyContent: 'space-between',
         alignItems: 'center',
         pointerEvents: 'none',
-        color: '#64748b',
-        fontSize: '0.68rem',
+        color: '#475569',
+        fontSize: '0.72rem',
         fontFamily: 'monospace'
       }}>
-        <div>
-          <span>🖱 Drag to rotate 360° | Scroll to zoom | Arrow shows live 3D B-vector</span>
+        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <rect x="5" y="2" width="14" height="20" rx="7" />
+            <line x1="12" y1="6" x2="12" y2="10" />
+          </svg>
+          <span>Drag to rotate 360° | Scroll to zoom | Vector shows live 3D B-field</span>
         </div>
         <div style={{ display: 'flex', gap: '14px' }}>
-          <span><span style={{ color: '#22c55e' }}>■</span> Pico RP2040</span>
+          <span><span style={{ color: '#16a34a' }}>■</span> Pico RP2040</span>
           <span><span style={{ color: '#d97706' }}>■</span> RM3100 Coils</span>
-          <span><span style={{ color: '#38bdf8' }}>▲</span> B-Field Vector</span>
+          <span><span style={{ color: '#0284c7' }}>▲</span> B-Field Vector</span>
         </div>
       </div>
     </div>
