@@ -3,6 +3,10 @@ import Link from 'next/link';
 import Sidebar from '../components/Sidebar';
 import * as signalR from '@microsoft/signalr';
 import { DOTNET_BASE_URL } from '../lib/config';
+import InteractiveGridMapDiagram from '../components/diagrams/InteractiveGridMapDiagram';
+import RealtimeTelemetryOscilloscope from '../components/diagrams/RealtimeTelemetryOscilloscope';
+import TransformerCoreSaturationDiagram from '../components/diagrams/TransformerCoreSaturationDiagram';
+import MultiHazardRadarDiagram from '../components/diagrams/MultiHazardRadarDiagram';
 
 interface SubstationItem {
   SubstationId: string;
@@ -201,12 +205,32 @@ export default function CommandView(): JSX.Element {
                 </tbody>
               </table>
             ) : (
-              <div style={{ height: '320px', background: '#f8fafc', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: '8px' }}>
-                <span style={{ fontSize: '2rem', color: '#991b1b' }}>&#9889;</span>
-                <span style={{ fontWeight: 'bold' }}>South African Transmission Corridors (400 kV & 765 kV)</span>
-                <span style={{ fontSize: '0.82rem', color: '#64748b' }}>Ex: {gridRisk?.ExVkm ?? 0.08} V/km &bull; Ey: {gridRisk?.EyVkm ?? -0.06} V/km</span>
+              <div style={{ marginTop: '12px' }}>
+                <InteractiveGridMapDiagram
+                  exVkm={gridRisk?.ExVkm ?? 0.12}
+                  eyVkm={gridRisk?.EyVkm ?? -0.08}
+                />
               </div>
             )}
+          </section>
+
+          {/* Real-Time Live Telemetry Waveforms Oscilloscope */}
+          <section style={{ marginBottom: '20px' }}>
+            <RealtimeTelemetryOscilloscope
+              currentBz={solarWind?.ImfBz ?? -18.4}
+              currentSpeed={solarWind?.SpeedKmS ?? 745}
+              currentEField={gridRisk?.ExVkm ?? 0.14}
+              currentGic={gridRisk?.MaxGicAmps ?? 26.8}
+            />
+          </section>
+
+          {/* Real-Time Physical Saturation & Multi-Hazard Threat Diagrams */}
+          <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))', gap: '20px', marginBottom: '20px' }}>
+            <TransformerCoreSaturationDiagram
+              gicAmps={gridRisk?.MaxGicAmps ?? 26.8}
+              qLossMvar={gridRisk?.TotalQLossMvar ?? 9.8}
+            />
+            <MultiHazardRadarDiagram />
           </section>
 
           {/* Bottom Split Row */}

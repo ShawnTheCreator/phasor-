@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from '../components/Sidebar';
 import { API_BASE_URL } from '../lib/config';
+import SappGridTopologyDiagram from '../components/diagrams/SappGridTopologyDiagram';
 
 interface SappSubstation {
   id: string;
@@ -121,6 +122,9 @@ export default function GridExpansionPage(): JSX.Element {
               </div>
             </div>
           </section>
+
+          {/* SAPP Interactive Single-Line Topology & Protection Schematic */}
+          <SappGridTopologyDiagram />
 
           {/* SAPP Grid League Table */}
           <section className="content-card">

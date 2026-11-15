@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from '../components/Sidebar';
 import { API_BASE_URL } from '../lib/config';
+import GnssScintillationDiagram from '../components/diagrams/GnssScintillationDiagram';
 
 interface GnssStation {
   id: string;
@@ -161,6 +162,9 @@ export default function GnssPage(): JSX.Element {
               </div>
             </div>
           </section>
+
+          {/* Real-time Equatorial Plasma Bubble (EPB) Scintillation Drift Map */}
+          <GnssScintillationDiagram />
 
           {/* S4 / Sigma-Phi Station League Table */}
           <section className="content-card">

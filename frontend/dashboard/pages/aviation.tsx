@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from '../components/Sidebar';
 import { API_BASE_URL } from '../lib/config';
+import AviationRadiationDiagram from '../components/diagrams/AviationRadiationDiagram';
 
 interface FlightRoute {
   id: string;
@@ -178,6 +179,14 @@ export default function AviationPage(): JSX.Element {
                 ADS-B timing jitter observed. Use ground VOR / DME for primary navigation.
               </div>
             </div>
+          </div>
+
+          {/* ICAO Radiation Cross-Section & HF Fadeout Visual Spectrum */}
+          <div style={{ marginBottom: '20px' }}>
+            <AviationRadiationDiagram
+              currentDoseRateFL390={triad?.radiation.dose_rate_fl390_usv_h ?? 64.2}
+              currentDoseRateFL310={triad?.radiation.dose_rate_fl310_usv_h ?? 36.8}
+            />
           </div>
 
           {/* Route & Altitude Advisory Table */}

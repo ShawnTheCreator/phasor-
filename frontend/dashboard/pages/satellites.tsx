@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from '../components/Sidebar';
 import { API_BASE_URL } from '../lib/config';
+import OrbitalDecayDiagram from '../components/diagrams/OrbitalDecayDiagram';
 
 interface DecayPoint {
   day: number;
@@ -108,8 +109,11 @@ export default function SatellitesPage(): JSX.Element {
             </div>
           </section>
 
+          {/* Interactive LEO Orbital Decay Visual Curve */}
+          <OrbitalDecayDiagram densityFactor={data?.thermospheric_density_factor ?? 4.2} />
+
           {/* Monitored LEO Satellite Fleet Table */}
-          <section className="content-card">
+          <section className="content-card" style={{ marginTop: '20px' }}>
             <div className="card-header-row">
               <h2 className="card-title">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>

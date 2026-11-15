@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from '../components/Sidebar';
 import { DOTNET_BASE_URL } from '../lib/config';
+import HistoricalStormWaveformDiagram from '../components/diagrams/HistoricalStormWaveformDiagram';
 
 interface StormSummary {
   id: string;
@@ -123,6 +124,13 @@ export default function ReplayPage(): JSX.Element {
                 style={{ width: '100%', accentColor: '#991b1b' }}
               />
             </div>
+
+            {/* Interactive 24-Hour Storm Shock Waveform & Ring Current Disturbance Diagram */}
+            <HistoricalStormWaveformDiagram
+              minuteIndex={minuteIndex}
+              stormId={selectedStorm}
+              onScrub={setMinuteIndex}
+            />
           </section>
         </main>
       </div>
