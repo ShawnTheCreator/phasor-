@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import RedLiquidBackground from './components/RedLiquidBackground';
 import CrumbleText from './components/CrumbleText';
 import PinnedPipeline from './components/PinnedPipeline';
@@ -9,6 +9,7 @@ import BookDemoModal from './components/BookDemoModal';
 import MultiHazardBentoSection from './components/MultiHazardBentoSection';
 import ExpandingBrandFooter from './components/ExpandingBrandFooter';
 import CinematicLoader from './components/CinematicLoader';
+import ResearchPage from './components/ResearchPage';
 
 const isProduction: boolean = Boolean(import.meta.env.PROD);
 const rawDashboardEnv: string = (import.meta.env.VITE_DASHBOARD_URL as string) || '';
@@ -19,10 +20,56 @@ const DASHBOARD_URL: string = rawDashboardEnv
 export default function App(): JSX.Element {
   const [isDemoOpen, setIsDemoOpen] = useState(false);
   const [isSiteRevealed, setIsSiteRevealed] = useState(false);
+  const [currentView, setCurrentView] = useState<'home' | 'research'>(() => {
+    if (typeof window !== 'undefined') {
+      const p = window.location.pathname;
+      const h = window.location.hash;
+      if (p === '/research' || h === '#research') return 'research';
+    }
+    return 'home';
+  });
+
+  useEffect(() => {
+    const handleLocationChange = () => {
+      const p = window.location.pathname;
+      const h = window.location.hash;
+      if (p === '/research' || h === '#research') {
+        setCurrentView('research');
+      } else {
+        setCurrentView('home');
+      }
+    };
+    window.addEventListener('popstate', handleLocationChange);
+    window.addEventListener('hashchange', handleLocationChange);
+    return () => {
+      window.removeEventListener('popstate', handleLocationChange);
+      window.removeEventListener('hashchange', handleLocationChange);
+    };
+  }, []);
+
+  const navigateToResearch = (e?: React.MouseEvent) => {
+    if (e) e.preventDefault();
+    setCurrentView('research');
+    window.history.pushState(null, '', '#research');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const navigateToHome = (e?: React.MouseEvent) => {
+    if (e) e.preventDefault();
+    setCurrentView('home');
+    window.history.pushState(null, '', window.location.pathname === '/research' ? '/' : '#');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   const handleLoaderComplete = () => {
     setIsSiteRevealed(true);
   };
+
+  if (currentView === 'research') {
+    return (
+      <ResearchPage onBackHome={navigateToHome} dashboardUrl={DASHBOARD_URL} />
+    );
+  }
 
   return (
     <div
@@ -64,7 +111,14 @@ export default function App(): JSX.Element {
             <a href="#how-it-works" className="hero-nav-link">How It Works</a>
             <a href="#replay" className="hero-nav-link">Storm Replay</a>
             <a href="#multi-hazard" className="hero-nav-link">Multi-Hazard</a>
-            <a href={`${DASHBOARD_URL}/model`} className="hero-nav-link" target="_blank" rel="noreferrer" style={{ color: '#ef4444', fontWeight: 600 }}>Research ↗</a>
+            <a
+              href="#research"
+              onClick={navigateToResearch}
+              className="hero-nav-link"
+              style={{ color: '#ef4444', fontWeight: 600, cursor: 'pointer' }}
+            >
+              Research ↗
+            </a>
             <a href="#science" className="hero-nav-link">Provenance</a>
             <a
               href={`${DASHBOARD_URL}/login`}

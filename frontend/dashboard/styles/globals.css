@@ -1244,3 +1244,843 @@ body {
   overflow: hidden;
 }
 
+/* ==========================================================================
+   Cognition-Style Minimalist Editorial Research Page
+   Clean, high-contrast, editorial aesthetic on an off-white/light gray canvas.
+   ========================================================================== */
+
+.cognition-research-wrapper {
+  min-height: 100vh;
+  height: 100vh;
+  overflow-y: auto;
+  width: 100%;
+  background-color: #ffffff;
+  color: #111827;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.6;
+  position: relative;
+  z-index: 50;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* --------------------------------------------------------------------------
+   Sticky Top Navigation Bar
+   -------------------------------------------------------------------------- */
+.cognition-top-nav {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid #e5e7eb;
+  z-index: 100;
+}
+
+.cognition-nav-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cognition-nav-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.cognition-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #0f172a;
+  color: #ffffff;
+  border: 1px solid transparent;
+  padding: 7px 16px;
+  border-radius: 9999px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.cognition-back-btn:hover {
+  background-color: #000000;
+  transform: translateX(-3px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.cognition-back-btn .back-arrow {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.cognition-nav-divider {
+  width: 1px;
+  height: 20px;
+  background-color: #e5e7eb;
+}
+
+.cognition-brand-mark {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.brand-phi {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #ef4444;
+  line-height: 1;
+}
+
+.brand-name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #0f172a;
+  letter-spacing: -0.01em;
+}
+
+.brand-badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background-color: #f1f5f9;
+  color: #475569;
+  padding: 2px 7px;
+  border-radius: 4px;
+  border: 1px solid #e2e8f0;
+}
+
+.cognition-nav-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cognition-secondary-btn {
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  color: #334155;
+  padding: 7px 14px;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.cognition-secondary-btn:hover {
+  background-color: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
+.cognition-primary-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #ef4444;
+  color: #ffffff;
+  border: none;
+  padding: 7px 16px;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.cognition-primary-btn:hover {
+  background-color: #dc2626;
+  transform: translateY(-1px);
+}
+
+/* --------------------------------------------------------------------------
+   Main Layout & Gutter Numbering (Exact Cognition Reference)
+   -------------------------------------------------------------------------- */
+.cognition-main-layout {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 48px 24px 100px 24px;
+}
+
+.cognition-row {
+  display: flex;
+  position: relative;
+  padding-bottom: 56px;
+  margin-bottom: 24px;
+}
+
+.cognition-gutter {
+  width: 56px;
+  flex-shrink: 0;
+  position: relative;
+  border-right: 1px solid #e5e7eb;
+  padding-right: 16px;
+  display: flex;
+  align-items: flex-start;
+}
+
+.gutter-num {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.82rem;
+  color: #9ca3af;
+  font-weight: 500;
+  line-height: 1.8;
+  user-select: none;
+}
+
+.cognition-content {
+  flex: 1;
+  padding-left: 36px;
+  max-width: 900px;
+}
+
+/* --------------------------------------------------------------------------
+   Typography
+   -------------------------------------------------------------------------- */
+.cognition-hero-heading {
+  font-size: 2.85rem;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  color: #111827;
+  margin: 0 0 20px 0;
+  line-height: 1.05;
+}
+
+.cognition-lead-paragraph {
+  font-size: 1.08rem;
+  line-height: 1.72;
+  color: #374151;
+  margin: 0;
+  font-weight: 400;
+}
+
+.cognition-section-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: #111827;
+  margin: 0 0 16px 0;
+  line-height: 1.2;
+}
+
+.cognition-subheading {
+  font-size: 1.08rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 24px 0 12px 0;
+  letter-spacing: -0.01em;
+}
+
+.cognition-body-text {
+  font-size: 0.96rem;
+  line-height: 1.68;
+  color: #374151;
+  margin: 0 0 16px 0;
+}
+
+.cognition-bullet-list {
+  margin: 0 0 20px 20px;
+  padding: 0;
+  color: #374151;
+  font-size: 0.94rem;
+  line-height: 1.7;
+}
+
+.cognition-bullet-list li {
+  margin-bottom: 8px;
+}
+
+/* --------------------------------------------------------------------------
+   Banner Card (Section 02)
+   -------------------------------------------------------------------------- */
+.cognition-banner-card {
+  background-color: #f4f4f5;
+  border: 1px solid #e4e4e7;
+  border-radius: 6px;
+  padding: 22px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  transition: all 0.15s ease;
+}
+
+.cognition-banner-card:hover {
+  background-color: #ebebeb;
+  border-color: #d4d4d8;
+}
+
+.banner-card-title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #09090b;
+  margin: 0 0 4px 0;
+  letter-spacing: -0.01em;
+}
+
+.banner-card-subtitle {
+  font-size: 0.88rem;
+  color: #71717a;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.banner-card-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #09090b;
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+  padding: 8px 16px;
+  border-radius: 4px;
+  background-color: #ffffff;
+  border: 1px solid #e4e4e7;
+  transition: all 0.15s ease;
+}
+
+.banner-card-action:hover {
+  background-color: #09090b;
+  color: #ffffff;
+  border-color: #09090b;
+}
+
+.banner-card-action .arrow {
+  transition: transform 0.15s ease;
+}
+
+.banner-card-action:hover .arrow {
+  transform: translateX(3px);
+}
+
+/* --------------------------------------------------------------------------
+   Articles Section (Section 03)
+   -------------------------------------------------------------------------- */
+.cognition-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.cognition-pill-toggle {
+  background-color: #f4f4f5;
+  border: 1px solid #e4e4e7;
+  border-radius: 4px;
+  padding: 6px 14px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: #18181b;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.cognition-pill-toggle:hover {
+  background-color: #e4e4e7;
+}
+
+.cognition-articles-table {
+  border-top: 1px solid #f4f4f5;
+}
+
+.cognition-article-item {
+  border-bottom: 1px solid #f4f4f5;
+  padding: 16px 0;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.cognition-article-item:hover {
+  background-color: #fafafa;
+}
+
+.article-main-row {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+}
+
+.article-date {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.84rem;
+  color: #71717a;
+  width: 105px;
+  flex-shrink: 0;
+}
+
+.article-title {
+  font-size: 1.02rem;
+  font-weight: 600;
+  color: #18181b;
+  flex: 1;
+  letter-spacing: -0.01em;
+}
+
+.cognition-article-item:hover .article-title {
+  color: #ef4444;
+}
+
+.article-tag {
+  font-size: 0.72rem;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.article-expanded-summary {
+  margin-top: 12px;
+  margin-left: 121px;
+  padding: 14px 18px;
+  background-color: #f8fafc;
+  border-left: 2px solid #ef4444;
+  border-radius: 0 4px 4px 0;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: #475569;
+}
+
+.article-jump-link {
+  display: inline-block;
+  margin-top: 8px;
+  background: none;
+  border: none;
+  color: #ef4444;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+}
+
+/* --------------------------------------------------------------------------
+   Data Tables
+   -------------------------------------------------------------------------- */
+.cognition-table-card {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  background-color: #ffffff;
+  margin: 16px 0 24px 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+}
+
+.cognition-data-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.88rem;
+}
+
+.cognition-data-table thead {
+  background-color: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.cognition-data-table th {
+  padding: 11px 16px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #6b7280;
+}
+
+.cognition-data-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #f3f4f6;
+  color: #374151;
+  line-height: 1.5;
+  vertical-align: top;
+}
+
+.cognition-data-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.cognition-data-table tbody tr:hover td {
+  background-color: #fafaf9;
+}
+
+.highlight-metric {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-weight: 700;
+  color: #059669;
+}
+
+.highlight-metric-red {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-weight: 700;
+  color: #b91c1c;
+}
+
+/* --------------------------------------------------------------------------
+   Status Pills
+   -------------------------------------------------------------------------- */
+.status-pill {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.status-watch {
+  background-color: #fef3c7;
+  color: #b45309;
+  border: 1px solid #fde68a;
+}
+
+.status-critical {
+  background-color: #fee2e2;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
+}
+
+/* --------------------------------------------------------------------------
+   Formulas and Code Blocks
+   -------------------------------------------------------------------------- */
+.formula-box {
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-left: 3px solid #0f172a;
+  border-radius: 0 4px 4px 0;
+  padding: 12px 18px;
+  margin: 12px 0 16px 0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.95rem;
+  color: #0f172a;
+  display: inline-block;
+}
+
+.formula-box.large-formula {
+  display: block;
+  font-size: 1.05rem;
+  font-weight: 600;
+  background-color: #faf5ff;
+  border-color: #e9d5ff;
+  border-left-color: #9333ea;
+  color: #581c87;
+}
+
+/* --------------------------------------------------------------------------
+   Cascade Flow Diagram Card (Section 05)
+   -------------------------------------------------------------------------- */
+.cascade-diagram-card {
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 24px;
+  margin: 20px 0 28px 0;
+}
+
+.diagram-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 12px;
+}
+
+.diagram-tag {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #64748b;
+  background-color: #ffffff;
+  padding: 3px 8px;
+  border-radius: 4px;
+  border: 1px solid #e2e8f0;
+}
+
+.diagram-title {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #334155;
+}
+
+.diagram-flow-grid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.flow-block.solar-source {
+  background-color: #fff1f2;
+  border: 1px solid #fecdd3;
+  color: #9f1239;
+  padding: 12px 24px;
+  border-radius: 6px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.flow-arrow-down {
+  font-size: 1.25rem;
+  color: #94a3b8;
+  line-height: 1;
+}
+
+.flow-three-paths {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  width: 100%;
+}
+
+.path-box {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.path-trigger {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #dc2626;
+  font-family: ui-monospace, SFMono-Regular, monospace;
+  background-color: #fef2f2;
+  padding: 4px 6px;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.path-step {
+  font-size: 0.8rem;
+  color: #475569;
+  background-color: #f8fafc;
+  padding: 6px 8px;
+  border-radius: 4px;
+  border: 1px solid #f1f5f9;
+}
+
+.path-danger {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #991b1b;
+  background-color: #fee2e2;
+  padding: 6px 8px;
+  border-radius: 4px;
+  text-align: center;
+}
+
+/* --------------------------------------------------------------------------
+   Damage Chains & Hazards
+   -------------------------------------------------------------------------- */
+.hazard-block {
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid #f1f5f9;
+}
+
+.hazard-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 10px 0;
+  letter-spacing: -0.01em;
+}
+
+.damage-chain-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 16px 0;
+}
+
+.chain-item {
+  display: flex;
+  gap: 12px;
+  background-color: #f8fafc;
+  border: 1px solid #f1f5f9;
+  border-radius: 6px;
+  padding: 12px 16px;
+  font-size: 0.92rem;
+  color: #334155;
+  line-height: 1.6;
+}
+
+.chain-num {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background-color: #ef4444;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   Tiers (Section 06)
+   -------------------------------------------------------------------------- */
+.tier-cards-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.tier-card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 20px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+}
+
+.tier-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.tier-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background-color: #0f172a;
+  color: #ffffff;
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+.tier-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.tier-card-text {
+  font-size: 0.92rem;
+  color: #475569;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.tier-calc-box {
+  margin-top: 12px;
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.82rem;
+  color: #1e293b;
+}
+
+/* --------------------------------------------------------------------------
+   Solutions (Section 07)
+   -------------------------------------------------------------------------- */
+.solution-block {
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid #f1f5f9;
+}
+
+.solution-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 10px 0;
+}
+
+/* --------------------------------------------------------------------------
+   Callout Note & Bottom Actions
+   -------------------------------------------------------------------------- */
+.cognition-callout-note {
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-left: 3px solid #64748b;
+  border-radius: 0 6px 6px 0;
+  padding: 16px 20px;
+  font-size: 0.88rem;
+  color: #475569;
+  line-height: 1.6;
+}
+
+.bottom-home-action {
+  margin-top: 48px;
+  padding-top: 32px;
+  border-top: 1px solid #e5e7eb;
+  display: flex;
+  justify-content: center;
+}
+
+/* --------------------------------------------------------------------------
+   Responsive Design
+   -------------------------------------------------------------------------- */
+@media (max-width: 860px) {
+  .cognition-row {
+    flex-direction: column;
+    padding-bottom: 40px;
+  }
+
+  .cognition-gutter {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #e5e7eb;
+    padding-bottom: 8px;
+    margin-bottom: 16px;
+  }
+
+  .cognition-content {
+    padding-left: 0;
+  }
+
+  .cognition-hero-heading {
+    font-size: 2.25rem;
+  }
+
+  .flow-three-paths {
+    grid-template-columns: 1fr;
+  }
+
+  .cognition-banner-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .article-main-row {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .article-expanded-summary {
+    margin-left: 0;
+  }
+}

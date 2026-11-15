@@ -8,16 +8,19 @@ export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const [authChecked, setAuthChecked] = useState<boolean>(false);
 
+  const publicRoutes = ['/login', '/research', '/model', '/public'];
+  const isPublicRoute = publicRoutes.includes(router.pathname);
+
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const isAuth = localStorage.getItem('phasor_auth') === 'true';
-      if (!isAuth && router.pathname !== '/login') {
+      if (!isAuth && !isPublicRoute) {
         router.replace('/login');
       } else {
         setAuthChecked(true);
       }
     }
-  }, [router.pathname]);
+  }, [router.pathname, isPublicRoute]);
 
   return (
     <>
@@ -33,7 +36,7 @@ export default function App({ Component, pageProps }: AppProps) {
         />
       </Head>
       {/* If checking auth on a protected route, render a clean dark backdrop while redirecting */}
-      {router.pathname === '/login' || authChecked ? (
+      {isPublicRoute || authChecked ? (
         <Component {...pageProps} />
       ) : (
         <div style={{ width: '100vw', height: '100vh', backgroundColor: '#060102' }} />
