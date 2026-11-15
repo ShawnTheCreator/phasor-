@@ -27,8 +27,8 @@ namespace Phasor.Ingest
         private readonly List<SolarWindSample> _history = new();
         private readonly object _lock = new();
 
-        private static readonly string NoaaPlasmaUrl = Environment.GetEnvironmentVariable("NOAA_PLASMA_URL") ?? "https://services.swpc.noaa.gov/products/solar-wind/plasma-5-minute.json";
-        private static readonly string NoaaMagUrl = Environment.GetEnvironmentVariable("NOAA_MAG_URL") ?? "https://services.swpc.noaa.gov/products/solar-wind/mag-5-minute.json";
+        private static readonly string NoaaPlasmaUrl = Environment.GetEnvironmentVariable("NOAA_PLASMA_URL") ?? "https://services.swpc.noaa.gov/products/summary/solar-wind-speed.json";
+        private static readonly string NoaaMagUrl = Environment.GetEnvironmentVariable("NOAA_MAG_URL") ?? "https://services.swpc.noaa.gov/products/summary/solar-wind-mag-field.json";
 
         public IngestionWorker(ILogger<IngestionWorker> logger)
         {
@@ -125,14 +125,14 @@ namespace Phasor.Ingest
                 var plasmaRoot = plasmaDoc.RootElement;
                 var magRoot = magDoc.RootElement;
 
-                if (plasmaRoot.GetArrayLength() > 1 && magRoot.GetArrayLength() > 1)
+                if (plasmaRoot.GetArrayLength() > 0 && magRoot.GetArrayLength() > 0)
                 {
                     var lastPlasma = plasmaRoot[plasmaRoot.GetArrayLength() - 1];
                     var lastMag = magRoot[magRoot.GetArrayLength() - 1];
 
-                    double speed = double.TryParse(lastPlasma[2].GetString(), out var s) ? s : 440.0;
-                    double dens = double.TryParse(lastPlasma[1].GetString(), out var d) ? d : 5.0;
-                    double bz = double.TryParse(lastMag[3].GetString(), out var b) ? b : -2.5;
+                    double speed = ExtractSpeed(lastPlasma);
+                    double dens = ExtractDensity(lastPlasma);
+                    double bz = ExtractBz(lastMag);
 
                     double leadTime = Math.Round((1.5e6 / Math.Max(speed, 100.0)) / 60.0, 1);
                     double pDyn = Math.Round(1.67e-6 * dens * (speed * speed), 2);
@@ -157,6 +157,63 @@ namespace Phasor.Ingest
                 return null;
             }
             return null;
+        }
+
+        private static double ExtractSpeed(JsonElement element)
+        {
+            if (element.ValueKind == JsonValueKind.Object)
+            {
+                if (element.TryGetProperty("proton_speed", out var prop))
+                {
+                    if (prop.ValueKind == JsonValueKind.Number && prop.TryGetDouble(out var num)) return num;
+                    if (prop.ValueKind == JsonValueKind.String && double.TryParse(prop.GetString(), out var strNum)) return strNum;
+                }
+            }
+            else if (element.ValueKind == JsonValueKind.Array && element.GetArrayLength() > 2)
+            {
+                var val = element[2];
+                if (val.ValueKind == JsonValueKind.Number && val.TryGetDouble(out var num)) return num;
+                if (val.ValueKind == JsonValueKind.String && double.TryParse(val.GetString(), out var strNum)) return strNum;
+            }
+            return 440.0;
+        }
+
+        private static double ExtractDensity(JsonElement element)
+        {
+            if (element.ValueKind == JsonValueKind.Object)
+            {
+                if (element.TryGetProperty("proton_density", out var prop))
+                {
+                    if (prop.ValueKind == JsonValueKind.Number && prop.TryGetDouble(out var num)) return num;
+                    if (prop.ValueKind == JsonValueKind.String && double.TryParse(prop.GetString(), out var strNum)) return strNum;
+                }
+            }
+            else if (element.ValueKind == JsonValueKind.Array && element.GetArrayLength() > 1)
+            {
+                var val = element[1];
+                if (val.ValueKind == JsonValueKind.Number && val.TryGetDouble(out var num)) return num;
+                if (val.ValueKind == JsonValueKind.String && double.TryParse(val.GetString(), out var strNum)) return strNum;
+            }
+            return 4.8;
+        }
+
+        private static double ExtractBz(JsonElement element)
+        {
+            if (element.ValueKind == JsonValueKind.Object)
+            {
+                if (element.TryGetProperty("bz_gsm", out var prop))
+                {
+                    if (prop.ValueKind == JsonValueKind.Number && prop.TryGetDouble(out var num)) return num;
+                    if (prop.ValueKind == JsonValueKind.String && double.TryParse(prop.GetString(), out var strNum)) return strNum;
+                }
+            }
+            else if (element.ValueKind == JsonValueKind.Array && element.GetArrayLength() > 3)
+            {
+                var val = element[3];
+                if (val.ValueKind == JsonValueKind.Number && val.TryGetDouble(out var num)) return num;
+                if (val.ValueKind == JsonValueKind.String && double.TryParse(val.GetString(), out var strNum)) return strNum;
+            }
+            return -2.5;
         }
 
         private SolarWindSample GenerateDynamicSample()

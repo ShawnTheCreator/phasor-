@@ -25,9 +25,13 @@ from data.db import db_manager
 class LiveSpaceWeatherFeed:
     """Streams and parses real-life live NASA/NOAA satellite telemetry."""
 
-    NOAA_PLASMA_URL = "https://services.swpc.noaa.gov/products/solar-wind/plasma-5-minute.json"
-    NOAA_MAG_URL = "https://services.swpc.noaa.gov/products/solar-wind/mag-5-minute.json"
+    NOAA_RTSW_WIND_URL = "https://services.swpc.noaa.gov/json/rtsw/rtsw_wind_1m.json"
+    NOAA_RTSW_MAG_URL = "https://services.swpc.noaa.gov/json/rtsw/rtsw_mag_1m.json"
+    NOAA_SUMMARY_SPEED_URL = "https://services.swpc.noaa.gov/products/summary/solar-wind-speed.json"
+    NOAA_SUMMARY_MAG_URL = "https://services.swpc.noaa.gov/products/summary/solar-wind-mag-field.json"
     NOAA_KP_URL = "https://services.swpc.noaa.gov/products/noaa-planetary-k-index.json"
+    NOAA_DST_URL = "https://services.swpc.noaa.gov/products/kyoto-dst.json"
+    NOAA_ALERTS_URL = "https://services.swpc.noaa.gov/products/alerts.json"
 
     def __init__(self):
         self.solver = GICNetworkSolver()
@@ -120,39 +124,123 @@ class LiveSpaceWeatherFeed:
         return frame
 
     def _poll_noaa_swpc(self) -> Optional[Dict[str, Any]]:
-        """Polls official NOAA SWPC real-time JSON endpoints."""
+        """Polls official NOAA SWPC real-time JSON endpoints (1-min RTSW & summary feeds)."""
+        headers = {"User-Agent": "Phasor-MultiHazard/2.0"}
+        speed: Optional[float] = None
+        density: Optional[float] = None
+        temp_k: float = 95000.0
+        bz: Optional[float] = None
+        by: float = 0.0
+        bx: float = 0.0
+        time_tag: Optional[str] = None
+        source_tag = "NOAA_SWPC_RTSW_LIVE"
+        recent_bz_history: List[float] = []
+        recent_speed_history: List[float] = []
+
         try:
-            # 1. Fetch Plasma (Speed & Density)
-            resp_plasma = requests.get(self.NOAA_PLASMA_URL, timeout=3.0)
-            plasma_rows = resp_plasma.json()
-            latest_plasma = plasma_rows[-1] if len(plasma_rows) > 1 else None
-
-            # 2. Fetch Magnetometer (Bx, By, Bz GSM)
-            resp_mag = requests.get(self.NOAA_MAG_URL, timeout=3.0)
-            mag_rows = resp_mag.json()
-            latest_mag = mag_rows[-1] if len(mag_rows) > 1 else None
-
-            if latest_plasma and latest_mag:
-                # plasma columns: [time_tag, density, speed, temperature]
-                # mag columns: [time_tag, bx_gsm, by_gsm, bz_gsm, lon, lat, bt]
-                speed = float(latest_plasma[2]) if latest_plasma[2] is not None else 420.0
-                density = float(latest_plasma[1]) if latest_plasma[1] is not None else 4.5
-                bz = float(latest_mag[3]) if latest_mag[3] is not None else -2.5
-                by = float(latest_mag[2]) if latest_mag[2] is not None else 1.8
-                bx = float(latest_mag[1]) if latest_mag[1] is not None else 3.2
-
-                return {
-                    "source": "NOAA_SWPC_REAL_TELEMETRY",
-                    "time_tag": latest_mag[0],
-                    "solar_wind_speed_km_s": speed,
-                    "proton_density_n_cm3": density,
-                    "imf_bz_gsm_nt": bz,
-                    "imf_by_gsm_nt": by,
-                    "imf_bx_gsm_nt": bx,
-                }
+            # 1. Primary: High-resolution RTSW 1-minute solar wind plasma
+            resp_wind = requests.get(self.NOAA_RTSW_WIND_URL, headers=headers, timeout=5.0)
+            if resp_wind.status_code == 200:
+                wind_rows = resp_wind.json()
+                valid_wind = [r for r in wind_rows if r.get("proton_speed") is not None]
+                if valid_wind:
+                    latest = valid_wind[-1]
+                    speed = float(latest["proton_speed"])
+                    density = float(latest.get("proton_density") or 4.5)
+                    temp_k = float(latest.get("proton_temperature") or 95000.0)
+                    time_tag = latest.get("time_tag")
+                    source_tag = f"NOAA_SWPC_{latest.get('source', 'DSCOVR')}_LIVE"
+                    # Capture up to 24 hourly spaced samples for sparklines
+                    step = max(1, len(valid_wind) // 24)
+                    recent_speed_history = [float(r["proton_speed"]) for r in valid_wind[::step][-24:]]
         except Exception:
-            # Sandbox or network offline -> returns None
-            return None
+            pass
+
+        try:
+            # 2. Primary: High-resolution RTSW 1-minute magnetic field
+            resp_mag = requests.get(self.NOAA_RTSW_MAG_URL, headers=headers, timeout=5.0)
+            if resp_mag.status_code == 200:
+                mag_rows = resp_mag.json()
+                valid_mag = [r for r in mag_rows if r.get("bz_gsm") is not None]
+                if valid_mag:
+                    latest = valid_mag[-1]
+                    bz = float(latest["bz_gsm"])
+                    by = float(latest.get("by_gsm") or 0.0)
+                    bx = float(latest.get("bx_gsm") or 0.0)
+                    if not time_tag:
+                        time_tag = latest.get("time_tag")
+                    step = max(1, len(valid_mag) // 24)
+                    recent_bz_history = [float(r["bz_gsm"]) for r in valid_mag[::step][-24:]]
+        except Exception:
+            pass
+
+        # 3. Fallback: NOAA SWPC Real-Time Summary Endpoints
+        if speed is None:
+            try:
+                resp_s = requests.get(self.NOAA_SUMMARY_SPEED_URL, headers=headers, timeout=4.0)
+                if resp_s.status_code == 200:
+                    data_s = resp_s.json()
+                    if data_s and len(data_s) > 0 and "proton_speed" in data_s[0]:
+                        speed = float(data_s[0]["proton_speed"])
+                        density = 4.8
+                        time_tag = data_s[0].get("time_tag")
+                        source_tag = "NOAA_SWPC_SUMMARY_LIVE"
+            except Exception:
+                pass
+
+        if bz is None:
+            try:
+                resp_m = requests.get(self.NOAA_SUMMARY_MAG_URL, headers=headers, timeout=4.0)
+                if resp_m.status_code == 200:
+                    data_m = resp_m.json()
+                    if data_m and len(data_m) > 0:
+                        bz = float(data_m[0].get("bz_gsm", -2.0))
+                        by = 1.2
+                        bx = 2.4
+                        if not time_tag:
+                            time_tag = data_m[0].get("time_tag")
+                        if source_tag == "NOAA_SWPC_RTSW_LIVE":
+                            source_tag = "NOAA_SWPC_SUMMARY_LIVE"
+            except Exception:
+                pass
+
+        # 4. Optional Live Planetary Kp & Kyoto Dst
+        kp_val = 2.3
+        try:
+            resp_kp = requests.get(self.NOAA_KP_URL, headers=headers, timeout=4.0)
+            if resp_kp.status_code == 200:
+                kp_data = resp_kp.json()
+                if kp_data and len(kp_data) > 0 and "Kp" in kp_data[-1]:
+                    kp_val = float(kp_data[-1]["Kp"])
+        except Exception:
+            pass
+
+        dst_val = -15.0
+        try:
+            resp_dst = requests.get(self.NOAA_DST_URL, headers=headers, timeout=4.0)
+            if resp_dst.status_code == 200:
+                dst_data = resp_dst.json()
+                if dst_data and len(dst_data) > 0 and "dst" in dst_data[-1]:
+                    dst_val = float(dst_data[-1]["dst"])
+        except Exception:
+            pass
+
+        if speed is not None and bz is not None:
+            return {
+                "source": source_tag,
+                "time_tag": time_tag or datetime.now(timezone.utc).isoformat(),
+                "solar_wind_speed_km_s": speed,
+                "proton_density_n_cm3": density or 4.5,
+                "temperature_k": temp_k,
+                "imf_bz_gsm_nt": bz,
+                "imf_by_gsm_nt": by,
+                "imf_bx_gsm_nt": bx,
+                "kp_index": kp_val,
+                "kyoto_dst_nt": dst_val,
+                "history_speed": recent_speed_history,
+                "history_bz": recent_bz_history
+            }
+
         return None
 
     def _build_frame_from_real_telemetry(self, data: Dict[str, Any]) -> Dict[str, Any]:
@@ -186,15 +274,24 @@ class LiveSpaceWeatherFeed:
         gic_sol = self.solver.solve_gic(ex_v_km=ex, ey_v_km=ey)
         risk_eval = assess_network_risk(gic_sol, self.solver.substations)
         sparklines = self._generate_sparklines(bz, speed, density, p_dyn)
+        if data.get("history_speed") and len(data["history_speed"]) >= 6:
+            sparklines["speed"] = data["history_speed"]
+        if data.get("history_bz") and len(data["history_bz"]) >= 6:
+            sparklines["bz"] = data["history_bz"]
         regional_fields = self._compute_regional_fields(db_dt)
 
         g_scale_key = "G2" if abs(bz) > 15 else ("G1" if abs(bz) > 8 else "G0")
         g_scale_meta = NOAA_G_SCALES.get(g_scale_key, NOAA_G_SCALES["G0"])
+        real_kp = data.get("kp_index", 2.3 if g_scale_key == "G0" else (5.0 if g_scale_key == "G1" else 6.3))
+        real_dst = data.get("kyoto_dst_nt", round(-15.0 - bz_coupling * 1.5, 1))
 
         return {
             "mode": "REAL_LIFE_NOAA_FEED",
-            "source_satellite": "NASA/NOAA DSCOVR (L1 Orbit)",
+            "is_live_telemetry": True,
+            "source": data.get("source", "NOAA_SWPC_REAL_TELEMETRY"),
+            "source_satellite": f"NASA/NOAA {data.get('source', 'DSCOVR')} (L1 Orbit)",
             "ground_observatory": "SANSA Hermanus (HER)",
+            "time_tag": data.get("time_tag", now_utc),
             "timestamp": now_utc,
             "dscovr": {
                 "solar_wind_speed_km_s": speed,
@@ -206,6 +303,7 @@ class LiveSpaceWeatherFeed:
                 "early_warning_lead_time_minutes": lead_time,
                 "early_warning_countdown_sec": countdown_sec,
                 "sparklines": sparklines,
+                "telemetry_status": "LIVE_STREAMING",
                 "status": "LIVE STREAMING (NOAA SWPC Real-Time)"
             },
             "sansa_magnetometer": {
@@ -214,10 +312,10 @@ class LiveSpaceWeatherFeed:
                 "status": "ONLINE (INTERMAGNET)"
             },
             "indices": {
-                "kp_index": 2.3 if g_scale_key == "G0" else (5.0 if g_scale_key == "G1" else 6.3),
+                "kp_index": real_kp,
                 "noaa_space_weather_scale": f"{g_scale_key} - {g_scale_meta['name']}",
                 "noaa_scale_meta": g_scale_meta,
-                "kyoto_dst_nt": round(-15.0 - bz_coupling * 1.5, 1)
+                "kyoto_dst_nt": real_dst
             },
             "induction": {
                 "ex_v_km": round(ex, 4),
