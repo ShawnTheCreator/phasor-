@@ -130,6 +130,8 @@ function BentoVideoCard({
             muted
             playsInline
             autoPlay
+            loop={false}
+            preload="auto"
             onEnded={handleVideoEnded}
             style={{
               position: 'absolute',
@@ -206,7 +208,7 @@ function BentoVideoCard({
         </div>
 
         {/* Hero Lockup (Scale AI Mayo Clinic Style) */}
-        {heroLockup && (
+        {heroLockup && !videoUrl && (
           <div
             style={{
               position: 'relative',
@@ -335,108 +337,139 @@ export default function MultiHazardBentoSection({ dashboardUrl }: MultiHazardBen
             BENTO GRID CONTAINER (Matching Scale AI layout from reference photo)
             ========================================================================= */}
         <div className="bento-grid-container">
-          {/* Card 1: SAPP Intertie (Morgan Stanley Style Card) */}
+          {/* Card 1: SAPP Intertie (Morgan Stanley Style Lockup Card) */}
           <div className="bento-card-span-5">
             <BentoVideoCard
-              isLargeHero={true}
-              textPosition="inside-bottom"
-              posterBg="#94a3b8"
-              badge="POWER & SAPP"
+              isLargeHero={false}
+              aspectRatio="16/10"
+              textPosition="below"
+              posterBg="linear-gradient(135deg, #788a99 0%, #5d6f7e 100%)"
+              badge="REGIONAL GRID"
               heroLockup={{
                 leftLogo: 'PHASOR',
                 rightLogo: 'SAPP INTERTIE',
-                rightSub: '6 Interconnected Countries',
+                rightSub: '6 Member Utilities',
               }}
-              title="SAPP Regional Grid Interconnection"
-              subtitle="Automatic 400 MW load-flow rerouting before transformer core saturation occurs."
+              title="Southern African Power Pool: Dynamic Islanding"
+              subtitle="How Southern African power pools automatically reroute 400 MW before transformer core saturation occurs."
               linkUrl={`${dashboardUrl}/grid`}
               ctaText="View SAPP Interconnected Grid ↗"
               videoUrl=""
             />
           </div>
 
-          {/* Card 2: Commercial Aviation (Mayo Clinic Style Large Hero Card) */}
+          {/* Card 2: Commercial Aviation (Fighter Jet Video Card) */}
           <div className="bento-card-span-7">
             <BentoVideoCard
               isLargeHero={true}
               textPosition="inside-bottom"
-              posterBg="linear-gradient(135deg, #0e2a1b 0%, #06170d 100%)"
+              posterBg="#09121a"
               badge="COMMERCIAL AVIATION"
-              heroLockup={{
-                leftLogo: 'PHASOR',
-                rightLogo: 'ICAO SWIS',
-                rightSub: 'Aviation Weather',
-              }}
               title="ICAO Space Weather Information: Aircrew Dosimetry & Step-Down Advisories"
               subtitle="Solar Proton Events spike radiation to 82.5 µSv/h at FL390. Phasor provides certified step-downs to FL310—slashing ionizing dosage by 42%—and manages CPDLC SATCOM handover."
               linkUrl={`${dashboardUrl}/aviation`}
               ctaText="Launch Aviation Triad Dashboard ↗"
-              // USER VIDEO SLOT: Replace with your copyright-free aviation video URL (e.g. cockpit clouds, airliner wing)
-              videoUrl=""
+              videoUrl="/videos/Fighter_Jet.mp4"
             />
           </div>
 
-          {/* Card 3: HF Radio Comms (US Capitol Style Card) */}
+          {/* Card 3: HF Radio Comms (Radio Satellite Video Card) */}
           <div className="bento-card-span-6">
             <BentoVideoCard
               aspectRatio="16/10"
               textPosition="below"
-              posterBg="linear-gradient(135deg, #1e293b 0%, #0f172a 100%)"
+              posterBg="#0f172a"
               badge="HF RADIO COMMS"
               title="Ionospheric Riometer Fadeout: Real-Time MUF Depression"
               subtitle="Solar X-ray flares induce 5.8 dB D-layer absorption. Phasor alerts maritime and defense operators before complete radio blackout."
               linkUrl={`${dashboardUrl}/aviation`}
               ctaText="View Riometer Curves ↗"
-              // USER VIDEO SLOT: Replace with your radio tower / satellite dish video URL
-              videoUrl=""
+              videoUrl="/videos/Radio_Satalite.mp4"
             />
           </div>
 
-          {/* Card 4: Precision GNSS (Tanks / Tactical Style Card) */}
+          {/* Card 4: Precision GNSS (Tactical Scintillation Radar Display) */}
           <div className="bento-card-span-6">
             <BentoVideoCard
               aspectRatio="16/10"
               textPosition="below"
-              posterBg="linear-gradient(135deg, #1c1917 0%, #292524 100%)"
+              posterBg="#090d16"
               badge="PRECISION GNSS"
               title="Equatorial Plasma Bubbles: Drone & Autonomous RTK Failover"
               subtitle="Scintillation (S4 > 0.60) causes 15m cycle slips. Phasor forecasts eastward drift to switch autonomous farm machinery to INS dead-reckoning."
               linkUrl={`${dashboardUrl}/gnss`}
               ctaText="Open GNSS Map ↗"
-              // USER VIDEO SLOT: Replace with your autonomous drone / field tractor video URL
               videoUrl=""
-            />
+            >
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%', padding: '10px 0' }}>
+                <svg viewBox="0 0 400 160" style={{ width: '100%', maxHeight: '150px' }}>
+                  <defs>
+                    <radialGradient id="radarGlow" cx="50%" cy="50%" r="50%">
+                      <stop offset="0%" stopColor="#38bdf8" stopOpacity="0.12" />
+                      <stop offset="100%" stopColor="#38bdf8" stopOpacity="0" />
+                    </radialGradient>
+                    <linearGradient id="bubbleGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stopColor="#ef4444" stopOpacity="0.8" />
+                      <stop offset="100%" stopColor="#f59e0b" stopOpacity="0.2" />
+                    </linearGradient>
+                  </defs>
+
+                  {/* Concentric rings */}
+                  <circle cx="200" cy="80" r="70" fill="url(#radarGlow)" stroke="rgba(255,255,255,0.08)" strokeWidth="1" strokeDasharray="3 3" />
+                  <circle cx="200" cy="80" r="45" fill="none" stroke="rgba(255,255,255,0.12)" strokeWidth="1" />
+                  <circle cx="200" cy="80" r="20" fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="1" />
+                  <line x1="200" y1="10" x2="200" y2="150" stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
+                  <line x1="130" y1="80" x2="270" y2="80" stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
+
+                  {/* Equatorial Anomaly Plume (Drift Corridor) */}
+                  <ellipse cx="230" cy="72" rx="42" ry="18" fill="url(#bubbleGrad)" transform="rotate(-15 230 72)" opacity="0.6" />
+
+                  {/* Satellites */}
+                  <circle cx="170" cy="50" r="4" fill="#10b981" />
+                  <text x="178" y="53" fill="#94a3b8" fontSize="8" fontFamily="monospace">GPS SV19 [LOCK]</text>
+
+                  <circle cx="235" cy="65" r="4" fill="#ef4444" />
+                  <text x="243" y="68" fill="#f87171" fontSize="8" fontFamily="monospace">GAL E11 [SLIP S4:0.72]</text>
+
+                  <circle cx="215" cy="115" r="4" fill="#38bdf8" />
+                  <text x="223" y="118" fill="#94a3b8" fontSize="8" fontFamily="monospace">BEI B2a [INS FAILOVER]</text>
+
+                  {/* Status Banner */}
+                  <rect x="35" y="136" width="330" height="18" rx="4" fill="rgba(0,0,0,0.5)" stroke="rgba(239,68,68,0.4)" strokeWidth="1" />
+                  <circle cx="47" cy="145" r="3" fill="#ef4444" />
+                  <text x="57" y="149" fill="#fca5a5" fontSize="8" fontFamily="monospace" fontWeight="bold">EPB DRIFT DETECTED: AUTO-SWITCH RTK → INERTIAL DEAD RECKONING</text>
+                </svg>
+              </div>
+            </BentoVideoCard>
           </div>
 
-          {/* Card 5: Hospital Resilience (Qatar Arch Wide Landscape Card) */}
+          {/* Card 5: Hospital Resilience (Medical ICU Video Card) */}
           <div className="bento-card-span-7">
             <BentoVideoCard
               aspectRatio="16/10"
               textPosition="inside-bottom"
-              posterBg="linear-gradient(135deg, #1e1b4b 0%, #0f172a 100%)"
+              posterBg="#090d16"
               badge="HOSPITAL RESILIENCE"
               title="Hospital Grid Feeder Shield: Protecting ICU Backup"
               subtitle="Topologically coupling 8 major tertiary hospitals to 400 kV substations while projecting +58% stroke and 2.15x cardiac surge loads."
               linkUrl={`${dashboardUrl}/health`}
               ctaText="View Hospital Grid Matrix ↗"
-              // USER VIDEO SLOT: Replace with your hospital / medical ICU video URL
-              videoUrl=""
+              videoUrl="/videos/Medical.mp4"
             />
           </div>
 
-          {/* Card 6: LEO Satellites (Robotic Arm / Physical AI Style Card) */}
+          {/* Card 6: LEO Satellites (Orbit Video Card) */}
           <div className="bento-card-span-5">
             <BentoVideoCard
               aspectRatio="16/10"
               textPosition="below"
-              posterBg="linear-gradient(135deg, #020617 0%, #0f172a 100%)"
+              posterBg="#020617"
               badge="ORBITAL DRAG"
               title="Thermospheric Swelling: 7-Day Orbit-Raise"
               subtitle="NRLMSISE-00 density models predict drag spikes on LEO constellations for safe thruster burn timing."
               linkUrl={`${dashboardUrl}/satellites`}
               ctaText="Inspect LEO Fleet ↗"
-              // USER VIDEO SLOT: Replace with your satellite / space orbit video URL
-              videoUrl=""
+              videoUrl="/videos/Orbit.mp4"
             />
           </div>
         </div>
