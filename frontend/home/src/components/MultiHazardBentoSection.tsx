@@ -582,32 +582,6 @@ export default function MultiHazardBentoSection({ dashboardUrl }: MultiHazardBen
             </div>
           </div>
         </div>
-
-        {/* User Helpful Instructions Callout Bar */}
-        <div
-          style={{
-            marginTop: '36px',
-            padding: '16px 20px',
-            borderRadius: '12px',
-            backgroundColor: '#f8fafc',
-            border: '1px dashed #cbd5e1',
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            flexWrap: 'wrap',
-            gap: '12px',
-          }}
-        >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <span style={{ fontSize: '1.1rem' }}>🎬</span>
-            <span style={{ fontSize: '0.84rem', color: '#475569' }}>
-              <strong>Video Slots Ready:</strong> All cards are wired with autoplaying videos that <strong>play once to the end, then stop</strong> without looping. Simply pass your copyright-free MP4/WebM URLs to the <code>videoUrl</code> props in <code>MultiHazardBentoSection.tsx</code>.
-            </span>
-          </div>
-          <span style={{ fontSize: '0.74rem', backgroundColor: '#e2e8f0', padding: '4px 10px', borderRadius: '6px', fontWeight: 600, color: '#334155' }}>
-            play end then stop (loop=false)
-          </span>
-        </div>
       </div>
     </section>
   );
