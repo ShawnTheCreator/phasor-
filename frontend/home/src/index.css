@@ -1253,6 +1253,18 @@ body {
   border-color: #111827;
 }
 
+.simple-storm-btn-dark {
+  background-color: #0f172a !important;
+  border-color: #0f172a !important;
+  color: #ffffff !important;
+}
+
+.simple-storm-btn-dark:hover {
+  background-color: #ef4444 !important;
+  border-color: #ef4444 !important;
+  color: #ffffff !important;
+}
+
 /* Minimalist Scroll Progress Indicator */
 .simple-storm-progress {
   display: flex;

@@ -24,8 +24,8 @@ const STORMS: StormEvent[] = [
     description:
       '5 cannibal CMEs triggered the highest peak GICs in NERC\'s post-2013 database across 397+ monitors, pushing grid transformers toward half-cycle saturation.',
     mediaType: 'video',
-    videoUrl: 'https://www.youtube.com/embed/wmumao6VquU',
-    articleTag: 'NOAA SWPC &bull; NERC GMD TECHNICAL REVIEW',
+    videoUrl: 'https://www.youtube.com/embed/9i47b__igEw',
+    articleTag: 'NASA GODDARD &bull; NOAA SWPC &bull; NERC REVIEW',
     kpiStats: ['Dst: -412 nT', 'Kp: 9.0 Extreme', '397+ GIC Monitors'],
     accentColor: '#ef4444',
     reportUrl: 'https://www.nerc.com/globalassets/programs/rapa/gmd/reference-documents/may-2024-gmd-event-review.pdf',
@@ -294,8 +294,8 @@ export default function StormShowcase({ dashboardUrl }: StormShowcaseProps): JSX
                               href={`${dashboardUrl}/replay`}
                               target="_blank"
                               rel="noreferrer"
-                              className="simple-storm-btn"
-                              style={{ backgroundColor: '#0f172a', borderColor: '#0f172a' }}
+                              className="simple-storm-btn simple-storm-btn-dark"
+                              style={{ backgroundColor: '#0f172a', borderColor: '#0f172a', color: '#ffffff' }}
                             >
                               REPLAY THEATRE ↗
                             </a>
