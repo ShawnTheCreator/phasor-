@@ -6,7 +6,7 @@ import StormShowcase from './components/StormShowcase';
 import GlassyPhiLogo from './components/GlassyPhiLogo';
 import CookieConsent from './components/CookieConsent';
 import BookDemoModal from './components/BookDemoModal';
-import MultiHazardDefenseSection from './components/MultiHazardDefenseSection';
+import MultiHazardBentoSection from './components/MultiHazardBentoSection';
 
 const isProduction: boolean = Boolean(import.meta.env.PROD);
 const rawDashboardEnv: string = (import.meta.env.VITE_DASHBOARD_URL as string) || '';
@@ -116,11 +116,12 @@ export default function App(): JSX.Element {
       </section>
 
       {/* =========================================================================
-          FOURTH SECTION: MULTI-HAZARD DEFENSE (PLANES, RADIO, GPS, HOSPITALS, LEO)
-          - What happens to planes, HF radios, GPS satellites, hospitals & remote field workers
-          - How Phasor shields operations with real-time early warning and mitigation
+          FOURTH SECTION: MULTI-HAZARD BENTO GRID (SCALE AI STYLE LAYOUT)
+          - Asymmetrical Scale AI-style Bento Cards with Video Slots
+          - Videos play once to the end, then stop (play end then stop)
+          - Direct deep-links to each operational view in the live dashboard
           ========================================================================= */}
-      <MultiHazardDefenseSection dashboardUrl={DASHBOARD_URL} />
+      <MultiHazardBentoSection dashboardUrl={DASHBOARD_URL} />
 
       {/* =========================================================================
           OPEN SCIENCE DATA PROVENANCE

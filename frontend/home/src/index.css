@@ -1348,3 +1348,66 @@ body {
   border-top: 1px solid #e2e8f0;
   font-size: 0.88rem;
 }
+
+/* ==========================================================================
+   Multi-Hazard Bento Grid (Scale AI Style Layout)
+   ========================================================================== */
+.bento-grid-container {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 20px;
+  align-items: stretch;
+}
+
+.bento-col-left {
+  grid-column: span 5;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.bento-col-right {
+  grid-column: span 7;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.bento-split-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.bento-bottom-row {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 20px;
+}
+
+.bento-bottom-wide {
+  grid-column: span 7;
+}
+
+.bento-bottom-narrow {
+  grid-column: span 5;
+}
+
+@media (max-width: 992px) {
+  .bento-col-left,
+  .bento-col-right {
+    grid-column: span 12;
+  }
+
+  .bento-bottom-wide,
+  .bento-bottom-narrow {
+    grid-column: span 12;
+  }
+}
+
+@media (max-width: 640px) {
+  .bento-split-row {
+    grid-template-columns: 1fr;
+  }
+}
+
