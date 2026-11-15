@@ -6,13 +6,14 @@
 const isProduction: boolean = process.env.NODE_ENV === 'production';
 
 export const API_BASE_URL: string =
+  (process.env.NEXT_PUBLIC_PYTHON_URL ? process.env.NEXT_PUBLIC_PYTHON_URL.replace(/\/$/, '') : '') ||
+  (process.env.NEXT_PUBLIC_ENGINE_URL ? process.env.NEXT_PUBLIC_ENGINE_URL.replace(/\/$/, '') : '') ||
   (process.env.NEXT_PUBLIC_API_URL ? process.env.NEXT_PUBLIC_API_URL.replace(/\/$/, '') : '') ||
   (isProduction ? '' : 'http://localhost:8000');
 
 export const DOTNET_BASE_URL: string =
   (process.env.NEXT_PUBLIC_DOTNET_URL ? process.env.NEXT_PUBLIC_DOTNET_URL.replace(/\/$/, '') : '') ||
   (process.env.NEXT_PUBLIC_CSHARP_URL ? process.env.NEXT_PUBLIC_CSHARP_URL.replace(/\/$/, '') : '') ||
-  (process.env.NEXT_PUBLIC_API_URL ? process.env.NEXT_PUBLIC_API_URL.replace(/\/$/, '') : '') ||
   (isProduction ? '' : 'http://localhost:5000');
 
 export const HOME_URL: string =
