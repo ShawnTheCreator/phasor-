@@ -42,6 +42,13 @@ export default function App(): JSX.Element {
             <a href="#how-it-works" className="hero-nav-link">How It Works</a>
             <a href="#replay" className="hero-nav-link">Storm Replay</a>
             <a href="#science" className="hero-nav-link">Data Lineage</a>
+            <button
+              onClick={() => setIsDemoOpen(true)}
+              className="hero-nav-link"
+              style={{ background: 'none', border: 'none', cursor: 'pointer', font: 'inherit', padding: 0 }}
+            >
+              Book a Demo
+            </button>
             <a
               href={`${DASHBOARD_URL}/login`}
               className="btn-pill-glass"
@@ -69,22 +76,17 @@ export default function App(): JSX.Element {
           </p>
 
           <div className="hero-action-buttons">
-            <button
-              onClick={() => setIsDemoOpen(true)}
-              className="btn-hero-red"
-              style={{ border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}
-            >
-              <span>Book a Demo</span>
-              <span>↗</span>
-            </button>
             <a
               href={DASHBOARD_URL}
-              className="btn-hero-glass"
+              className="btn-hero-red"
               target="_blank"
               rel="noreferrer"
             >
               <span>Demo</span>
               <span>↗</span>
+            </a>
+            <a href="#how-it-works" className="btn-hero-glass">
+              <span>Explore Physics</span>
             </a>
           </div>
         </div>
@@ -138,12 +140,21 @@ export default function App(): JSX.Element {
         <div className="editorial-container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px' }}>
           <p>&copy; 2026 Phasor &bull; NASA International Space Apps Challenge &bull; All Rights Reserved.</p>
           <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+            <a
+              href={DASHBOARD_URL}
+              className="btn-hero-red"
+              style={{ padding: '8px 18px', fontSize: '0.84rem', textDecoration: 'none' }}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Demo ↗
+            </a>
             <button
               onClick={() => setIsDemoOpen(true)}
-              className="btn-hero-red"
-              style={{ padding: '8px 18px', fontSize: '0.84rem', border: 'none', cursor: 'pointer' }}
+              className="btn-pill-glass"
+              style={{ padding: '8px 16px', fontSize: '0.84rem', cursor: 'pointer', border: '1px solid rgba(255,255,255,0.3)' }}
             >
-              Book a Demo ↗
+              Book a Demo
             </button>
             <a
               href={`${DASHBOARD_URL}/login`}
