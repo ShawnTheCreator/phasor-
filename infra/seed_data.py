@@ -17,8 +17,8 @@ except ImportError:
     print("Warning: pymongo not installed. Install with `pip install pymongo` to seed live MongoDB.")
     sys.exit(0)
 
-MONGO_URI = os.getenv("MONGODB_URI", "mongodb://127.0.0.1:27017/phasor_spaceweather")
-DB_NAME = "phasor_spaceweather"
+MONGO_URI = os.getenv("MONGODB_URI") or os.getenv("MONGO_URI") or "mongodb://127.0.0.1:27017/phasor"
+DB_NAME = os.getenv("MONGODB_DB_NAME") or os.getenv("MONGO_DB_NAME") or "phasor"
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
 STORM_FILE = ROOT_DIR / "data" / "may_2024_g5_storm.json"

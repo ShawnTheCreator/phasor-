@@ -30,8 +30,8 @@ except ImportError:
     PYMONGO_AVAILABLE = False
     MongoClient = None
 
-MONGO_URI = os.getenv("MONGO_URI", "mongodb://127.0.0.1:27017")
-MONGO_DB_NAME = os.getenv("MONGO_DB_NAME", "phasor_grid")
+MONGO_URI = os.getenv("MONGODB_URI") or os.getenv("MONGO_URI") or "mongodb://127.0.0.1:27017"
+MONGO_DB_NAME = os.getenv("MONGODB_DB_NAME") or os.getenv("MONGO_DB_NAME") or "phasor"
 
 
 class MongoManager:
