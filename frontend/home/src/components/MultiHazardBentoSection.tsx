@@ -337,24 +337,19 @@ export default function MultiHazardBentoSection({ dashboardUrl }: MultiHazardBen
             BENTO GRID CONTAINER (Matching Scale AI layout from reference photo)
             ========================================================================= */}
         <div className="bento-grid-container">
-          {/* Card 1: SAPP Intertie (Morgan Stanley Style Lockup Card) */}
+          {/* Card 1: SAPP Intertie (Regional Power Pool Video Card) */}
           <div className="bento-card-span-5">
             <BentoVideoCard
               isLargeHero={false}
               aspectRatio="16/10"
               textPosition="below"
-              posterBg="linear-gradient(135deg, #788a99 0%, #5d6f7e 100%)"
-              badge="REGIONAL GRID"
-              heroLockup={{
-                leftLogo: 'PHASOR',
-                rightLogo: 'SAPP INTERTIE',
-                rightSub: '6 Member Utilities',
-              }}
+              posterBg="#0f172a"
+              badge="REGIONAL POWER POOL"
               title="Southern African Power Pool: Dynamic Islanding"
               subtitle="How Southern African power pools automatically reroute 400 MW before transformer core saturation occurs."
               linkUrl={`${dashboardUrl}/grid`}
               ctaText="View SAPP Interconnected Grid ↗"
-              videoUrl=""
+              videoUrl="/videos/Grid_Pool.mp4"
             />
           </div>
 
@@ -388,59 +383,19 @@ export default function MultiHazardBentoSection({ dashboardUrl }: MultiHazardBen
             />
           </div>
 
-          {/* Card 4: Precision GNSS (Tactical Scintillation Radar Display) */}
+          {/* Card 4: Precision GNSS & Drones (Drone Video Card) */}
           <div className="bento-card-span-6">
             <BentoVideoCard
               aspectRatio="16/10"
               textPosition="below"
               posterBg="#090d16"
-              badge="PRECISION GNSS"
+              badge="PRECISION GNSS & DRONES"
               title="Equatorial Plasma Bubbles: Drone & Autonomous RTK Failover"
               subtitle="Scintillation (S4 > 0.60) causes 15m cycle slips. Phasor forecasts eastward drift to switch autonomous farm machinery to INS dead-reckoning."
               linkUrl={`${dashboardUrl}/gnss`}
               ctaText="Open GNSS Map ↗"
-              videoUrl=""
-            >
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%', padding: '10px 0' }}>
-                <svg viewBox="0 0 400 160" style={{ width: '100%', maxHeight: '150px' }}>
-                  <defs>
-                    <radialGradient id="radarGlow" cx="50%" cy="50%" r="50%">
-                      <stop offset="0%" stopColor="#38bdf8" stopOpacity="0.12" />
-                      <stop offset="100%" stopColor="#38bdf8" stopOpacity="0" />
-                    </radialGradient>
-                    <linearGradient id="bubbleGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                      <stop offset="0%" stopColor="#ef4444" stopOpacity="0.8" />
-                      <stop offset="100%" stopColor="#f59e0b" stopOpacity="0.2" />
-                    </linearGradient>
-                  </defs>
-
-                  {/* Concentric rings */}
-                  <circle cx="200" cy="80" r="70" fill="url(#radarGlow)" stroke="rgba(255,255,255,0.08)" strokeWidth="1" strokeDasharray="3 3" />
-                  <circle cx="200" cy="80" r="45" fill="none" stroke="rgba(255,255,255,0.12)" strokeWidth="1" />
-                  <circle cx="200" cy="80" r="20" fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="1" />
-                  <line x1="200" y1="10" x2="200" y2="150" stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
-                  <line x1="130" y1="80" x2="270" y2="80" stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
-
-                  {/* Equatorial Anomaly Plume (Drift Corridor) */}
-                  <ellipse cx="230" cy="72" rx="42" ry="18" fill="url(#bubbleGrad)" transform="rotate(-15 230 72)" opacity="0.6" />
-
-                  {/* Satellites */}
-                  <circle cx="170" cy="50" r="4" fill="#10b981" />
-                  <text x="178" y="53" fill="#94a3b8" fontSize="8" fontFamily="monospace">GPS SV19 [LOCK]</text>
-
-                  <circle cx="235" cy="65" r="4" fill="#ef4444" />
-                  <text x="243" y="68" fill="#f87171" fontSize="8" fontFamily="monospace">GAL E11 [SLIP S4:0.72]</text>
-
-                  <circle cx="215" cy="115" r="4" fill="#38bdf8" />
-                  <text x="223" y="118" fill="#94a3b8" fontSize="8" fontFamily="monospace">BEI B2a [INS FAILOVER]</text>
-
-                  {/* Status Banner */}
-                  <rect x="35" y="136" width="330" height="18" rx="4" fill="rgba(0,0,0,0.5)" stroke="rgba(239,68,68,0.4)" strokeWidth="1" />
-                  <circle cx="47" cy="145" r="3" fill="#ef4444" />
-                  <text x="57" y="149" fill="#fca5a5" fontSize="8" fontFamily="monospace" fontWeight="bold">EPB DRIFT DETECTED: AUTO-SWITCH RTK → INERTIAL DEAD RECKONING</text>
-                </svg>
-              </div>
-            </BentoVideoCard>
+              videoUrl="/videos/Drone.mp4"
+            />
           </div>
 
           {/* Card 5: Hospital Resilience (Medical ICU Video Card) */}
