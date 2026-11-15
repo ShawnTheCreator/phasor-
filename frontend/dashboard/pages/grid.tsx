@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import Sidebar from '../components/Sidebar';
 import { API_BASE_URL } from '../lib/config';
 import SappGridTopologyDiagram from '../components/diagrams/SappGridTopologyDiagram';
+import InteractiveGridMapDiagram from '../components/diagrams/InteractiveGridMapDiagram';
+import TransformerCoreSaturationDiagram from '../components/diagrams/TransformerCoreSaturationDiagram';
 
 interface SappSubstation {
   id: string;
@@ -123,8 +125,18 @@ export default function GridExpansionPage(): JSX.Element {
             </div>
           </section>
 
+          {/* Synchronous Regional Grid Map with Live User GPS Radar */}
+          <section style={{ marginBottom: '24px' }}>
+            <InteractiveGridMapDiagram />
+          </section>
+
           {/* SAPP Interactive Single-Line Topology & Protection Schematic */}
           <SappGridTopologyDiagram />
+
+          {/* 3D Transformer Core Saturation Diagram */}
+          <section style={{ marginBottom: '24px' }}>
+            <TransformerCoreSaturationDiagram />
+          </section>
 
           {/* SAPP Grid League Table */}
           <section className="content-card">

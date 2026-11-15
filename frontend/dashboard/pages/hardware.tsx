@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import dynamic from 'next/dynamic';
 import Sidebar from '../components/Sidebar';
 import { DOTNET_BASE_URL } from '../lib/config';
+
+const Hardware3DViewer = dynamic(
+  () => import('../components/diagrams/Hardware3DViewer'),
+  { ssr: false }
+);
 
 interface HardwareTelemetry {
   node_id?: string;
@@ -259,6 +265,26 @@ export default function HardwarePage(): JSX.Element {
               <span className="metric-value">75 LSB/nT</span>
               <span className="metric-sub">PNI RM3100 (Cycle Count = 200)</span>
             </div>
+          </div>
+
+          {/* 3D Hardware Digital Twin & Magneto-Inductive Sensor Visualization */}
+          <div style={{ marginBottom: '24px' }}>
+            <div style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              marginBottom: '10px'
+            }}>
+              <div>
+                <h3 style={{ fontSize: '0.96rem', fontWeight: 700, color: '#0f172a', margin: '0 0 2px 0' }}>
+                  Interactive 3D Hardware Digital Twin & Magnetic Vector Field
+                </h3>
+                <p style={{ fontSize: '0.78rem', color: '#64748b', margin: 0 }}>
+                  Real-time CAD model of Raspberry Pi Pico RP2040 and PNI RM3100 magneto-inductive probe. Vector arrow dynamically tracks live 3-axis induction in real time.
+                </p>
+              </div>
+            </div>
+            <Hardware3DViewer bx={currentBx} by={currentBy} bz={currentBz} isSimulating={isSimulating} />
           </div>
 
           {/* Vector Components Section */}
