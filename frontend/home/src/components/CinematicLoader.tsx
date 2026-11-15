@@ -10,7 +10,7 @@ export default function CinematicLoader({ onComplete }: CinematicLoaderProps): J
   const [isRemoved, setIsRemoved] = useState<boolean>(false);
 
   useEffect(() => {
-    // Escape key or click listener to skip immediately
+    // ESC key or click to skip immediately
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape' || e.key === ' ') {
         skipLoader();
@@ -24,7 +24,7 @@ export default function CinematicLoader({ onComplete }: CinematicLoaderProps): J
     window.addEventListener('keydown', handleKeyDown);
     window.addEventListener('click', handleClick);
 
-    // Dynamic telemetry progress increments (finishes in ~1.3s)
+    // Dynamic rapid progression from 0 to 100 in ~1.2s
     const interval = setInterval(() => {
       setProgress(prev => {
         if (prev >= 100) {
@@ -32,15 +32,15 @@ export default function CinematicLoader({ onComplete }: CinematicLoaderProps): J
           triggerExit();
           return 100;
         }
-        const jump = Math.floor(Math.random() * 22) + 12;
-        const next = Math.min(100, prev + jump);
+        const step = Math.floor(Math.random() * 20) + 14;
+        const next = Math.min(100, prev + step);
         if (next === 100) {
           clearInterval(interval);
-          setTimeout(triggerExit, 160);
+          setTimeout(triggerExit, 120);
         }
         return next;
       });
-    }, 110);
+    }, 95);
 
     return () => {
       clearInterval(interval);
@@ -59,7 +59,7 @@ export default function CinematicLoader({ onComplete }: CinematicLoaderProps): J
     setTimeout(() => {
       setIsRemoved(true);
       onComplete();
-    }, 700); // matches CSS exit transition duration
+    }, 450); // Fast exit transition so the hero pop triggers immediately
   };
 
   if (isRemoved) return null;
@@ -70,170 +70,163 @@ export default function CinematicLoader({ onComplete }: CinematicLoaderProps): J
         position: 'fixed',
         inset: 0,
         zIndex: 99999,
-        backgroundColor: '#05070c',
+        backgroundColor: '#1c1e22', // Tactile grainy gray background
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
         opacity: isExiting ? 0 : 1,
-        transform: isExiting ? 'scale(1.04)' : 'scale(1)',
-        filter: isExiting ? 'blur(10px)' : 'none',
-        transition: 'opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1), filter 0.65s ease',
+        transform: isExiting ? 'scale(1.03)' : 'scale(1)',
+        filter: isExiting ? 'blur(8px)' : 'none',
+        transition: 'opacity 0.45s ease-out, transform 0.45s ease-out, filter 0.45s ease-out',
         cursor: 'pointer',
         userSelect: 'none',
-        padding: '24px',
-        boxSizing: 'border-box',
+        overflow: 'hidden',
       }}
       title="Click or press ESC to enter immediately"
     >
-      {/* Background Architectural Grid Lines */}
+      {/* SVG Procedural Grain / Film Noise Filter */}
+      <svg
+        style={{
+          position: 'absolute',
+          width: 0,
+          height: 0,
+          pointerEvents: 'none',
+        }}
+        aria-hidden="true"
+      >
+        <filter id="grainNoise">
+          <feTurbulence
+            type="fractalNoise"
+            baseFrequency="0.8"
+            numOctaves="3"
+            stitchTiles="stitch"
+          />
+          <feColorMatrix
+            type="matrix"
+            values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0.28 0"
+          />
+        </filter>
+      </svg>
+
+      {/* Grainy Texture Overlay Layer */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: '-20%',
+          width: '140%',
+          height: '140%',
+          pointerEvents: 'none',
+          filter: 'url(#grainNoise)',
+          opacity: 0.85,
+        }}
+      />
+
+      {/* Subtle Architectural Construction Hairlines on Grainy Gray */}
       <div
         style={{
           position: 'absolute',
           inset: 0,
           pointerEvents: 'none',
-          opacity: 0.06,
+          opacity: 0.05,
           backgroundImage:
-            'linear-gradient(to right, rgba(255, 255, 255, 0.4) 1px, transparent 1px), linear-gradient(to bottom, rgba(255, 255, 255, 0.4) 1px, transparent 1px)',
-          backgroundSize: '80px 80px',
+            'linear-gradient(to right, rgba(255, 255, 255, 0.5) 1px, transparent 1px), linear-gradient(to bottom, rgba(255, 255, 255, 0.5) 1px, transparent 1px)',
+          backgroundSize: '120px 120px',
         }}
       />
 
-      {/* Centerpiece: Glowing Molded Glass Phi Logo */}
+      {/* Central Flowing Red Liquid Number */}
       <div
         style={{
           position: 'relative',
-          width: '90px',
-          height: '90px',
-          marginBottom: '28px',
           display: 'flex',
+          flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
         }}
       >
-        {/* Pulsing Sonar Ring */}
+        {/* Massive Flowing Red Liquid Percentage Readout */}
         <div
+          className="flowing-liquid-number"
           style={{
-            position: 'absolute',
-            inset: '-18px',
-            borderRadius: '50%',
-            border: '1.5px solid rgba(239, 68, 68, 0.4)',
-            animation: 'sonarPing 2s cubic-bezier(0, 0, 0.2, 1) infinite',
+            fontSize: 'clamp(7rem, 22vw, 19rem)',
+            fontWeight: 900,
+            lineHeight: 0.88,
+            letterSpacing: '-0.06em',
+            fontFamily: '"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+            background:
+              'linear-gradient(-45deg, #450a0a 0%, #991b1b 20%, #f5242e 45%, #ff3b30 65%, #940a14 85%, #dc2626 100%)',
+            backgroundSize: '350% 350%',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            animation: 'flowingRedLiquid 2.8s ease infinite',
+            filter: 'drop-shadow(0 0 45px rgba(239, 68, 68, 0.55))',
+            fontVariantNumeric: 'tabular-nums',
+            display: 'inline-block',
           }}
-        />
+        >
+          {progress < 10 ? `0${progress}` : progress}
+          <span
+            style={{
+              fontSize: 'clamp(2.5rem, 7vw, 6rem)',
+              fontWeight: 800,
+              letterSpacing: '-0.02em',
+              marginLeft: '4px',
+              opacity: 0.9,
+            }}
+          >
+            %
+          </span>
+        </div>
 
-        {/* Squircle Badge */}
+        {/* Technical Sub-Tag with Glowing Indicator */}
         <div
           style={{
-            width: '100%',
-            height: '100%',
-            borderRadius: '24px',
-            background: 'linear-gradient(135deg, #b91c1c 0%, #7f1d1d 60%, #450a0a 100%)',
-            border: '1px solid rgba(248, 113, 113, 0.5)',
-            boxShadow: '0 0 35px rgba(220, 38, 38, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.4)',
-            display: 'flex',
+            marginTop: '20px',
+            display: 'inline-flex',
             alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          {/* Classical Phi Glyph */}
-          <svg viewBox="0 0 64 64" width="52" height="52" fill="none">
-            <line x1="32" y1="8" x2="32" y2="56" stroke="#ffffff" strokeWidth="5.5" strokeLinecap="round" />
-            <line x1="22" y1="9" x2="42" y2="9" stroke="#ffffff" strokeWidth="3" strokeLinecap="round" />
-            <line x1="22" y1="55" x2="42" y2="55" stroke="#ffffff" strokeWidth="3" strokeLinecap="round" />
-            <circle cx="32" cy="32" r="14" stroke="#ffffff" strokeWidth="5" />
-          </svg>
-        </div>
-      </div>
-
-      {/* Brand Title & System Header */}
-      <div style={{ textAlign: 'center', marginBottom: '22px' }}>
-        <h1
-          style={{
-            margin: 0,
-            fontSize: '1.45rem',
-            fontWeight: 800,
-            letterSpacing: '0.18em',
-            color: '#ffffff',
-            textTransform: 'uppercase',
-            fontFamily: '"Inter", sans-serif',
-          }}
-        >
-          P H A S O R
-        </h1>
-        <div
-          style={{
-            marginTop: '6px',
-            fontSize: '0.74rem',
-            letterSpacing: '0.12em',
-            color: 'rgba(255, 255, 255, 0.5)',
-            textTransform: 'uppercase',
+            gap: '10px',
+            fontSize: '0.78rem',
             fontFamily: 'monospace',
+            letterSpacing: '0.14em',
+            color: 'rgba(255, 255, 255, 0.65)',
+            textTransform: 'uppercase',
           }}
         >
-          Planetary Space Weather Defense System
+          <span
+            style={{
+              width: '8px',
+              height: '8px',
+              borderRadius: '50%',
+              backgroundColor: '#ef4444',
+              boxShadow: '0 0 10px #ef4444',
+              display: 'inline-block',
+            }}
+          />
+          <span>
+            {progress < 40
+              ? 'CALIBRATING DSCOVR L1 STREAM'
+              : progress < 85
+              ? 'COMPUTING KAAPVAAL MT TENSOR'
+              : 'SPACE WEATHER SHIELD ONLINE'}
+          </span>
         </div>
       </div>
 
-      {/* Precision Progress Bar */}
-      <div
-        style={{
-          width: '240px',
-          height: '4px',
-          backgroundColor: 'rgba(255, 255, 255, 0.1)',
-          borderRadius: '4px',
-          overflow: 'hidden',
-          marginBottom: '14px',
-          position: 'relative',
-        }}
-      >
-        <div
-          style={{
-            width: `${progress}%`,
-            height: '100%',
-            backgroundColor: '#ef4444',
-            boxShadow: '0 0 12px #ef4444',
-            borderRadius: '4px',
-            transition: 'width 0.12s ease-out',
-          }}
-        />
-      </div>
-
-      {/* Progress Telemetry Readout */}
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          width: '240px',
-          fontSize: '0.72rem',
-          fontFamily: 'monospace',
-          color: 'rgba(255, 255, 255, 0.65)',
-        }}
-      >
-        <span>
-          {progress < 40
-            ? 'INITIALIZING L1 SATELLITE...'
-            : progress < 85
-            ? 'COMPUTING MT IMPEDANCE...'
-            : 'GRID SHIELD READY'}
-        </span>
-        <span style={{ color: '#ef4444', fontWeight: 700 }}>{progress}%</span>
-      </div>
-
-      {/* Escape / Skip Prompt Pill */}
+      {/* Subtle Escape Key Callout on Grainy Gray */}
       <div
         style={{
           position: 'absolute',
-          bottom: '32px',
+          bottom: '36px',
           display: 'inline-flex',
           alignItems: 'center',
           gap: '8px',
           padding: '6px 14px',
           borderRadius: '9999px',
-          backgroundColor: 'rgba(255, 255, 255, 0.06)',
-          border: '1px solid rgba(255, 255, 255, 0.14)',
+          backgroundColor: 'rgba(255, 255, 255, 0.05)',
+          border: '1px solid rgba(255, 255, 255, 0.12)',
           fontSize: '0.72rem',
-          color: 'rgba(255, 255, 255, 0.65)',
+          color: 'rgba(255, 255, 255, 0.55)',
           letterSpacing: '0.04em',
         }}
       >
@@ -241,22 +234,22 @@ export default function CinematicLoader({ onComplete }: CinematicLoaderProps): J
           style={{
             fontFamily: 'monospace',
             fontWeight: 800,
-            backgroundColor: 'rgba(255, 255, 255, 0.16)',
-            padding: '1px 6px',
+            backgroundColor: 'rgba(255, 255, 255, 0.12)',
+            padding: '2px 7px',
             borderRadius: '4px',
             color: '#ffffff',
           }}
         >
           ESC
         </span>
-        <span>or click anywhere to enter</span>
+        <span>or click anywhere to skip</span>
       </div>
 
       <style>{`
-        @keyframes sonarPing {
-          0% { transform: scale(0.9); opacity: 0.8; }
-          70% { transform: scale(1.35); opacity: 0; }
-          100% { transform: scale(1.4); opacity: 0; }
+        @keyframes flowingRedLiquid {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
         }
       `}</style>
     </div>

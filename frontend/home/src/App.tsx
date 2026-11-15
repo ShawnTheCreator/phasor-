@@ -9,7 +9,6 @@ import BookDemoModal from './components/BookDemoModal';
 import MultiHazardBentoSection from './components/MultiHazardBentoSection';
 import ExpandingBrandFooter from './components/ExpandingBrandFooter';
 import CinematicLoader from './components/CinematicLoader';
-import BriefingPopup from './components/BriefingPopup';
 
 const isProduction: boolean = Boolean(import.meta.env.PROD);
 const rawDashboardEnv: string = (import.meta.env.VITE_DASHBOARD_URL as string) || '';
@@ -20,41 +19,26 @@ const DASHBOARD_URL: string = rawDashboardEnv
 export default function App(): JSX.Element {
   const [isDemoOpen, setIsDemoOpen] = useState(false);
   const [isSiteRevealed, setIsSiteRevealed] = useState(false);
-  const [isBriefingOpen, setIsBriefingOpen] = useState(false);
 
   const handleLoaderComplete = () => {
     setIsSiteRevealed(true);
-    // Slow popup glides in 1.4 seconds after the site is slowly revealed
-    setTimeout(() => {
-      setIsBriefingOpen(true);
-    }, 1400);
   };
 
   return (
     <div
       className={`landing-root ${isSiteRevealed ? 'site-revealed' : 'site-preloading'}`}
       style={{
-        opacity: isSiteRevealed ? 1 : 0.92,
-        transition: 'opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
+        opacity: isSiteRevealed ? 1 : 0.95,
+        transition: 'opacity 0.4s ease-out',
       }}
     >
       {/* =========================================================================
-          CINEMATIC INITIALIZATION LOADER
-          - Smoothly reveals the site with telemetry progress
-          - Can be bypassed instantly by pressing ESC or clicking anywhere
+          CINEMATIC GRAINY GRAY LOADER
+          - Tactile grainy gray background with film noise texture
+          - Massive flowing red liquid number matching the hero background
+          - ESC or click skips immediately
           ========================================================================= */}
       <CinematicLoader onComplete={handleLoaderComplete} />
-
-      {/* =========================================================================
-          SLOW-REVEALING MISSION BRIEFING HUD POPUP
-          - Appears gracefully after the site is revealed with gentle entrance
-          - Displays live telemetry status and link to mission control dashboard
-          ========================================================================= */}
-      <BriefingPopup
-        isOpen={isBriefingOpen}
-        onClose={() => setIsBriefingOpen(false)}
-        dashboardUrl={DASHBOARD_URL}
-      />
 
       {/* =========================================================================
           FIXED GLASSY PHI (Φ) LOGO IN THE LEFT CORNER
@@ -82,13 +66,6 @@ export default function App(): JSX.Element {
             <a href="#multi-hazard" className="hero-nav-link">Multi-Hazard</a>
             <a href={`${DASHBOARD_URL}/model`} className="hero-nav-link" target="_blank" rel="noreferrer" style={{ color: '#ef4444', fontWeight: 600 }}>Research ↗</a>
             <a href="#science" className="hero-nav-link">Provenance</a>
-            <button
-              onClick={() => setIsDemoOpen(true)}
-              className="hero-nav-link"
-              style={{ background: 'none', border: 'none', cursor: 'pointer', font: 'inherit', padding: 0 }}
-            >
-              Book a Demo
-            </button>
             <a
               href={`${DASHBOARD_URL}/login`}
               className="btn-pill-glass"
@@ -102,11 +79,13 @@ export default function App(): JSX.Element {
           </nav>
         </header>
 
-        {/* Hero Centered Content: Crumbling Phasor on Scroll */}
+        {/* Hero Centered Content: Crumbling Phasor on Scroll with Tactile Pop Entrance */}
         <div className="hero-content">
-          <CrumbleText />
+          <div className={isSiteRevealed ? 'hero-title-pop' : 'hero-title-idle'}>
+            <CrumbleText />
+          </div>
 
-          <div className="hero-role-tag">
+          <div className={`hero-role-tag ${isSiteRevealed ? 'hero-tag-pop' : 'hero-tag-idle'}`}>
             <span>Space weather early warning</span>
             <span style={{ fontSize: '1.25em' }}>↘</span>
           </div>
@@ -116,15 +95,14 @@ export default function App(): JSX.Element {
           </p>
 
           <div className="hero-action-buttons">
-            <a
-              href={DASHBOARD_URL}
+            <button
+              onClick={() => setIsDemoOpen(true)}
               className="btn-hero-red"
-              target="_blank"
-              rel="noreferrer"
+              style={{ border: 'none', cursor: 'pointer', font: 'inherit' }}
             >
-              <span>Launch Dashboard</span>
+              <span>Book a Demo</span>
               <span>↗</span>
-            </a>
+            </button>
             <a href="#how-it-works" className="btn-hero-glass">
               <span>Explore Physics &darr;</span>
             </a>
@@ -147,7 +125,7 @@ export default function App(): JSX.Element {
           - Storm 2 and Storm 3 slide in from the left like a carousel
           - No manual selection controls: 100% scroll-driven
           - Falling high-voltage wires with electric spark arcs
-          - Verified YouTube videos, real metrics, and official scientific citations
+          - Verified NASA/NERC scientific dossiers, real metrics, and official citations
           ========================================================================= */}
       <section id="replay" className="storm-section-wrapper">
         <StormShowcase dashboardUrl={DASHBOARD_URL} />
