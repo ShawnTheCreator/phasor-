@@ -64,9 +64,9 @@ export default function CrumbleText({ isRevealed = true }: CrumbleTextProps): JS
       // Ensure canvas has full generous width across any display so letters never clip
       const width = Math.max(viewportW, rect.width || 1200);
 
-      // Font size calculation matching CSS clamp(4.5rem, 11vw, 9.8rem)
+      // Font size calculation matching CSS clamp: scales responsively on mobile while preserving exact desktop size
       const baseRem = 16;
-      const minPx = 4.5 * baseRem;
+      const minPx = viewportW < 480 ? 2.8 * baseRem : (viewportW < 768 ? 3.6 * baseRem : 4.5 * baseRem);
       const maxPx = 9.8 * baseRem;
       const preferredPx = viewportW * 0.11;
       const fontSizeCss = Math.min(maxPx, Math.max(minPx, preferredPx));

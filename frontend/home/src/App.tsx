@@ -114,7 +114,7 @@ export default function App(): JSX.Element {
             <a
               href="#research"
               onClick={navigateToResearch}
-              className="hero-nav-link"
+              className="hero-nav-link hero-nav-highlight"
               style={{ color: '#ef4444', fontWeight: 600, cursor: 'pointer' }}
             >
               Research ↗

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { HOME_URL } from '../lib/config';
@@ -6,40 +6,92 @@ import { HOME_URL } from '../lib/config';
 export default function Sidebar(): JSX.Element {
   const router = useRouter();
   const currentPath: string = router.pathname;
+  const [isMobileOpen, setIsMobileOpen] = useState<boolean>(false);
+
+  // Close mobile drawer on route navigation
+  useEffect(() => {
+    setIsMobileOpen(false);
+  }, [currentPath]);
 
   return (
-    <aside className="sidebar">
-      {/* 1. Header (Anchored at top - Links back to Public Home) */}
-      <a
-        href={HOME_URL}
-        className="logo-header"
-        title="Return to Public Homepage"
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '10px',
-          textDecoration: 'none',
-          color: 'inherit',
-          cursor: 'pointer',
-          padding: '4px 6px',
-          borderRadius: '8px',
-          transition: 'background-color 0.15s ease',
-        }}
+    <>
+      {/* Mobile Drawer Trigger (Hamburger) - hidden on laptops/desktops via CSS display: none !important */}
+      <button
+        type="button"
+        className="mobile-sidebar-toggle"
+        onClick={() => setIsMobileOpen((prev) => !prev)}
+        aria-label="Toggle navigation drawer"
+        title="Open navigation menu"
       >
-        <span className="logo-phi-symbol" style={{ fontSize: '1.45rem', fontWeight: 800, color: '#ef4444', lineHeight: 1, textShadow: '0 0 12px rgba(239, 68, 68, 0.4)' }}>Φ</span>
-        <div>
-          <div className="logo-text" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <span>Phasor</span>
-            <span style={{ fontSize: '0.62rem', color: '#991b1b', fontWeight: 700, backgroundColor: '#fef2f2', padding: '1px 5px', borderRadius: '4px', border: '1px solid #fecaca' }}>
-              ↖ Home
-            </span>
-          </div>
-          <div style={{ fontSize: '0.68rem', color: '#94a3b8', letterSpacing: '0.04em', fontWeight: 600 }}>SOUTHERN AFRICAN COUNTRIES MULTI-HAZARD</div>
-        </div>
-      </a>
+        {isMobileOpen ? (
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        ) : (
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12" />
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <line x1="3" y1="18" x2="21" y2="18" />
+          </svg>
+        )}
+      </button>
 
-      {/* 2. Scrollable Middle Body */}
-      <div className="sidebar-scroll-body">
+      {/* Backdrop for mobile drawer */}
+      <div
+        className={`mobile-sidebar-backdrop ${isMobileOpen ? 'active' : ''}`}
+        onClick={() => setIsMobileOpen(false)}
+        aria-hidden="true"
+      />
+
+      <aside className={`sidebar ${isMobileOpen ? 'mobile-open' : ''}`}>
+        {/* 1. Header (Anchored at top - Links back to Public Home) */}
+        <div className="sidebar-header-wrapper" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
+          <a
+            href={HOME_URL}
+            className="logo-header"
+            title="Return to Public Homepage"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '10px',
+              textDecoration: 'none',
+              color: 'inherit',
+              cursor: 'pointer',
+              padding: '4px 6px',
+              borderRadius: '8px',
+              transition: 'background-color 0.15s ease',
+              marginBottom: 0,
+            }}
+          >
+            <span className="logo-phi-symbol" style={{ fontSize: '1.45rem', fontWeight: 800, color: '#ef4444', lineHeight: 1, textShadow: '0 0 12px rgba(239, 68, 68, 0.4)' }}>Φ</span>
+            <div>
+              <div className="logo-text" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <span>Phasor</span>
+                <span style={{ fontSize: '0.62rem', color: '#991b1b', fontWeight: 700, backgroundColor: '#fef2f2', padding: '1px 5px', borderRadius: '4px', border: '1px solid #fecaca' }}>
+                  ↖ Home
+                </span>
+              </div>
+              <div style={{ fontSize: '0.68rem', color: '#94a3b8', letterSpacing: '0.04em', fontWeight: 600 }}>SOUTHERN AFRICAN COUNTRIES MULTI-HAZARD</div>
+            </div>
+          </a>
+
+          {/* Mobile close button inside drawer */}
+          <button
+            type="button"
+            className="mobile-sidebar-close-btn"
+            onClick={() => setIsMobileOpen(false)}
+            aria-label="Close menu"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+        </div>
+
+        {/* 2. Scrollable Middle Body */}
+        <div className="sidebar-scroll-body" onClick={() => setIsMobileOpen(false)}>
         {/* SECTION 1: SOUTHERN AFRICAN COUNTRIES OPERATIONAL PICTURES */}
         <div className="sidebar-divider-title">
           <span>Southern African Operational Pictures</span>
@@ -227,5 +279,6 @@ export default function Sidebar(): JSX.Element {
         </div>
       </div>
     </aside>
+    </>
   );
 }

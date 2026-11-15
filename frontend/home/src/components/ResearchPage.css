@@ -836,3 +836,22 @@
     margin-left: 0;
   }
 }
+
+@media (max-width: 520px) {
+  .cognition-nav-inner {
+    padding: 10px 14px;
+  }
+  .cognition-back-btn {
+    padding: 5px 12px;
+    font-size: 0.76rem;
+  }
+  .cognition-article {
+    padding: 20px 14px;
+  }
+  .cognition-hero-heading {
+    font-size: 1.85rem;
+  }
+  .cognition-meta-badge {
+    font-size: 0.72rem;
+  }
+}

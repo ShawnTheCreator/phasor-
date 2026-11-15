@@ -525,8 +525,15 @@ body {
     padding-top: 100px;
     padding-bottom: 40px;
   }
-  .hero-nav-links .hero-nav-link {
+  .hero-nav-links .hero-nav-link:not(.hero-nav-highlight) {
     display: none;
+  }
+  .hero-nav-highlight {
+    font-size: 0.76rem;
+    padding: 5px 12px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 9999px;
+    border: 1px solid rgba(239, 68, 68, 0.35);
   }
 }
 
@@ -1315,6 +1322,53 @@ body {
   }
   .simple-storm-content {
     padding: 24px 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  .storm-carousel-stage {
+    height: 520px;
+  }
+  .simple-storm-media {
+    height: 200px;
+    min-height: 200px;
+  }
+  .simple-storm-content {
+    padding: 16px 14px;
+  }
+  .simple-storm-title {
+    font-size: 1.35rem;
+    margin-bottom: 8px;
+  }
+  .simple-storm-desc {
+    font-size: 0.88rem;
+    line-height: 1.45;
+    margin-bottom: 16px;
+  }
+  .simple-storm-btn {
+    padding: 8px 18px;
+    font-size: 0.74rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-buttons {
+    flex-direction: column;
+    width: 100%;
+    max-width: 280px;
+    margin: 0 auto;
+    gap: 10px;
+  }
+  .hero-buttons a {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+  }
+  .editorial-container {
+    padding: 0 16px;
+  }
+  .hero-content {
+    padding-top: 86px;
   }
 }
 
