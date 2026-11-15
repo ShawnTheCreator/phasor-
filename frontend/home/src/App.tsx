@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import RedLiquidBackground from './components/RedLiquidBackground';
 import CrumbleText from './components/CrumbleText';
 import PinnedPipeline from './components/PinnedPipeline';
 import StormShowcase from './components/StormShowcase';
 import GlassyPhiLogo from './components/GlassyPhiLogo';
 import CookieConsent from './components/CookieConsent';
+import BookDemoModal from './components/BookDemoModal';
 
 const isProduction: boolean = Boolean(import.meta.env.PROD);
 const rawDashboardEnv: string = (import.meta.env.VITE_DASHBOARD_URL as string) || '';
@@ -13,6 +14,8 @@ const DASHBOARD_URL: string = rawDashboardEnv
   : (isProduction ? '/dashboard' : 'http://localhost:3000');
 
 export default function App(): JSX.Element {
+  const [isDemoOpen, setIsDemoOpen] = useState(false);
+
   return (
     <div className="landing-root">
       {/* =========================================================================
@@ -40,12 +43,12 @@ export default function App(): JSX.Element {
             <a href="#replay" className="hero-nav-link">Storm Replay</a>
             <a href="#science" className="hero-nav-link">Data Lineage</a>
             <a
-              href={DASHBOARD_URL}
+              href={`${DASHBOARD_URL}/login`}
               className="btn-pill-glass"
               target="_blank"
               rel="noreferrer"
             >
-              <span>Launch Operations</span>
+              <span>Login</span>
               <span>↗</span>
             </a>
             <span className="asterisk-badge" title="NASA Space Apps 2026">✻</span>
@@ -66,17 +69,22 @@ export default function App(): JSX.Element {
           </p>
 
           <div className="hero-action-buttons">
+            <button
+              onClick={() => setIsDemoOpen(true)}
+              className="btn-hero-red"
+              style={{ border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}
+            >
+              <span>Book a Demo</span>
+              <span>↗</span>
+            </button>
             <a
               href={DASHBOARD_URL}
-              className="btn-hero-red"
+              className="btn-hero-glass"
               target="_blank"
               rel="noreferrer"
             >
-              <span>Launch Control Room</span>
+              <span>Demo</span>
               <span>↗</span>
-            </a>
-            <a href="#how-it-works" className="btn-hero-glass">
-              <span>Explore Physics</span>
             </a>
           </div>
         </div>
@@ -129,17 +137,33 @@ export default function App(): JSX.Element {
       <footer className="editorial-footer">
         <div className="editorial-container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px' }}>
           <p>&copy; 2026 Phasor &bull; NASA International Space Apps Challenge &bull; All Rights Reserved.</p>
-          <a
-            href={DASHBOARD_URL}
-            className="btn-hero-red"
-            style={{ padding: '8px 20px', fontSize: '0.85rem' }}
-            target="_blank"
-            rel="noreferrer"
-          >
-            Launch Control Room ↗
-          </a>
+          <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+            <button
+              onClick={() => setIsDemoOpen(true)}
+              className="btn-hero-red"
+              style={{ padding: '8px 18px', fontSize: '0.84rem', border: 'none', cursor: 'pointer' }}
+            >
+              Book a Demo ↗
+            </button>
+            <a
+              href={`${DASHBOARD_URL}/login`}
+              className="btn-pill-glass"
+              style={{ padding: '8px 16px', fontSize: '0.84rem', textDecoration: 'none' }}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Login ↗
+            </a>
+          </div>
         </div>
       </footer>
+
+      {/* Interactive VIP Demo Booking Modal */}
+      <BookDemoModal
+        isOpen={isDemoOpen}
+        onClose={() => setIsDemoOpen(false)}
+        dashboardUrl={DASHBOARD_URL}
+      />
 
       {/* Modern Cookie & Telemetry Consent Banner */}
       <CookieConsent />
