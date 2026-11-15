@@ -89,14 +89,6 @@ export default function App(): JSX.Element {
               <span>Launch Dashboard</span>
               <span>↗</span>
             </a>
-            <a
-              href={`${DASHBOARD_URL}/model`}
-              className="btn-hero-glass"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <span>Scientific Research (R² = 0.961) ↗</span>
-            </a>
             <a href="#how-it-works" className="btn-hero-glass">
               <span>Explore Physics &darr;</span>
             </a>
@@ -134,38 +126,16 @@ export default function App(): JSX.Element {
       <MultiHazardBentoSection dashboardUrl={DASHBOARD_URL} />
 
       {/* =========================================================================
-          OPEN SCIENCE DATA PROVENANCE & RESEARCH
+          OPEN SCIENCE DATA PROVENANCE
           ========================================================================= */}
       <section id="science" className="editorial-sub-section" style={{ borderTop: '1px solid #e2e8f0' }}>
         <div className="editorial-container">
           <div className="editorial-header">
             <div className="editorial-pill-marker" />
-            <h2 className="editorial-title">Open science provenance & Scientific Research</h2>
+            <h2 className="editorial-title">Open science data provenance</h2>
             <p className="editorial-sub-desc">
               Built with free and open scientific telemetry from NASA, NOAA, SANSA Space Science, and Kyoto World Data Center. All neural architectures, lithospheric impedance tensors, and ground-truth backtests are publicly verifiable.
             </p>
-          </div>
-
-          <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap', alignItems: 'center', marginBottom: '28px' }}>
-            <a
-              href={`${DASHBOARD_URL}/model`}
-              target="_blank"
-              rel="noreferrer"
-              className="btn-hero-red"
-              style={{ padding: '10px 22px', fontSize: '0.88rem', textDecoration: 'none' }}
-            >
-              <span>Inspect ML LSTM Model & Research (R² = 0.961)</span>
-              <span>↗</span>
-            </a>
-            <a
-              href={`${DASHBOARD_URL}/public`}
-              target="_blank"
-              rel="noreferrer"
-              className="btn-pill-glass"
-              style={{ padding: '10px 20px', fontSize: '0.88rem', textDecoration: 'none', color: '#0f172a', borderColor: '#cbd5e1' }}
-            >
-              <span>Public Civil Defense Feeds ↗</span>
-            </a>
           </div>
 
           <div style={{ display: 'flex', gap: '28px', flexWrap: 'wrap', fontSize: '0.92rem', fontWeight: 600 }}>
