@@ -3,7 +3,6 @@ import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import PitchModeModal from '../components/PitchModeModal';
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -35,10 +34,7 @@ export default function App({ Component, pageProps }: AppProps) {
       </Head>
       {/* If checking auth on a protected route, render a clean dark backdrop while redirecting */}
       {router.pathname === '/login' || authChecked ? (
-        <>
-          <Component {...pageProps} />
-          {router.pathname !== '/login' && <PitchModeModal />}
-        </>
+        <Component {...pageProps} />
       ) : (
         <div style={{ width: '100vw', height: '100vh', backgroundColor: '#060102' }} />
       )}
