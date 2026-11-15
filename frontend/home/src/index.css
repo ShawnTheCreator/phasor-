@@ -155,30 +155,30 @@ body {
   transition: opacity 0.08s linear, transform 0.08s linear, filter 0.08s linear;
 }
 
-/* Dark Theme Molded Glass Shadows & Caustic Reflection */
+/* Dark Theme Pure Molded Glass Shadows & Crystal Specular Highlights */
 .theme-dark .molded-phi-svg {
   filter: 
-    drop-shadow(0 4px 14px rgba(239, 68, 68, 0.55))
-    drop-shadow(0 2px 4px rgba(0, 0, 0, 0.75));
+    drop-shadow(0 6px 18px rgba(255, 255, 255, 0.3))
+    drop-shadow(0 2px 5px rgba(0, 0, 0, 0.85));
 }
 
-/* Light Theme Molded Glass Shadows & Caustic Reflection */
+/* Light Theme Pure Molded Glass Refraction Shadows */
 .theme-light .molded-phi-svg {
   filter: 
-    drop-shadow(0 4px 12px rgba(153, 27, 27, 0.4))
-    drop-shadow(0 2px 4px rgba(15, 23, 42, 0.25));
+    drop-shadow(0 4px 14px rgba(15, 23, 42, 0.28))
+    drop-shadow(0 2px 4px rgba(255, 255, 255, 0.85));
 }
 
 .molded-glass-phi-btn:hover .molded-phi-svg {
   filter: 
-    drop-shadow(0 6px 22px rgba(239, 68, 68, 0.8))
+    drop-shadow(0 8px 24px rgba(255, 255, 255, 0.55))
     drop-shadow(0 2px 8px rgba(0, 0, 0, 0.9));
 }
 
 .theme-light.molded-glass-phi-btn:hover .molded-phi-svg {
   filter: 
-    drop-shadow(0 6px 20px rgba(153, 27, 27, 0.55))
-    drop-shadow(0 2px 8px rgba(15, 23, 42, 0.35));
+    drop-shadow(0 6px 20px rgba(15, 23, 42, 0.45))
+    drop-shadow(0 2px 6px rgba(255, 255, 255, 0.95));
 }
 
 .phi-symbol-svg {

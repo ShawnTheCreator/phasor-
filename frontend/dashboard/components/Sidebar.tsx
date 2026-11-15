@@ -154,24 +154,6 @@ export default function Sidebar(): JSX.Element {
             <span>Hardware Probe</span>
           </Link>
         </nav>
-
-        {/* SECTION 3: BACKEND SERVICES */}
-        <div className="sidebar-divider-title">
-          <span>Backend & Microservices</span>
-        </div>
-
-        <div className="project-item">
-          <span className="color-dot" style={{ backgroundColor: '#10b981' }}></span>
-          <span>FastAPI Multi-Hazard (8000)</span>
-        </div>
-        <div className="project-item">
-          <span className="color-dot" style={{ backgroundColor: '#3b82f6' }}></span>
-          <span>C# ASP.NET Core GIC (5000)</span>
-        </div>
-        <div className="project-item">
-          <span className="color-dot" style={{ backgroundColor: '#f59e0b' }}></span>
-          <span>C++ Pico Magnetometer</span>
-        </div>
       </div>
 
       {/* 3. Bottom Footer */}

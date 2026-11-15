@@ -234,28 +234,36 @@ export default function GlassyPhiLogo(): JSX.Element {
             style={{ overflow: 'visible' }}
           >
             <defs>
-              {/* Dark Theme Molded Glass Liquid Body Gradient */}
-              <linearGradient id="phiMoldedGlassDark" x1="15%" y1="0%" x2="85%" y2="100%">
-                <stop offset="0%" stopColor="#ffffff" stopOpacity="0.95" />
-                <stop offset="25%" stopColor="rgba(255, 255, 255, 0.88)" />
-                <stop offset="55%" stopColor="rgba(254, 202, 202, 0.78)" />
-                <stop offset="82%" stopColor="#ef4444" stopOpacity="0.92" />
-                <stop offset="100%" stopColor="#991b1b" stopOpacity="0.98" />
+              {/* Pure Frosted Glass Body Gradient (Clear, Optical, Refractive) */}
+              <linearGradient id="phiPureGlassBody" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="rgba(255, 255, 255, 0.45)" />
+                <stop offset="30%" stopColor="rgba(255, 255, 255, 0.2)" />
+                <stop offset="65%" stopColor="rgba(255, 255, 255, 0.08)" />
+                <stop offset="100%" stopColor="rgba(255, 255, 255, 0.32)" />
               </linearGradient>
 
-              {/* Light Theme Molded Glass Liquid Body Gradient */}
-              <linearGradient id="phiMoldedGlassLight" x1="15%" y1="0%" x2="85%" y2="100%">
-                <stop offset="0%" stopColor="#1e293b" stopOpacity="0.95" />
-                <stop offset="35%" stopColor="#334155" stopOpacity="0.88" />
-                <stop offset="75%" stopColor="#991b1b" stopOpacity="0.95" />
-                <stop offset="100%" stopColor="#7f1d1d" stopOpacity="1" />
+              {/* Pure Glass Specular Rim / Bevel Reflection */}
+              <linearGradient id="phiPureGlassRim" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#ffffff" stopOpacity="0.98" />
+                <stop offset="40%" stopColor="rgba(255, 255, 255, 0.65)" />
+                <stop offset="75%" stopColor="rgba(255, 255, 255, 0.3)" />
+                <stop offset="100%" stopColor="#ffffff" stopOpacity="0.9" />
               </linearGradient>
 
-              {/* Molded Glass Specular Highlight Bevel Rim */}
-              <linearGradient id="phiGlassBevelRim" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#ffffff" stopOpacity="0.95" />
-                <stop offset="50%" stopColor="rgba(255, 255, 255, 0.45)" />
-                <stop offset="100%" stopColor="rgba(239, 68, 68, 0.65)" />
+              {/* Light Theme Pure Smoked Crystal Body */}
+              <linearGradient id="phiPureGlassLightBody" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="rgba(15, 23, 42, 0.32)" />
+                <stop offset="35%" stopColor="rgba(15, 23, 42, 0.16)" />
+                <stop offset="70%" stopColor="rgba(15, 23, 42, 0.06)" />
+                <stop offset="100%" stopColor="rgba(15, 23, 42, 0.26)" />
+              </linearGradient>
+
+              {/* Light Theme Pure Glass Rim */}
+              <linearGradient id="phiPureGlassLightRim" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#0f172a" stopOpacity="0.95" />
+                <stop offset="45%" stopColor="rgba(15, 23, 42, 0.5)" />
+                <stop offset="80%" stopColor="rgba(15, 23, 42, 0.2)" />
+                <stop offset="100%" stopColor="#0f172a" stopOpacity="0.85" />
               </linearGradient>
             </defs>
 
@@ -265,9 +273,9 @@ export default function GlassyPhiLogo(): JSX.Element {
             <path
               d={UPPERCASE_PHI_PATH}
               fillRule="evenodd"
-              fill={isLight ? 'url(#phiMoldedGlassLight)' : 'url(#phiMoldedGlassDark)'}
-              stroke={isLight ? 'rgba(255, 255, 255, 0.95)' : 'url(#phiGlassBevelRim)'}
-              strokeWidth="0.8"
+              fill={isLight ? 'url(#phiPureGlassLightBody)' : 'url(#phiPureGlassBody)'}
+              stroke={isLight ? 'url(#phiPureGlassLightRim)' : 'url(#phiPureGlassRim)'}
+              strokeWidth="0.9"
               strokeLinejoin="round"
               className="molded-path-glyph"
               style={{
@@ -280,14 +288,14 @@ export default function GlassyPhiLogo(): JSX.Element {
             />
 
             {/* ===============================================================
-                2. LOWERCASE PHI (φ) - Active in Section 2 (Pinned Pipeline)
+                2. LOWERCASE PHI (φ) - Active in Section 2, 3, and 4
                 =============================================================== */}
             <path
               d={LOWERCASE_PHI_PATH}
               fillRule="evenodd"
-              fill={isLight ? 'url(#phiMoldedGlassLight)' : 'url(#phiMoldedGlassDark)'}
-              stroke={isLight ? 'rgba(255, 255, 255, 0.95)' : 'url(#phiGlassBevelRim)'}
-              strokeWidth="0.8"
+              fill={isLight ? 'url(#phiPureGlassLightBody)' : 'url(#phiPureGlassBody)'}
+              stroke={isLight ? 'url(#phiPureGlassLightRim)' : 'url(#phiPureGlassRim)'}
+              strokeWidth="0.9"
               strokeLinejoin="round"
               className="molded-path-glyph"
               style={{
