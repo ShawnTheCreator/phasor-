@@ -143,7 +143,7 @@ export default function CookieConsent(): JSX.Element | null {
             <div className="pref-item">
               <div>
                 <strong className="pref-title">Anonymous Usage Analytics</strong>
-                <p className="pref-desc">Helps our team optimize dashboard latency across low-bandwidth SADC field networks.</p>
+                <p className="pref-desc">Helps our team optimize dashboard latency across low-bandwidth Southern African field networks.</p>
               </div>
               <label className="pref-switch" aria-label="Toggle Anonymous Usage Analytics">
                 <input

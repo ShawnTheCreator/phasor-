@@ -71,7 +71,7 @@ export default function PublicSafetyPage(): JSX.Element {
               Public Safety & Civil Protection Matrix
             </h2>
             <span style={{ fontSize: '0.68rem', fontWeight: 600, color: '#991b1b', backgroundColor: 'var(--red-soft)', padding: '2px 8px', borderRadius: '9999px', border: '1px solid var(--red-border)' }}>
-              SADC Disaster Management
+              Southern African Countries Disaster Management
             </span>
           </div>
 
@@ -91,7 +91,7 @@ export default function PublicSafetyPage(): JSX.Element {
           {/* Greeting Header */}
           <section className="greeting-header">
             <div>
-              <div className="date-label">SADC Operational Picture 6 &bull; Civil Protection & Infrastructure Protection</div>
+              <div className="date-label">Southern African Countries Operational Picture 6 &bull; Civil Protection & Infrastructure Protection</div>
               <h1 className="greeting-title">Public Safety & Cascading Dependency Matrix</h1>
               <div className="stat-pills-row">
                 <div className="stat-pill">

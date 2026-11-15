@@ -224,8 +224,8 @@ def compute_gnss_scintillation_state(
 
     # Pre-formatted Last-Mile SMS Alert
     sms_text = (
-        f"[PHASOR SADC ALERT] GNSS Ionospheric Risk: {overall_tier} (S4={max_s4}). "
-        f"RTK / GPS accuracy degraded in Northern & Central SADC. "
+        f"[PHASOR ALERT] GNSS Ionospheric Risk: {overall_tier} (S4={max_s4}). "
+        f"RTK / GPS accuracy degraded across Southern African Countries. "
         f"Switch autonomous field machines & drones to INS backup. "
         f"Forecast: EPB drift east towards Zambezi corridor over next 2h."
     )

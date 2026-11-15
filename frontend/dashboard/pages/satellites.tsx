@@ -93,7 +93,7 @@ export default function SatellitesPage(): JSX.Element {
         <main className="page-container">
           <section className="greeting-header">
             <div>
-              <div className="date-label">SADC Operational Picture 5 &bull; Satellite Operators & Constellation Safety</div>
+              <div className="date-label">Southern African Countries Operational Picture 5 &bull; Satellite Operators & Constellation Safety</div>
               <h1 className="greeting-title">Thermospheric Swelling & Orbital Drag Risk</h1>
               <div className="stat-pills-row">
                 <div className="stat-pill">

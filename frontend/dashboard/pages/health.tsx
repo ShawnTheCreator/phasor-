@@ -117,7 +117,7 @@ export default function HealthPage(): JSX.Element {
         <main className="page-container">
           <section className="greeting-header">
             <div>
-              <div className="date-label">SADC Operational Picture 2 &bull; Hospital Emergency Coordinators & EMS</div>
+              <div className="date-label">Southern African Countries Operational Picture 2 &bull; Hospital Emergency Coordinators & EMS</div>
               <h1 className="greeting-title">Health System Resilience & Hospital Grid Vulnerability</h1>
               <div className="stat-pills-row">
                 <div className="stat-pill">

@@ -159,7 +159,7 @@ def assess_aviation_triad_state(
 
     return {
         "timestamp": now.isoformat(),
-        "icao_bulletin_code": "SWXC-SADC-ICAO-2026",
+        "icao_bulletin_code": "SWXC-SAF-ICAO-2026",
         "triad": {
             "hf_radio": {
                 "tier": hf_tier,

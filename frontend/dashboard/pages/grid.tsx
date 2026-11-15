@@ -107,7 +107,7 @@ export default function GridExpansionPage(): JSX.Element {
         <main className="page-container">
           <section className="greeting-header">
             <div>
-              <div className="date-label">SADC Operational Picture 4 &bull; SAPP Regional Dispatch & Maintenance Planners</div>
+              <div className="date-label">Southern African Countries Operational Picture 4 &bull; SAPP Regional Dispatch & Maintenance Planners</div>
               <h1 className="greeting-title">SAPP Interconnected Grid & Transformer Loss-of-Life</h1>
               <div className="stat-pills-row">
                 <div className="stat-pill">

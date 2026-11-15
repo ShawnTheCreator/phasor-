@@ -52,7 +52,7 @@ export default function LoginPage(): JSX.Element {
   return (
     <>
       <Head>
-        <title>Sign In — Phasor SADC Space Weather Defense</title>
+        <title>Sign In — Phasor Southern Africa Space Weather Defense</title>
         <meta name="description" content="Sign in to the Phasor Space Weather Operations Control Room" />
       </Head>
 

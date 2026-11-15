@@ -37,7 +37,7 @@ CRITICAL_INFRASTRUCTURE_NODES: List[Dict[str, Any]] = [
         "id": "INFRA-03",
         "name": "Vodacom Midrand Data Centre & Core Switch",
         "sector": "Telecommunications & Cellular",
-        "serves_population": "45 Million SADC subscribers",
+        "serves_population": "45 Million Southern African subscribers",
         "feeding_substation": "Hartebeesthoek 400kV",
         "backup_power_hours": 48,
         "vulnerability": "Voice & emergency 112 / 10111 routing resilience.",

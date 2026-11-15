@@ -82,7 +82,7 @@ export default function GnssPage(): JSX.Element {
       } else {
         setModalMsg({
           title: "SMS Broadcast Queued (Dev Mode)",
-          text: `Low-bandwidth SMS queued for delivery across SADC cellular gateway to ${phoneInput}.`
+          text: `Low-bandwidth SMS queued for delivery across Southern African cellular gateway to ${phoneInput}.`
         });
       }
     } catch {
@@ -119,7 +119,7 @@ export default function GnssPage(): JSX.Element {
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#64748b" strokeWidth="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
             <input
               type="text"
-              placeholder="Search SADC GNSS station, country, or risk tier..."
+              placeholder="Search Southern African GNSS station, country, or risk tier..."
               value={filterQuery}
               onChange={(e) => setFilterQuery(e.target.value)}
             />
@@ -128,7 +128,7 @@ export default function GnssPage(): JSX.Element {
           <div className="top-nav-right">
             <div className="btn-outline" style={{ fontSize: '0.8rem', padding: '7px 14px' }}>
               <span className="color-dot" style={{ backgroundColor: data?.overall_color || '#991b1b', display: 'inline-block' }}></span>
-              <span>SADC GNSS: <strong>{data?.overall_tier || 'SEVERE'}</strong></span>
+              <span>Southern Africa GNSS: <strong>{data?.overall_tier || 'SEVERE'}</strong></span>
             </div>
 
             <button
@@ -147,7 +147,7 @@ export default function GnssPage(): JSX.Element {
           {/* Header & Stat Pills */}
           <section className="greeting-header">
             <div>
-              <div className="date-label">SADC Operational Picture 1 &bull; GNSS Field Operators & Precision Survey</div>
+              <div className="date-label">Southern African Countries Operational Picture 1 &bull; GNSS Field Operators & Precision Survey</div>
               <h1 className="greeting-title">GNSS Scintillation & Ionospheric Risk (PRISM Model)</h1>
               <div className="stat-pills-row">
                 <div className="stat-pill">
@@ -171,7 +171,7 @@ export default function GnssPage(): JSX.Element {
             <div className="card-header-row">
               <h2 className="card-title">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-                <span>SADC Regional Receiver Network (SANSA / Septentrio / IGS)</span>
+                <span>Southern Africa Regional Receiver Network (SANSA / Septentrio / IGS)</span>
               </h2>
             </div>
 
@@ -278,7 +278,7 @@ export default function GnssPage(): JSX.Element {
               <div style={{ background: '#fef2f2', border: '1px solid #fecaca', borderRadius: '8px', padding: '12px', fontSize: '0.8rem', color: '#991b1b' }}>
                 <strong>Automated Alert Payload:</strong>
                 <p style={{ marginTop: '4px', margin: 0, fontFamily: 'monospace' }}>
-                  {data?.sms_dispatch.text || "[PHASOR SADC ALERT] GNSS Ionospheric Risk: SEVERE (S4=0.62). Switch autonomous field machines & drones to INS dead-reckoning."}
+                  {data?.sms_dispatch.text || "[PHASOR ALERT] GNSS Ionospheric Risk: SEVERE (S4=0.62). Switch autonomous field machines & drones to INS dead-reckoning."}
                 </p>
               </div>
             </section>

@@ -27,8 +27,8 @@ namespace Phasor.Ingest
         private readonly List<SolarWindSample> _history = new();
         private readonly object _lock = new();
 
-        private const string NoaaPlasmaUrl = "https://services.swpc.noaa.gov/products/solar-wind/plasma-5-minute.json";
-        private const string NoaaMagUrl = "https://services.swpc.noaa.gov/products/solar-wind/mag-5-minute.json";
+        private static readonly string NoaaPlasmaUrl = Environment.GetEnvironmentVariable("NOAA_PLASMA_URL") ?? "https://services.swpc.noaa.gov/products/solar-wind/plasma-5-minute.json";
+        private static readonly string NoaaMagUrl = Environment.GetEnvironmentVariable("NOAA_MAG_URL") ?? "https://services.swpc.noaa.gov/products/solar-wind/mag-5-minute.json";
 
         public IngestionWorker(ILogger<IngestionWorker> logger)
         {

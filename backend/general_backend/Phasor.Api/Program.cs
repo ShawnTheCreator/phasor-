@@ -257,5 +257,8 @@ app.MapPost("/api/hardware/ingest", (MagnetometerSample sample) =>
     return Results.Ok(new { status = "INGESTED", sample });
 });
 
-Console.WriteLine("[Phasor C# API] ASP.NET Core Backend ready on http://0.0.0.0:5000");
-app.Run("http://0.0.0.0:5000");
+var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
+var defaultUrl = $"http://0.0.0.0:{port}";
+var bindUrl = Environment.GetEnvironmentVariable("ASPNETCORE_URLS") ?? defaultUrl;
+Console.WriteLine($"[Phasor C# API] ASP.NET Core Backend ready on {bindUrl}");
+app.Run(bindUrl);
