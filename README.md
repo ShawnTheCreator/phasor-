@@ -6,6 +6,7 @@
 
 [![NASA Space Apps Durban](https://img.shields.io/badge/NASA%20Space%20Apps-Durban%202026-orange.svg)](https://www.spaceappschallenge.org/)
 [![Challenge](https://img.shields.io/badge/Challenge-Earth%20System%20Trend%20Detective-blue.svg)](https://www.spaceappschallenge.org/)
+[![Live Application](https://img.shields.io/badge/Live%20App-phasor--five.vercel.app-success.svg)](https://phasor-five.vercel.app/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)
 [![.NET 10.0](https://img.shields.io/badge/.NET-10.0-512BD4.svg)](https://dotnet.microsoft.com/)
@@ -15,9 +16,10 @@
 ---
 
 ## 📽️ Project Quick Links
+- 🚀 **Live Web Application (Public Home & Research):** **[https://phasor-five.vercel.app/](https://phasor-five.vercel.app/)**
+- 🌐 **Live Operations Dashboard (Command Center):** **[https://dashboard-pi-eight-87.vercel.app/](https://dashboard-pi-eight-87.vercel.app/)**
 - 🎥 **Watch the 30-Second Pitch & Live Demo:** **[Phasor 30-Second Video Demo (YouTube)](https://www.youtube.com/watch?v=9i47b__igEw)**
-- 🌐 **Live Operations Dashboard:** **[https://dashboard-pi-eight-87.vercel.app/](https://dashboard-pi-eight-87.vercel.app/)**
-- 📄 **Full Technical & Scientific Dossier:** **[Scientific Research & Equations Page](frontend/home/src/components/ResearchPage.tsx)**
+- 📄 **Full Technical & Scientific Dossier:** **[https://phasor-five.vercel.app/#research](https://phasor-five.vercel.app/#research)**
 
 ---
 
